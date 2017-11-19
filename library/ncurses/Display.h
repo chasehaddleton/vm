@@ -9,6 +9,7 @@
 #include "../Point.h"
 
 class Display {
+	Point cursorPos;
 	bool init;
 
 	void begin();
