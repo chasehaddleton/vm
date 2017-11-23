@@ -1,4 +1,4 @@
-#include "library/ncurses/Display.h"
+#include "library/vmwindow/VMDisplay.h"
 #include "library/abstractions/Command.h"
 #include <vector>
 

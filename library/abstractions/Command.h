@@ -8,7 +8,7 @@
 #include "../MatchType.h"
 #include <string>
 #include "../Point.h"
-#include "../ncurses/Display.h"
+#include "../vmwindow/VMDisplay.h"
 
 class Command {
 	virtual void doExecute(const std::string &command) const = 0;
