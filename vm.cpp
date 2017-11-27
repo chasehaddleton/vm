@@ -10,6 +10,8 @@ int main() {
 	int x = 0;
 	int y = 0;
 
+    unsigned short tabStop;
+
 	do {
 		in = static_cast<char>(n.receiveInput());
 

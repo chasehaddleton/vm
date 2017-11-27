@@ -5,16 +5,19 @@
 #ifndef VM_MODEL_H
 #define VM_MODEL_H
 
-class Model {
-    std::string name;
-    DataSource ds;
-    HistoryStack undo;
-    HistoryStack redo;
+#include "DataSource.h"
+#include "HistoryStack.h
 
-    virtual void addLine() = 0;
-    virtual void removeLine() = 0;
-    virtual void undo() = 0;
-    virtual void redo() = 0;
+class Model {
+    virtual void doAddLine() = 0;
+    virtual void doRemoveLine() = 0;
+    virtual void doUndo() = 0;
+    virtual void doRedo() = 0;
+public:
+    void addLine() { doAddLine(); }
+    void removeLine() { doRemoveLine(); }
+    void undo() { doUndo(); }
+    void redo() { doRedo(); }
 };
 
 #endif //VM_MODEL_H
