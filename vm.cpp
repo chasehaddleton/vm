@@ -1,55 +1,30 @@
+#include <iostream>
+#include <string>
+#include <list>
 #include "library/vmwindow/VMDisplay.h"
-#include "library/abstractions/Command.h"
-#include <vector>
+#include "library/input/VMKeyboard.h"
+#include "library/Point.h"
 
-int main() {
-	Display n{};
+int main(int argc, const char *argv[]) {
+	std::shared_ptr<std::list<std::string>> st{new std::list<std::string>{}};
 
-	char in;
-
-	int x = 0;
-	int y = 0;
-
-	do {
-		in = static_cast<char>(n.receiveInput());
-
-		if (in == Display::BACKSPACE) {
-			n.movePos({--x, y});
-			n.erasePos({x, y});
-		} else if (in == '\n') {
-			n.print(in);
-			++y;
-		} else {
-			n.print(in);
-		}
-
-		n.update();
-	} while (in != 'y');
-
-	std::vector<std::unique_ptr<Command>> commands;
-
-	/**
-	 * Create the commands and put them into commands
-	 */
-
-	commands.push_back(new Macro());
-
-	bool running, commandMode, insertMode;
-
-	while (running) {
-		if (commandMode) {
-			in = static_cast<char>(n.receiveInput());
-
-			if (in == 'a') {
-
-			}
-		} else if (insertMode) {
-
-		} else { // Macro record mode?
-
-		}
+	for (int i = 0; i < 15; ++i) {
+		st->push_back(std::to_string(i) +
+		              "jafhksdjhfkjahsdnkjfnakjsdnfkjasdnfkjansdkjfnasdkjfnkajsdnfkjasndfkjasdfhaiorhjgndjfna");
 	}
 
-	return 0;
-}
+	std::shared_ptr<Point> curPos{new Point{}};
+	VMDisplay vmd{st, curPos};
+	VMKeyboard vmk{};
+	auto kIt = vmk.begin();
 
+	vmd.display();
+	int c = *kIt;
+
+	while (c != 'q') {
+		vmd.handleInput(c);
+		vmd.display();
+
+		c = *kIt;
+	}
+}
