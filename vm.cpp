@@ -15,12 +15,12 @@ int main(int argc, const char *argv[]) {
 	VMKeyboard vmk{};
 	auto kIt = vmk.begin();
 
-	vmd.display();
+	vmd.doUpdate();
 	int c = *kIt;
 
 	while (c != 'q') {
 		vmd.handleInput(c);
-		vmd.display();
+		vmd.doUpdate();
 
 		c = *kIt;
 	}

@@ -6,7 +6,10 @@
 #define VM_DISPLAY_H
 
 class Display {
-
+public:
+	void update() {
+		doUpdate();
+	}
 };
 
 #endif //VM_DISPLAY_H

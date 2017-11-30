@@ -9,16 +9,16 @@
 #include <string>
 #include "../Point.h"
 #include <memory>
+#include "../abstractions/Display.h"
 
-class window_resized {
-};
-
-class VMDisplay {
+class VMDisplay : public Display {
 	std::shared_ptr<std::list<std::string>> f;
+	std::shared_ptr<std::list<std::string>::iterator> fIt;
+
 	std::list<std::string>::iterator fIt;
 	std::shared_ptr<Point> curPos;
+	std::shared_ptr<int> printStart;
 
-	int printStart = 0;
 	int xSize = 0;
 	int ySize = 0;
 
@@ -26,19 +26,24 @@ class VMDisplay {
 
 	void end();
 
+	void doUpdate();
+
 public:
 
-	VMDisplay(std::shared_ptr<std::list<std::string>> f, std::shared_ptr<Point> p);
+	VMDisplay(std::shared_ptr<std::list<std::string>> f, std::shared_ptr<std::list<std::string>::iterator> fIt,
+	          std::shared_ptr<Point> p);
 
 	~VMDisplay();
-
-	void display();
 
 	void resize();
 
 	void print(std::string s, int y);
 
 	bool handleInput(int ch);
+
+	int getXSize() const;
+
+	int getYSize() const;
 };
 
 
