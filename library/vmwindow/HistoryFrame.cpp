@@ -6,12 +6,12 @@
 
 HistoryFrame::HistoryFrame(size_t start): startLine(start) {}
 
-void HistoryFrame::addLineAddition(std::string s) {
+void HistoryFrame::pushNewLine(std::string s) {
     newLines->emplace_back(std::move(s));
 }
 
-void HistoryFrame::addLineRemoval(std::string s) {
-    oldLines->emplace_back(std::move(s));
+void HistoryFrame::pushOldLine(std::string s) {
+    oldLines->emplace_front(std::move(s));
 }
 
 void HistoryFrame::invert() {
