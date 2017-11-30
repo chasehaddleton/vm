@@ -9,7 +9,7 @@ void VMDisplay::init() {
 	initscr();
 	xSize = COLS;
 	ySize = LINES;
-	keypad(stdscr, TRUE);
+	keypad(stdscr, true);
 	noecho();
 	raw();
 }
@@ -19,9 +19,8 @@ void VMDisplay::end() {
 	endwin();
 }
 
-VMDisplay::VMDisplay(std::shared_ptr<std::list<std::string>> f, std::shared_ptr<Point> p) : f{f}, curPos{p} {
+VMDisplay::VMDisplay(VMDisplay::dataType &ds, Cursor &c) : ds{ds}, cursor{c} {
 	init();
-	fIt = f->begin();
 }
 
 VMDisplay::~VMDisplay() {
@@ -48,18 +47,18 @@ void VMDisplay::print(std::string s, int y) {
 
 void VMDisplay::doUpdate() {
 	int longLineSkip = 0;
-	int displayXPos = curPos->x;
-	int displayYPos = curPos->y - printStart;
-	auto it = fIt;
+	int displayXPos = static_cast<int>(cursor.getXPos());
+	int displayYPos = static_cast<int>(cursor.getYPos()) - *printStart;
+	auto it = cursor.getIT();
 
 	// curPos.y + printStart == position in file wrt screen cursor
-	std::advance(it, -(curPos->y - printStart));
+	std::advance(it, -displayYPos);
 
 	for (int i = 0; i < ySize; ++i) {
-		if (it != f->end()) {
-			print(*it, i);
-			if (it->size() > xSize) {
-				if ((i - longLineSkip) < curPos->y) {
+		if (it != ds.end()) {
+			print(***it, i);
+			if ((*it)->size() > xSize) {
+				if ((i - longLineSkip) < cursor.getLinePos()) {
 					++longLineSkip;
 				}
 				++i;
@@ -70,7 +69,7 @@ void VMDisplay::doUpdate() {
 		}
 	}
 
-	if (curPos->x >= xSize) {
+	if (cursor.getXPos() >= xSize) {
 		++longLineSkip;
 		displayXPos -= xSize;
 	}

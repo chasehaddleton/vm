@@ -3,7 +3,6 @@
 //
 
 #include <fstream>
-#include <memory>
 #include "VMDataSource.h"
 
 VMDataSource::VMDataSource() = default;

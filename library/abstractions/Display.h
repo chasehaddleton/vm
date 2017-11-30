@@ -6,7 +6,10 @@
 #define VM_DISPLAY_H
 
 class Display {
+	virtual void doUpdate() = 0;
+
 public:
+
 	void update() {
 		doUpdate();
 	}

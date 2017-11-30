@@ -6,7 +6,7 @@
 #define VM_MODEL_H
 
 #include "DataSource.h"
-#include "HistoryStack.h
+#include "../vmwindow/history/HistoryStack.h"
 
 class Model {
     virtual void doAddLine() = 0;

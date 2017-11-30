@@ -5,7 +5,7 @@
 #ifndef VM_MACRO_H
 #define VM_MACRO_H
 
-#include "../abstractions/CompositeCommand.h"
+#include "../abstractions/command/CompositeCommand.h"
 
 class Macro : public CompositeCommand {
 

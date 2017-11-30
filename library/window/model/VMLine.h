@@ -5,7 +5,6 @@
 #ifndef VM_LINE_H
 #define VM_LINE_H
 
-
 #include <cstddef>
 #include <vector>
 #include <string>
@@ -24,8 +23,10 @@ public:
     size_t tabCount();                  // returns number of tabs on line
     size_t tabCount(size_t pos);        // returns number of tabs prior to pos on line
     size_t length();                    // returns length of line
-    std::string toString();             // returns line as a string
+	size_t size();
 
+	std::string toString();             // returns line as a string
+	std::string &operator*();
     using iterator = std::string::iterator;
 
 };
@@ -36,7 +37,7 @@ std::ostream &operator<<(std::ostream &out, VMLine line);
 
 
 
-// SOME LEGACY CODE DELETE BEFORE SUBMISSION
+// TODO: SOME LEGACY CODE DELETE BEFORE SUBMISSION
 // possibly deprecated iterator wrapper
 /*class iterator {
     std::string::iterator it;

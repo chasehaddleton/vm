@@ -2,7 +2,7 @@
 // Created by Slayorious on 2017-11-26.
 //
 
-#include "../abstractions/HistoryFrame.h"
+#include "HistoryFrame.h"
 
 HistoryFrame::HistoryFrame(size_t start): startLine(start) {}
 

@@ -42,9 +42,17 @@ size_t VMLine::length() {
     return line.length();
 }
 
+size_t VMLine::size() {
+	return length();
+}
+
 // returns the VMLine as a string
 std::string VMLine::toString() {
     return line;
+}
+
+std::string &VMLine::operator*() {
+	return line;
 }
 
 std::ostream &operator<<(std::ostream &out, VMLine l) {

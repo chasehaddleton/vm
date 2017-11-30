@@ -6,16 +6,18 @@
 #define VM_CURSOR_H
 
 #include <cstddef>
-#include "../vmwindow/VMDataSource.h"
+#include "VMDataSource.h"
 
 class Cursor {
-    size_t xpos;
-    size_t ypos;
+	size_t xPos{0};
+	size_t yPos{0};
     VMDataSource::iterator currentLine;
-    size_t linePos;
+	size_t linePos{0};
     const VMDataSource& ds;
 
 public:
+	explicit Cursor(VMDataSource &ds);
+
     size_t getXPos();
     size_t getYPos();
     VMDataSource::iterator getIT();

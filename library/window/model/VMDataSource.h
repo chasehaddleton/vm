@@ -5,20 +5,16 @@
 #ifndef VM_VMDATASOURCE_H
 #define VM_VMDATASOURCE_H
 
-#include "../abstractions/DataSource.h"
-//#include <ostream>
-//#include <fstream>
+#include "../../abstractions/DataSource.h"
 #include <list>
 #include <memory>
 
 class VMDataSource {
-    std::list<std::unique_ptr<VMLine>> lines;
+	std::list<std::unique_ptr<VMLine>> lines; // TODO: Evaluate whether to use unique_ptr or not
     std::string fileName;
-
-    using iterator = std::list<std::unique_ptr<VMLine>>::iterator;
-    using const_iterator = std::list<std::unique_ptr<VMLine>>::const_iterator;
-
 public:
+	using iterator = std::list<std::unique_ptr<VMLine>>::iterator;
+	using const_iterator = std::list<std::unique_ptr<VMLine>>::const_iterator;
 
     VMDataSource();
     explicit VMDataSource(const std::string &file);

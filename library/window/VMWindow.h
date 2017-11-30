@@ -5,24 +5,26 @@
 #ifndef VM_VMWINDOW_H
 #define VM_VMWINDOW_H
 
-#include "VMModel.h"
-#include "VMDisplay.h"
+#include "model/VMModel.h"
+#include "display/VMDisplay.h"
 #include "../input/VMKeyboard.h"
-#include "../Point.h"
 #include <memory>
+#include "model/Cursor.h"
 
 class DataSource;
 
 class VMWindow {
-	std::shared_ptr<Point> cursorPosition;
-	VMDisplay display;
 	VMKeyboard keyboard;
+	VMKeyboard::Iterator keyIt;
 	VMModel model;
-	std::shared_ptr<DataSource> dataSource;
-	std::shared_ptr<DataSource::Iterator> dsIt;
+	Cursor cursor;
+	VMDisplay display;
+
 	int printStart = 0;
 
 public:
+	explicit VMWindow(std::string fileName);
+
 	void run();
 
 	bool handleInput(int ch);

@@ -5,7 +5,7 @@
 #ifndef VM_DELETE_H
 #define VM_DELETE_H
 
-#include "../abstractions/Command.h"
+#include "../abstractions/command/Command.h"
 
 class Delete : public Command {
 

@@ -5,10 +5,10 @@
 #ifndef VM_COMMAND_H
 #define VM_COMMAND_H
 
-#include "../MatchType.h"
+#include "../../MatchType.h"
 #include <string>
-#include "../Point.h"
-#include "../vmwindow/VMDisplay.h"
+#include "../../Point.h"
+#include "../display/VMDisplay.h"
 
 class Command {
 	virtual void doExecute(const std::string &command) const = 0;

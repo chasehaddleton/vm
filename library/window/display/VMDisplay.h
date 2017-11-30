@@ -7,16 +7,18 @@
 
 #include <list>
 #include <string>
-#include "../Point.h"
+#include "../../Point.h"
 #include <memory>
-#include "../abstractions/Display.h"
+#include "../../abstractions/Display.h"
+#include "../model/VMModel.h"
+#include "../model/Cursor.h"
 
 class VMDisplay : public Display {
-	std::shared_ptr<std::list<std::string>> f;
-	std::shared_ptr<std::list<std::string>::iterator> fIt;
+	using dataType = VMModel;
+	using dataTypeIt = VMModel::dataSource::iterator;
 
-	std::list<std::string>::iterator fIt;
-	std::shared_ptr<Point> curPos;
+	dataType &ds;
+	Cursor &cursor;
 	std::shared_ptr<int> printStart;
 
 	int xSize = 0;
@@ -26,12 +28,11 @@ class VMDisplay : public Display {
 
 	void end();
 
-	void doUpdate();
+	void doUpdate() override;
 
 public:
 
-	VMDisplay(std::shared_ptr<std::list<std::string>> f, std::shared_ptr<std::list<std::string>::iterator> fIt,
-	          std::shared_ptr<Point> p);
+	VMDisplay(dataType &ds, Cursor &c);
 
 	~VMDisplay();
 

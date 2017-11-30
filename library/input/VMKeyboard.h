@@ -6,6 +6,7 @@
 #define VM_VMKEYBOARD_H
 
 class VMKeyboard {
+public:
 	class Iterator {
 		Iterator() = default;
 
@@ -19,7 +20,6 @@ class VMKeyboard {
 		friend class VMKeyboard;
 	};
 
-public:
 	struct Key {
 		const int DOWN;
 		const int UP;
@@ -41,7 +41,7 @@ public:
 		const int REDO;
 		const int SAVE;
 		const int UNDO;
-		const int REIZE;
+		const int RESIZE;
 		const int ESCAPE;
 	};
 

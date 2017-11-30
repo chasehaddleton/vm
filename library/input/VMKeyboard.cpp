@@ -47,7 +47,7 @@ struct VMKeyboard::Key {
 	const int REDO = KEY_REDO;
 	const int SAVE = KEY_SAVE;
 	const int UNDO = KEY_UNDO;
-	const int REIZE = KEY_RESIZE;
+	const int RESIZE = KEY_RESIZE;
 	const int ESCAPE = 27;
 /*#define KEY_SF        0520        *//* scroll-forward key *//*
 #define KEY_SR        0521        *//* scroll-backward key *//*

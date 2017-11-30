@@ -2,7 +2,7 @@
 // Created by Slayorious on 2017-11-26.
 //
 
-#include "../abstractions/HistoryStack.h"
+#include "HistoryStack.h"
 
 void HistoryStack::push(std::shared_ptr<HistoryFrame> &frame) {
     history.push(frame);

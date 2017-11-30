@@ -5,7 +5,7 @@
 #ifndef VM_HISTORYFRAME_H
 #define VM_HISTORYFRAME_H
 
-#include "../vmwindow/VMLine.h"
+#include "../model/VMLine.h"
 #include <deque>
 #include <memory>
 
