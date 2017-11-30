@@ -9,13 +9,15 @@
 #include <cstddef>
 #include <vector>
 #include <string>
+#include <iostream>
 
-class Line {
+class VMLine {
     std::string line;
 
 public:
-    Line();
-    explicit Line(std::string str);
+    VMLine();
+
+    explicit VMLine(std::string str);
 
     void addChar(size_t pos, char c);   // inserts the given character at the iterator position
     void removeChar(size_t pos);        // removes the character at the given position
@@ -28,7 +30,7 @@ public:
 
 };
 
-std::ostream &operator<<(std::ostream &out, Line line);
+std::ostream &operator<<(std::ostream &out, VMLine line);
 
 #endif //VM_LINE_H
 

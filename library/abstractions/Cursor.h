@@ -6,7 +6,7 @@
 #define VM_CURSOR_H
 
 #include <cstddef>
-#include "VMDataSource.h"
+#include "../vmwindow/VMDataSource.h"
 
 class Cursor {
     size_t xpos;

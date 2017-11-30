@@ -5,14 +5,14 @@
 #ifndef VM_HISTORYFRAME_H
 #define VM_HISTORYFRAME_H
 
-#include "../abstractions/Line.h"
+#include "../vmwindow/VMLine.h"
 #include <deque>
 #include <memory>
 
 class HistoryFrame {
     size_t startLine;
-    std::unique_ptr<std::deque<Line>> oldLines;
-    std::unique_ptr<std::deque<Line>> newLines;
+    std::unique_ptr<std::deque<VMLine>> oldLines;
+    std::unique_ptr<std::deque<VMLine>> newLines;
 
 public:
     explicit HistoryFrame(size_t start);

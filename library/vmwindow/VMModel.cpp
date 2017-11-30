@@ -2,7 +2,7 @@
 // Created by Slayorious on 2017-11-23.
 //
 
-#include "../abstractions/VMModel.h"
+#include "VMModel.h"
 
 VMModel::VMModel() = default;
 

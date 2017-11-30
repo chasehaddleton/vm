@@ -19,7 +19,7 @@ void Cursor::moveLeft() {
         // Otherwise move up a line
         else {
             --currentLine;
-            linePos = currentLine->length() - 1;
+            linePos = (*currentLine)->length() - 1;
         }
     }
     // Otherwise we're not at the start of the line
@@ -27,6 +27,7 @@ void Cursor::moveLeft() {
         // If the line's length is less than linePos, update accordingly
         if (currentLine->length() - 1 < linePos) {
             linePos = currentLine->length() - 2;
+            currentLine
         }
         // otherwise decrement linePos by 1
         else {

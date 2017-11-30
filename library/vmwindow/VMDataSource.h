@@ -5,18 +5,18 @@
 #ifndef VM_VMDATASOURCE_H
 #define VM_VMDATASOURCE_H
 
-#include "DataSource.h"
+#include "../abstractions/DataSource.h"
 //#include <ostream>
 //#include <fstream>
 #include <list>
 #include <memory>
 
 class VMDataSource {
-    std::list<std::unique_ptr<Line>> lines;
+    std::list<std::unique_ptr<VMLine>> lines;
     std::string fileName;
 
-    using iterator = std::list::iterator;
-    using const_iterator = std::list::const_iterator;
+    using iterator = std::list<std::unique_ptr<VMLine>>::iterator;
+    using const_iterator = std::list<std::unique_ptr<VMLine>>::const_iterator;
 
 public:
 
@@ -26,8 +26,10 @@ public:
     void addChar(iterator it, size_t linePos, char c);
     void removeChar(iterator it, size_t linePos);
     void addLine(iterator it, const std::string &str);
-    void addLine(iterator it, std::unique_ptr<Line> line);
-    std::unique_ptr<Line> removeLine(iterator it);
+
+    void addLine(iterator it, std::unique_ptr<VMLine> line);
+
+    std::unique_ptr<VMLine> removeLine(iterator it);
 
     void saveFile();
     void saveFile(std::string fileName);
@@ -54,8 +56,8 @@ public:
     using iterator_tag = std::bidirectional_iterator_tag;
 
     bool operator!=(const iterator &other) const;
-    Line &operator*() const;
-    Line *operator->() const;
+    VMLine &operator*() const;
+    VMLine *operator->() const;
     iterator operator++();
     iterator operator--();
 

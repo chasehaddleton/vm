@@ -6,7 +6,7 @@
 #define VM_DATASOURCE_H
 
 #include <vector>
-#include "Line.h"
+#include "../vmwindow/VMLine.h"
 
 class DataSource {
 

@@ -8,7 +8,7 @@
 //#include "Model.h"
 #include <memory>
 #include "VMDataSource.h"
-#include "HistoryStack.h"
+#include "../abstractions/HistoryStack.h"
 
 class VMModel {
     VMDataSource ds;
@@ -25,7 +25,8 @@ public:
     void addChar(size_t linePos, char c);
     void removeChar(size_t linePos);
     void addLine(std::string);
-    void addLine(std::unique_ptr<Line> line);
+
+    void addLine(std::unique_ptr<VMLine> line);
     void removeLine();
     void undo();
     void redo();

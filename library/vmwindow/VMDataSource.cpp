@@ -3,10 +3,8 @@
 //
 
 #include <fstream>
-#include <stdexcept>
 #include <memory>
-#include "../abstractions/VMDataSource.h"
-#include "../abstractions/Line.h"
+#include "VMDataSource.h"
 
 VMDataSource::VMDataSource() = default;
 
@@ -20,7 +18,7 @@ VMDataSource::VMDataSource(const std::string &name): fileName{name} {
     // Otherwise read file
     else {
         while (std::getline(f, line)) {
-            lines.emplace_back(new Line(line));
+            lines.emplace_back(new VMLine(line));
         }
     }
     f.close();
@@ -38,12 +36,12 @@ void VMDataSource::removeChar(VMDataSource::iterator it, size_t linePos) {
 
 // Add a line at the given iterator position
 void VMDataSource::addLine(VMDataSource::iterator it, const std::string &s) {
-    lines.insert(it, std::make_unique<Line>(new Line(s)));
+    lines.insert(it, std::make_unique<VMLine>(new VMLine(s)));
 }
 
 // Remove a line at the given iterator position and return it
-std::unique_ptr<Line> VMDataSource::removeLine(VMDataSource::iterator it) {
-    std::unique_ptr<Line> tmp = *it;
+std::unique_ptr<VMLine> VMDataSource::removeLine(VMDataSource::iterator it) {
+    std::unique_ptr<VMLine> tmp = *it;
     lines.erase(it);
     return tmp;
 }
@@ -52,14 +50,15 @@ void VMDataSource::saveFile() {
     saveFile(fileName);
 }
 
-void VMDataSource::saveFile(std::string fileName) {
-    std::ofstream f(fileName);
+void VMDataSource::saveFile(std::string file) {
+    std::ofstream f(file);
     if (!f.failbit) {
         throw std::invalid_argument("ERROR WHILE TRYING TO SAVE FILE!");
     }
     else {
+        fileName = file;
         for (auto line:lines) {
-            f << *line;
+            f << *line << std::endl;
         }
     }
     f.close();
@@ -72,10 +71,10 @@ iterator VMDataSource::begin() { return lines.begin(); }
 iterator VMDataSource::end() { return lines.end(); }
 
 // Return a const iterator at the beginning of the DataSource
-const_iterator VMDataSource::cbegin() { return lines.cbegin(); }
+const_iterator VMDataSource::cbegin() const { return lines.cbegin(); }
 
 // Return a const iterator at the end of the DataSource
-const_iterator VMDataSource::cend() { return lines.cend(); }
+const_iterator VMDataSource::cend() const { return lines.cend(); }
 
 // Prints our DataSource to the provided output stream
 std::ostream &operator<<(std::ostream &out, VMDataSource &ds) {
@@ -93,9 +92,9 @@ VMDataSource::iterator::iterator(std::list::iterator inputIt) { it = inputIt; }
 
 bool VMDataSource::iterator::operator!=(const iterator &other) const { return *it != *other; }
 
-Line &VMDataSource::iterator::operator*() const { return *it; }
+VMLine &VMDataSource::iterator::operator*() const { return *it; }
 
-Line *VMDataSource::iterator::operator->() const { return &*it; }
+VMLine *VMDataSource::iterator::operator->() const { return &*it; }
 
 iterator VMDataSource::iterator::operator++() {
     ++it;
