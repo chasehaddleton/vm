@@ -13,7 +13,7 @@ VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
 	std::ifstream f{name};
 	std::string line;
 	// Check if failbit was set on ifstream
-	if (f.failbit) {
+	if (f.fail()) {
 		throw std::invalid_argument("No filename matching input!");
 	}
 		// Otherwise read file
@@ -53,7 +53,7 @@ void VMDataSource::saveFile() {
 
 void VMDataSource::saveFile(std::string file) {
 	std::ofstream f(file);
-	if (!f.failbit) {
+	if (f.fail()) {
 		throw std::invalid_argument("ERROR WHILE TRYING TO SAVE FILE!");
 	} else {
 		fileName = file;
