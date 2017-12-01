@@ -5,7 +5,7 @@
 #ifndef VM_DELETE_H
 #define VM_DELETE_H
 
-#include "../abstractions/command/Command.h"
+#include "../abstractions/command/CompositeCommand.h"
 #include <memory>
 #include <vector>
 
@@ -15,9 +15,10 @@ class DeleteMotion : public Command {
 public:
 	~DeleteMotion() override = default;
 
-	MatchType match(const std::string &s) const override;
+private:
+	void doExecute(const std::string &command) const override;
 
-	void execute(const std::string &command) const override;
+	MatchType doMatch(const std::string &s) const override;
 };
 
 

@@ -26,29 +26,29 @@ VMKeyboard::Iterator VMKeyboard::end() {
 	return Iterator{};
 }
 
-struct VMKeyboard::Key {
-	const int DOWN = KEY_DOWN;
-	const int UP = KEY_UP;
-	const int LEFT = KEY_LEFT;
-	const int RIGHT = KEY_RIGHT;
-	const int HOME = KEY_HOME;
-	const int BACKSPACE = KEY_BACKSPACE;
-	const int F0 = KEY_F0;
-	const int F1 = KEY_F(1); // TODO: define the rest of the functions keys
-	const int DELETE_LINE = KEY_DL;
-	const int INSERT_LINE = KEY_IL;
-	const int DELECT_CHARACTER = KEY_DC;
-	const int INSERT_CHARACTER = KEY_IC;
-	const int ENTER = KEY_ENTER;
-	const int CANCEL = KEY_CANCEL;
-	const int COMMAND = KEY_COMMAND;
-	const int END = KEY_END;
-	const int EXIT = KEY_EXIT;
-	const int REDO = KEY_REDO;
-	const int SAVE = KEY_SAVE;
-	const int UNDO = KEY_UNDO;
-	const int RESIZE = KEY_RESIZE;
-	const int ESCAPE = 27;
+const int VMKeyboard::Key::DOWN = KEY_DOWN;
+const int VMKeyboard::Key::UP = KEY_UP;
+const int VMKeyboard::Key::LEFT = KEY_LEFT;
+const int VMKeyboard::Key::RIGHT = KEY_RIGHT;
+const int VMKeyboard::Key::HOME = KEY_HOME;
+const int VMKeyboard::Key::BACKSPACE = KEY_BACKSPACE;
+const int VMKeyboard::Key::F0 = KEY_F0;
+const int VMKeyboard::Key::F1 = KEY_F(1); // TODO: define the rest of the functions keys
+const int VMKeyboard::Key::DELETE_LINE = KEY_DL;
+const int VMKeyboard::Key::INSERT_LINE = KEY_IL;
+const int VMKeyboard::Key::DELECT_CHARACTER = KEY_DC;
+const int VMKeyboard::Key::INSERT_CHARACTER = KEY_IC;
+const int VMKeyboard::Key::ENTER = KEY_ENTER;
+const int VMKeyboard::Key::CANCEL = KEY_CANCEL;
+const int VMKeyboard::Key::COMMAND = KEY_COMMAND;
+const int VMKeyboard::Key::END = KEY_END;
+const int VMKeyboard::Key::EXIT = KEY_EXIT;
+const int VMKeyboard::Key::REDO = KEY_REDO;
+const int VMKeyboard::Key::SAVE = KEY_SAVE;
+const int VMKeyboard::Key::UNDO = KEY_UNDO;
+const int VMKeyboard::Key::RESIZE = KEY_RESIZE;
+const int VMKeyboard::Key::ESCAPE = 27;
+const int VMKeyboard::Key::DELETE = KEY_DC;
 /*#define KEY_SF        0520        *//* scroll-forward key *//*
 #define KEY_SR        0521        *//* scroll-backward key *//*
 #define KEY_NPAGE    0522        *//* next-page key *//*
@@ -68,4 +68,3 @@ struct VMKeyboard::Key {
 #define KEY_OPTIONS    0561        *//* options key *//*
 #define KEY_PREVIOUS    0562        *//* previous key *//*
 #define KEY_RESUME    0570        *//* resume key */
-};

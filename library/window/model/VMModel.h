@@ -52,6 +52,8 @@ public:
 
 	Cursor &getCursor();
 
+	VMDataSource &getDataSource();
+
 };
 
 #endif //VM_VMMODEL_H

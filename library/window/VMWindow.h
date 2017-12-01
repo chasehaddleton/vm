@@ -17,12 +17,14 @@ class VMWindow {
 	VMKeyboard keyboard;
 	VMKeyboard::Iterator keyIt;
 	VMModel model;
-	Cursor cursor;
+	Cursor &cursor;
 	VMDisplay display;
 
 	int printStart = 0;
 
 public:
+	VMWindow();
+
 	explicit VMWindow(std::string fileName);
 
 	void run();

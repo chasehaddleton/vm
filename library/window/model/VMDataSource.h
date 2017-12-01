@@ -5,7 +5,8 @@
 #ifndef VM_VMDATASOURCE_H
 #define VM_VMDATASOURCE_H
 
-#include "../../abstractions/DataSource.h"
+//#include "../../abstractions/DataSource.h"
+#include "VMLine.h"
 #include <list>
 #include <memory>
 

@@ -56,7 +56,8 @@ std::string &VMLine::operator*() {
 }
 
 std::ostream &operator<<(std::ostream &out, VMLine l) {
-    out << l.line << std::endl;
+    out << *l << std::endl;
+	return out;
 }
 
 

@@ -14,7 +14,7 @@ class CompositeCommand : Command {
 	void doExecute(const std::string &command) const override;
 
 public:
-	~DeleteMotion() override = default;
+	~CompositeCommand() override = default;
 
 	MatchType match(const std::string &s) const override;
 
