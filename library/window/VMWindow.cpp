@@ -4,14 +4,15 @@
 
 #include "VMWindow.h"
 
-VMWindow::VMWindow() :  keyboard{}, keyIt{keyboard.begin()}, model{}, cursor{model.getCursor()},
-                        display{model.getDataSource(), cursor} {}
+VMWindow::VMWindow() : keyboard{}, keyIt{keyboard.begin()}, model{}, cursor{model.getCursor()},
+                       printStart{new int {0}}, display{model.getDataSource(), cursor, printStart} {}
 
 VMWindow::VMWindow(std::string fileName)
 		: keyboard{}, keyIt{keyboard.begin()}, model{fileName}, cursor{model.getCursor()},
-		  display{model.getDataSource(), cursor} {}
+		  printStart{new int {0}}, display{model.getDataSource(), cursor, printStart} {}
 
 void VMWindow::run() {
+	display.update();
 	int ch = *keyIt;
 
 	while (ch != 'q') {
@@ -32,17 +33,17 @@ bool VMWindow::handleInput(int ch) {
 	} else if (ch == VMKeyboard::key.RIGHT) {
 		cursor.moveRight();
 	} else if (ch == VMKeyboard::key.UP) {
-		if (cursor.getYPos() > 0 && cursor.getYPos() == printStart) {
+		if (cursor.getYPos() > 0 && cursor.getYPos() == *printStart) {
 			// printStart has room to move up
-			--printStart;
+			--(*printStart);
 		}
 
 		cursor.moveUp();
 	} else if (ch == VMKeyboard::key.DOWN) {
 		auto tmpIt = ++cursor.getIT();
 
-		if (tmpIt != model.end() && printStart + display.getYSize() - 1 == cursor.getYPos()) {
-			++printStart;
+		if (tmpIt != model.end() && *printStart + display.getYSize() - 1 == cursor.getYPos()) {
+			++(*printStart);
 		}
 
 		cursor.moveDown();

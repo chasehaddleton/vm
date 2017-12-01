@@ -4,6 +4,8 @@
 
 #include "Cursor.h"
 
+Cursor::Cursor(VMDataSource &ds) : ds{ds}, currentLine{ds.begin()} {}
+
 size_t Cursor::getXPos() { return xPos; }
 
 size_t Cursor::getYPos() { return yPos; }
@@ -73,5 +75,3 @@ void Cursor::moveDown() {
 		}
 	}
 }
-
-Cursor::Cursor(VMDataSource &ds) : ds{ds} {}

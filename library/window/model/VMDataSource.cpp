@@ -5,7 +5,9 @@
 #include <fstream>
 #include "VMDataSource.h"
 
-VMDataSource::VMDataSource() = default;
+VMDataSource::VMDataSource() {
+	lines.emplace_front(new VMLine(""));
+}
 
 VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
 	std::ifstream f{name};
