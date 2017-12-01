@@ -20,6 +20,7 @@ void VMWindow::run() {
 
 		++keyIt;
 		ch = *keyIt;
+		handleInput(ch);
 	}
 }
 

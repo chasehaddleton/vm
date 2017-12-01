@@ -12,31 +12,35 @@ size_t Cursor::getYPos() { return yPos; }
 
 VMDataSource::iterator Cursor::getIT() { return currentLine; }
 
-size_t Cursor::getLinePos() { return linePos; }
+size_t Cursor::getInsertPos() { return insertPos; }
 
 // TODO: Add alerts to all places marked alert
+
+// Moves the cursor left one space
 void Cursor::moveLeft() {
 	// If we're at the start of the line, we don't move left
-	if (linePos == 0) {
+	if (insertPos == 0) {
 		// Alert
 	}
 	else {
-		--linePos;
+		--insertPos;
 		--xPos;
 	}
 }
 
+// Move the cursor left one space
 void Cursor::moveRight() {
 	// If we're at the end of line, we don't move right
-	if (linePos == (*currentLine)->length() - 1) {
+	if (insertPos >= (rightOfEnd ? currentLine->length() : currentLine->length() - 1)) {
 		// ALERT
 	}
 	else {
-		++linePos;
+		++insertPos;
 		++xPos;
 	}
 }
 
+// Moves the cursor up one line
 void Cursor::moveUp() {
 	// If we're at the top, we don't move up
 	if (currentLine == ds.cbegin()) {
@@ -48,6 +52,7 @@ void Cursor::moveUp() {
 	}
 }
 
+// Moves the cursor down one line
 void Cursor::moveDown() {
 	// If we're at the bottom, we don't move down
 	if (currentLine == ds.cend()) {
@@ -57,4 +62,15 @@ void Cursor::moveDown() {
 		++currentLine;
 		++yPos;
 	}
+}
+
+// Allows the cursor to be positioned one space beyond the end of line
+void Cursor::allowRightOfEnd() {
+	rightOfEnd = true;
+}
+
+// Disables allowing the cursor to be positioned one space beyond the end of line
+//   Note: it is the responsibility of the caller to ensure
+void Cursor::disableRightOfEnd() {
+	rightOfEnd = false;
 }

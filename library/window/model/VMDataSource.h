@@ -11,11 +11,11 @@
 #include <memory>
 
 class VMDataSource {
-	std::list<std::unique_ptr<VMLine>> lines; // TODO: Evaluate whether to use unique_ptr or not
+	std::list<VMLine> lines;
     std::string fileName;
 public:
-	using iterator = std::list<std::unique_ptr<VMLine>>::iterator;
-	using const_iterator = std::list<std::unique_ptr<VMLine>>::const_iterator;
+	using iterator = std::list<VMLine>::iterator;
+	using const_iterator = std::list<VMLine>::const_iterator;
 
     VMDataSource();
     explicit VMDataSource(const std::string &file);
@@ -24,9 +24,9 @@ public:
     void removeChar(iterator it, size_t linePos);
     void addLine(iterator it, const std::string &str);
 
-    void addLine(iterator it, std::unique_ptr<VMLine> line);
+	void addLine(iterator it, VMLine line);
 
-    std::unique_ptr<VMLine> removeLine(iterator it);
+	VMLine removeLine(iterator it);
 
     void saveFile();
     void saveFile(std::string fileName);
@@ -40,23 +40,3 @@ public:
 std::ostream &operator<<(std::ostream &out, VMDataSource &ds);
 
 #endif //VM_VMDATASOURCE_H
-
-
-
-// SOME LEGACY CODE, DELETE BEFORE SUBMISSION!
-
-/*class iterator : DataSource::iterator {
-    std::list::iterator it;
-    explicit iterator(std::list::iterator inputIt);
-
-public:
-    using iterator_tag = std::bidirectional_iterator_tag;
-
-    bool operator!=(const iterator &other) const;
-    VMLine &operator*() const;
-    VMLine *operator->() const;
-    iterator operator++();
-    iterator operator--();
-
-    friend class VMDataSource;
-};*/

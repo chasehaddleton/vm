@@ -14,9 +14,10 @@
 class VMModel {
 	VMDataSource ds;
 	Cursor cursor;
-	// TO DO:
+	// TODO: Implement History
 	// HistoryStack undoStack;
 	// HistoryStack redoStack;
+	// TODO: Implement StatusBar
 	// InfoBar statusBar;
 
 public:
@@ -30,9 +31,13 @@ public:
 
 	void removeChar(size_t linePos);
 
+	void removeWord();
+
+	void addWord(std::string);
+
 	void addLine(std::string);
 
-	void addLine(std::unique_ptr<VMLine> line);
+	void addLine(VMLine line);
 
 	void removeLine();
 

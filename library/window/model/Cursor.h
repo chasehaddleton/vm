@@ -14,7 +14,8 @@ class Cursor {
 
 	size_t xPos{0};
 	size_t yPos{0};
-	size_t linePos{0};
+	size_t insertPos{0};
+	bool rightOfEnd{false};
 
 public:
 	explicit Cursor(VMDataSource &ds);
@@ -25,7 +26,7 @@ public:
 
 	VMDataSource::iterator getIT();
 
-	size_t getLinePos();
+	size_t getInsertPos();
 
 	void moveLeft();
 
@@ -34,6 +35,10 @@ public:
 	void moveUp();
 
 	void moveDown();
+
+	void allowRightOfEnd();
+
+	void disableRightOfEnd();
 };
 
 #endif //VM_CURSOR_H

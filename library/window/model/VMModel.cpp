@@ -9,12 +9,12 @@ VMModel::VMModel() : ds{}, cursor{ds} {};
 VMModel::VMModel(const std::string &fileName) : ds{fileName}, cursor{ds} {}
 
 void VMModel::addChar(size_t linePos, char c) {
-	ds.addChar(cursor.getIT(), cursor.getLinePos(), c);
+	ds.addChar(cursor.getIT(), cursor.getInsertPos(), c);
 	cursor.moveDown();
 }
 
 void VMModel::removeChar(size_t linePos) {
-	ds.removeChar(cursor.getIT(), cursor.getLinePos());
+	ds.removeChar(cursor.getIT(), cursor.getInsertPos());
 	cursor.moveUp();
 }
 
