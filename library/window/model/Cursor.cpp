@@ -12,66 +12,65 @@ size_t Cursor::getYPos() { return yPos; }
 
 VMDataSource::iterator Cursor::getIT() { return currentLine; }
 
-size_t Cursor::getLinePos() { return linePos; }
+size_t Cursor::getInsertPos() { return insertPos; }
 
-// TODO: Look at VMWindow.handleInput() for ideas on how to do this + edge handling (it works)_
+// TODO: Add alerts to all places marked alert
+
+// Moves the cursor left one space
 void Cursor::moveLeft() {
-	// If we're at the start of the line
-	if (linePos == 0) {
-		// If we're at the start of the data, cursor should not move
-		if (currentLine == ds.cbegin()) {
-			// TO DO: SOME KIND OF NOTIFICATION!
-		}
-			// Otherwise move up a line
-		else {
-			--currentLine;
-			linePos = (*currentLine)->length() - 1;
-		}
+	// If we're at the start of the line, we don't move left
+	if (insertPos == 0) {
+		// Alert
 	}
-		// Otherwise we're not at the start of the line
 	else {
-		// If the line's length is less than linePos, update accordingly
-		if ((*currentLine)->length() - 1 < linePos) {
-			linePos = (*currentLine)->length() - 2;
-		}
-			// otherwise decrement linePos by 1
-		else {
-			--linePos;
-		}
+		--insertPos;
+		--xPos;
 	}
 }
 
+// Move the cursor left one space
 void Cursor::moveRight() {
-	// If we're at the start of the line
-	if (linePos == (*currentLine)->length() - 1) {
-		// If we're at the end of the data, cursor should not move
-		if (currentLine == ds.cend()) {
-			// TO DO: SOME KIND OF NOTIFICATION!
-		}
-			// Otherwise move down a line
-		else {
-			++currentLine;
-			linePos = 0;
-		}
+	// If we're at the end of line, we don't move right
+	if (insertPos >= (rightOfEnd ? currentLine->length() : currentLine->length() - 1)) {
+		// ALERT
 	}
-		// Otherwise we're not at the start of the line
 	else {
-		++linePos;
+		++insertPos;
+		++xPos;
 	}
 }
 
+// Moves the cursor up one line
 void Cursor::moveUp() {
-	// TODO: WRITE ME!
+	// If we're at the top, we don't move up
+	if (currentLine == ds.cbegin()) {
+		// ALERT
+	}
+	else {
+		--currentLine;
+		--yPos;
+	}
 }
 
+// Moves the cursor down one line
 void Cursor::moveDown() {
-	if (currentLine != ds.cend()) {
-		++yPos;
-		++currentLine;
-
-		if ((*currentLine)->length() < xPos) {
-			xPos = (*currentLine)->length() - 1;
-			// TODO: Make this safe if line is length 0 in unsighned
-		}
+	// If we're at the bottom, we don't move down
+	if (currentLine == ds.cend()) {
+		// ALERT
 	}
+	else {
+		++currentLine;
+		++yPos;
+	}
+}
+
+// Allows the cursor to be positioned one space beyond the end of line
+void Cursor::allowRightOfEnd() {
+	rightOfEnd = true;
+}
+
+// Disables allowing the cursor to be positioned one space beyond the end of line
+//   Note: it is the responsibility of the caller to ensure
+void Cursor::disableRightOfEnd() {
+	rightOfEnd = false;
 }

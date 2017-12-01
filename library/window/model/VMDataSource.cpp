@@ -6,7 +6,7 @@
 #include "VMDataSource.h"
 
 VMDataSource::VMDataSource() {
-	lines.emplace_front(new VMLine(""));
+	lines.emplace_front("");
 }
 
 VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
@@ -19,7 +19,7 @@ VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
 		// Otherwise read file
 	else {
 		while (std::getline(f, line)) {
-			lines.emplace_back(new VMLine(line));
+			lines.emplace_back(line);
 		}
 	}
 	f.close();
@@ -27,22 +27,22 @@ VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
 
 // Add a character to the line pointed to by iterator at the given position
 void VMDataSource::addChar(VMDataSource::iterator it, size_t linePos, char c) {
-	(*it)->addChar(linePos, c);
+	it->addChar(linePos, c);
 }
 
-// Remove the character at linePos in line pointed to by iterator
+// Remove the character at insertPos in line pointed to by iterator
 void VMDataSource::removeChar(VMDataSource::iterator it, size_t linePos) {
-	(*it)->removeChar(linePos);
+	it->removeChar(linePos);
 }
 
 // Add a line at the given iterator position
 void VMDataSource::addLine(VMDataSource::iterator it, const std::string &s) {
-	lines.insert(it, std::unique_ptr<VMLine>{new VMLine(s)});
+	lines.insert(it, VMLine(s));
 }
 
 // Remove a line at the given iterator position and return it
-std::unique_ptr<VMLine> VMDataSource::removeLine(VMDataSource::iterator it) {
-	std::unique_ptr<VMLine> tmp{(*it).release()};
+VMLine VMDataSource::removeLine(VMDataSource::iterator it) {
+	VMLine tmp{std::move(*it)};
 	lines.erase(it);
 	return tmp;
 }
@@ -83,34 +83,3 @@ std::ostream &operator<<(std::ostream &out, VMDataSource &ds) {
 	}
 	return out;
 }
-
-
-
-// SOME LEGACY CODE, DELETE BEFORE SUBMISSION!
-/*
-VMDataSource::iterator::iterator(std::list::iterator inputIt) { it = inputIt; }
-
-bool VMDataSource::iterator::operator!=(const iterator &other) const { return *it != *other; }
-
-VMLine &VMDataSource::iterator::operator*() const { return *it; }
-
-VMLine *VMDataSource::iterator::operator->() const { return &*it; }
-
-iterator VMDataSource::iterator::operator++() {
-    ++it;
-    return *this;
-}
-
-iterator VMDataSource::iterator::operator--() {
-    --it;
-    return *this;
-}
-
-
-iterator VMDataSource::createEnd() {
-    VMDataSource::iterator(lines.begin());
-}
-
-iterator VMDataSource::createBegin() {
-    VMDataSource::iterator(lines.end());
-}*/

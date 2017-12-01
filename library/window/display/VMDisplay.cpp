@@ -3,7 +3,6 @@
 //
 
 #include "VMDisplay.h"
-#include <ncurses.h>
 
 void VMDisplay::init() {
 	initscr();
@@ -57,10 +56,10 @@ void VMDisplay::doUpdate() {
 
 	for (int i = 0; i < ySize; ++i) {
 		if (it != ds.end()) {
-			print(***it, i);
+			print(**it, i);
 
-			if ((*it)->size() > xSize) {
-				if ((i - longLineSkip) < cursor.getLinePos()) {
+			if (it->size() > xSize) {
+				if ((i - longLineSkip) < cursor.getYPos()) {
 					++longLineSkip;
 				}
 				++i;
