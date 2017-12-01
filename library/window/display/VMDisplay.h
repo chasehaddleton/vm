@@ -32,7 +32,7 @@ class VMDisplay : public Display {
 
 public:
 
-	VMDisplay(dataType &ds, Cursor &c);
+	VMDisplay(dataType &ds, Cursor &c, std::shared_ptr<int> printStart);
 
 	~VMDisplay();
 

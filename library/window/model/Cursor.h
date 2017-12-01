@@ -9,11 +9,12 @@
 #include "VMDataSource.h"
 
 class Cursor {
+	const VMDataSource &ds;
+	VMDataSource::iterator currentLine;
+
 	size_t xPos{0};
 	size_t yPos{0};
-	VMDataSource::iterator currentLine;
 	size_t linePos{0};
-	const VMDataSource &ds;
 
 public:
 	explicit Cursor(VMDataSource &ds);

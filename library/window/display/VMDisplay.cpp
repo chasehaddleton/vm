@@ -19,7 +19,8 @@ void VMDisplay::end() {
 	endwin();
 }
 
-VMDisplay::VMDisplay(VMDisplay::dataType &ds, Cursor &c) : ds{ds}, cursor{c} {
+VMDisplay::VMDisplay(VMDisplay::dataType &ds, Cursor &c, std::shared_ptr<int> printStart)
+		: ds{ds}, cursor{c}, printStart{std::move(printStart)} {
 	init();
 }
 
@@ -57,6 +58,7 @@ void VMDisplay::doUpdate() {
 	for (int i = 0; i < ySize; ++i) {
 		if (it != ds.end()) {
 			print(***it, i);
+
 			if ((*it)->size() > xSize) {
 				if ((i - longLineSkip) < cursor.getLinePos()) {
 					++longLineSkip;

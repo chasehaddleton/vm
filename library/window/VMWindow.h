@@ -18,9 +18,8 @@ class VMWindow {
 	VMKeyboard::Iterator keyIt;
 	VMModel model;
 	Cursor &cursor;
+	std::shared_ptr<int> printStart;
 	VMDisplay display;
-
-	int printStart = 0;
 
 public:
 	VMWindow();
