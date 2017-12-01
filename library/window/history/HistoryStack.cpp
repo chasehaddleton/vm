@@ -9,7 +9,7 @@ void HistoryStack::push(std::shared_ptr<HistoryFrame> &frame) {
 }
 
 std::shared_ptr<HistoryFrame> HistoryStack::pop() {
-    std::shared_ptr tmp = history.top();
+    std::shared_ptr<HistoryFrame> tmp{std::move(history.top())};
     history.pop();
     return tmp;
 }

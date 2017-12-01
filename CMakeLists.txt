@@ -7,10 +7,8 @@ include_directories(${CURSES_INCLUDE_DIR})
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS -Wall)
 
-set(SOURCE_FILES vm.cpp library/window/display/VMDisplay.cpp library/window/display/VMDisplay.h library/Point.h library/abstractions/command/Command.h
-        library/abstractions/command/Command.cpp library/MatchType.h library/commands/DeleteMotion.cpp library/commands/DeleteMotion.h
-        library/abstractions/command/CompositeCommand.cpp library/abstractions/command/CompositeCommand.h library/commands/Delete.cpp
-        library/commands/Delete.h library/commands/Macro.cpp library/commands/Macro.h library/abstractions/Subscribeable.h
+set(SOURCE_FILES vm.cpp library/window/display/VMDisplay.cpp library/window/display/VMDisplay.h library/MatchType.h
+        library/abstractions/Subscribeable.h
         library/abstractions/Undoable.h library/abstractions/Model.h
         library/abstractions/Display.h library/window/model/VMModel.cpp library/window/model/VMLine.h
         library/window/history/HistoryStack.h library/window/history/HistoryFrame.h library/window/model/VMLine.cpp

@@ -4,10 +4,9 @@
 
 #include "VMModel.h"
 
-VMModel::VMModel() = default;
+VMModel::VMModel() : ds{}, cursor{ds} {};
 
-VMModel::VMModel(const std::string &fileName) : ds{fileName} {
-}
+VMModel::VMModel(const std::string &fileName) : ds{fileName}, cursor{ds} {}
 
 void VMModel::addChar(size_t linePos, char c) {
 	ds.addChar(cursor.getIT(), cursor.getLinePos(), c);

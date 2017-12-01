@@ -7,60 +7,59 @@
 
 VMDataSource::VMDataSource() = default;
 
-VMDataSource::VMDataSource(const std::string &name): fileName{name} {
-    std::ifstream f{name};
-    std::string line;
-    // Check if failbit was set on ifstream
-    if (f.failbit) {
-        throw std::invalid_argument("No filename matching input!");
-    }
-    // Otherwise read file
-    else {
-        while (std::getline(f, line)) {
-            lines.emplace_back(new VMLine(line));
-        }
-    }
-    f.close();
+VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
+	std::ifstream f{name};
+	std::string line;
+	// Check if failbit was set on ifstream
+	if (f.failbit) {
+		throw std::invalid_argument("No filename matching input!");
+	}
+		// Otherwise read file
+	else {
+		while (std::getline(f, line)) {
+			lines.emplace_back(new VMLine(line));
+		}
+	}
+	f.close();
 }
 
 // Add a character to the line pointed to by iterator at the given position
 void VMDataSource::addChar(VMDataSource::iterator it, size_t linePos, char c) {
-    it->addChar(linePos, c);
+	(*it)->addChar(linePos, c);
 }
 
 // Remove the character at linePos in line pointed to by iterator
 void VMDataSource::removeChar(VMDataSource::iterator it, size_t linePos) {
-    it->removeChar(linePos);
+	(*it)->removeChar(linePos);
 }
 
 // Add a line at the given iterator position
 void VMDataSource::addLine(VMDataSource::iterator it, const std::string &s) {
-    lines.insert(it, std::make_unique<VMLine>(new VMLine(s)));
+	lines.insert(it, std::make_unique<VMLine>(new VMLine(s)));
 }
 
 // Remove a line at the given iterator position and return it
 std::unique_ptr<VMLine> VMDataSource::removeLine(VMDataSource::iterator it) {
-    std::unique_ptr<VMLine> tmp = *it;
-    lines.erase(it);
-    return tmp;
+	std::unique_ptr<VMLine> tmp{*it};
+	lines.erase(it);
+	return tmp;
 }
 
 void VMDataSource::saveFile() {
-    saveFile(fileName);
+	saveFile(fileName);
 }
 
 void VMDataSource::saveFile(std::string file) {
-    std::ofstream f(file);
-    if (!f.failbit) {
-        throw std::invalid_argument("ERROR WHILE TRYING TO SAVE FILE!");
-    }
-    else {
-        fileName = file;
-        for (auto line:lines) {
-            f << *line << std::endl;
-        }
-    }
-    f.close();
+	std::ofstream f(file);
+	if (!f.failbit) {
+		throw std::invalid_argument("ERROR WHILE TRYING TO SAVE FILE!");
+	} else {
+		fileName = file;
+		for (auto &line:lines) {
+			f << *line << std::endl;
+		}
+	}
+	f.close();
 }
 
 // Return an iterator at the beginning of DataSource
@@ -77,10 +76,10 @@ const_iterator VMDataSource::cend() const { return lines.cend(); }
 
 // Prints our DataSource to the provided output stream
 std::ostream &operator<<(std::ostream &out, VMDataSource &ds) {
-    for (auto line:ds) {
-        out << line;
-    }
-    return out;
+	for (auto line:ds) {
+		out << *line;
+	}
+	return out;
 }
 
 

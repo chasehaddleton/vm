@@ -7,8 +7,6 @@
 
 #include "../../MatchType.h"
 #include <string>
-#include "../../Point.h"
-#include "../display/VMDisplay.h"
 
 class Command {
 	virtual void doExecute(const std::string &command) const = 0;
@@ -16,7 +14,6 @@ class Command {
 	virtual MatchType doMatch(const std::string &s) const = 0;
 
 public:
-
 
 	virtual ~Command() = default;
 

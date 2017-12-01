@@ -15,7 +15,5 @@ void HistoryFrame::pushOldLine(std::string s) {
 }
 
 void HistoryFrame::invert() {
-    std::unique_ptr<std::vector<std::string>> tmp = oldLines.release();
-    oldLines = newLines.release();
-    newLines = tmp.release();
+    std::swap(oldLines, newLines);
 }
