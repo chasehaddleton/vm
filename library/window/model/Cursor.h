@@ -11,22 +11,28 @@
 class Cursor {
 	size_t xPos{0};
 	size_t yPos{0};
-    VMDataSource::iterator currentLine;
+	VMDataSource::iterator currentLine;
 	size_t linePos{0};
-    const VMDataSource& ds;
+	const VMDataSource &ds;
 
 public:
 	explicit Cursor(VMDataSource &ds);
 
-    size_t getXPos();
-    size_t getYPos();
-    VMDataSource::iterator getIT();
-    size_t getLinePos();
+	size_t getXPos();
 
-    void moveLeft();
-    void moveRight();
-    void moveUp();
-    void moveDown();
+	size_t getYPos();
+
+	VMDataSource::iterator getIT();
+
+	size_t getLinePos();
+
+	void moveLeft();
+
+	void moveRight();
+
+	void moveUp();
+
+	void moveDown();
 };
 
 #endif //VM_CURSOR_H

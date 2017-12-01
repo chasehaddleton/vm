@@ -50,3 +50,7 @@ VMDataSource::iterator VMModel::end() {
 Cursor &VMModel::getCursor() {
 	return cursor;
 }
+
+VMDataSource &VMModel::getDataSource() {
+	return ds;
+}

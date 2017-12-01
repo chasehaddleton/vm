@@ -35,12 +35,12 @@ void VMDataSource::removeChar(VMDataSource::iterator it, size_t linePos) {
 
 // Add a line at the given iterator position
 void VMDataSource::addLine(VMDataSource::iterator it, const std::string &s) {
-	lines.insert(it, std::make_unique<VMLine>(new VMLine(s)));
+	lines.insert(it, std::unique_ptr<VMLine>{new VMLine(s)});
 }
 
 // Remove a line at the given iterator position and return it
 std::unique_ptr<VMLine> VMDataSource::removeLine(VMDataSource::iterator it) {
-	std::unique_ptr<VMLine> tmp{*it};
+	std::unique_ptr<VMLine> tmp{(*it).release()};
 	lines.erase(it);
 	return tmp;
 }
@@ -63,20 +63,20 @@ void VMDataSource::saveFile(std::string file) {
 }
 
 // Return an iterator at the beginning of DataSource
-iterator VMDataSource::begin() { return lines.begin(); }
+VMDataSource::iterator VMDataSource::begin() { return lines.begin(); }
 
 // Return an iterator at the end of DataSource
-iterator VMDataSource::end() { return lines.end(); }
+VMDataSource::iterator VMDataSource::end() { return lines.end(); }
 
 // Return a const iterator at the beginning of the DataSource
-const_iterator VMDataSource::cbegin() const { return lines.cbegin(); }
+VMDataSource::const_iterator VMDataSource::cbegin() const { return lines.cbegin(); }
 
 // Return a const iterator at the end of the DataSource
-const_iterator VMDataSource::cend() const { return lines.cend(); }
+VMDataSource::const_iterator VMDataSource::cend() const { return lines.cend(); }
 
 // Prints our DataSource to the provided output stream
 std::ostream &operator<<(std::ostream &out, VMDataSource &ds) {
-	for (auto line:ds) {
+	for (auto &line:ds) {
 		out << *line;
 	}
 	return out;

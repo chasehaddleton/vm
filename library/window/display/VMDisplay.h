@@ -14,7 +14,7 @@
 #include "../model/Cursor.h"
 
 class VMDisplay : public Display {
-	using dataType = VMModel;
+	using dataType = VMModel::dataSource;
 	using dataTypeIt = VMModel::dataSource::iterator;
 
 	dataType &ds;
