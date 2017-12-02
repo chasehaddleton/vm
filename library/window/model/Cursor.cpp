@@ -28,10 +28,10 @@ void Cursor::moveLeft() {
 		// ALERT
 	}
 	else {
-		--currentLetter;
-		--insertPos;
 		xPos -= currentLetter->getWidth();
 		globalXPos = xPos;
+		--currentLetter;
+		--insertPos;
 	}
 }
 
@@ -45,10 +45,10 @@ void Cursor::moveRight() {
 		// ALERT
 	}
 	else {
-		xPos += currentLetter->getWidth();
-		globalXPos = xPos;
 		++currentLetter;
 		++insertPos;
+		xPos += currentLetter->getWidth();
+		globalXPos = xPos;
 	}
 }
 
@@ -77,24 +77,27 @@ void Cursor::moveDown() {
 	}
 }
 
+// Updates the horizontal position of the cursor
 void Cursor::updateHorizontalPos() {
 	// Our position is the lesser of our global xPos or the length of the newLine
 	size_t currentLineWidth = currentLine->lineWidth();
+	size_t tempPos;
 	if (rightOfEnd) {
-		xPos = std::min(globalXPos, currentLineWidth);
+		tempPos = std::min(globalXPos, currentLineWidth);
 	}
 	else if (currentLineWidth == 0) {
-		xPos = 0;
+		tempPos = 0;
 	}
 	else {
-		xPos = std::min(globalXPos, currentLineWidth - 1);
+		tempPos = std::min(globalXPos, currentLineWidth - 1);
 	}
 	currentLetter = currentLine->begin();
 	insertPos = 0;
-	while (currentLetter->getStartPos() + currentLetter->getWidth() <= xPos) {
+	while (currentLetter->getStartPos() + currentLetter->getWidth() <= tempPos) {
 		++currentLetter;
 		++insertPos;
 	}
+	xPos = currentLetter->getStartPos() + currentLetter->getWidth() - 1;
 }
 
 // Allows the cursor to be positioned one space beyond the end of line
