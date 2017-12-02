@@ -13,11 +13,11 @@ class Cursor {
 	VMDataSource::iterator currentLine;
 	VMLine::iterator currentLetter;
 
-	size_t xPos{0};
-	size_t yPos{0};
-	size_t globalXPos{0};
-	size_t insertPos{0};
-	bool rightOfEnd{false};
+	size_t xPos;
+	size_t yPos;
+	size_t globalXPos;
+	size_t insertPos;
+	bool rightOfEnd;
 
 	void updateHorizontalPos();
 

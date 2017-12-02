@@ -4,7 +4,8 @@
 
 #include "Cursor.h"
 
-Cursor::Cursor(VMDataSource &ds) : ds{ds}, currentLine{ds.begin()} {}
+Cursor::Cursor(VMDataSource &ds) : ds{ds}, currentLine{ds.begin()}, currentLetter{currentLine->begin()},
+                                   xPos{0}, yPos{0}, globalXPos{0}, insertPos{0}, rightOfEnd{false} {}
 
 // returns the x position
 size_t Cursor::getXPos() { return xPos; }
@@ -23,7 +24,7 @@ size_t Cursor::getInsertPos() { return std::min(insertPos, currentLine->length()
 // Moves the cursor left one space
 void Cursor::moveLeft() {
 	// If we're at the start of the line, we don't move left
-	if (insertPos == 0) {
+	if (xPos == 0) {
 		// ALERT
 	}
 	else {
@@ -38,8 +39,9 @@ void Cursor::moveLeft() {
 void Cursor::moveRight() {
 	// If we're at the end of line, we don't move right
 	// TODO: make this if statement nicer if possible
-	if (insertPos >= (rightOfEnd ? currentLine->length()
-	                             : (currentLine->length() == 0 ? 0 : currentLine->length() - 1))) {
+	size_t currentLineWidth = currentLine->lineWidth();
+	if (xPos >= (rightOfEnd ? currentLineWidth
+	                        : (currentLineWidth == 0 ? 0 : currentLineWidth - 1))) {
 		// ALERT
 	}
 	else {
@@ -65,8 +67,7 @@ void Cursor::moveUp() {
 
 // Moves the cursor down one line
 void Cursor::moveDown() {
-	// If we're at the bottom, we don't move down
-	if (currentLine == ds.cend()) {
+	if (currentLine == --ds.cend()) {
 		// ALERT
 	}
 	else {
@@ -78,8 +79,16 @@ void Cursor::moveDown() {
 
 void Cursor::updateHorizontalPos() {
 	// Our position is the lesser of our global xPos or the length of the newLine
-	xPos = (rightOfEnd ? std::min(globalXPos, currentLine->length())
-	                   : std::min(globalXPos, currentLine->length() - 1));
+	size_t currentLineWidth = currentLine->lineWidth();
+	if (rightOfEnd) {
+		xPos = std::min(globalXPos, currentLineWidth);
+	}
+	else if (currentLineWidth == 0) {
+		xPos = 0;
+	}
+	else {
+		xPos = std::min(globalXPos, currentLineWidth - 1);
+	}
 	currentLetter = currentLine->begin();
 	insertPos = 0;
 	while (currentLetter->getStartPos() + currentLetter->getWidth() <= xPos) {

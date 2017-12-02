@@ -116,10 +116,19 @@ size_t VMLine::tabCount(size_t pos) {
 }
 
 // returns the sum of the widths of the line
-size_t VMLine::length() {
+size_t VMLine::lineWidth() {
     size_t count = 0;
-    for (auto &c: line) { count += c.getWidth(); }
-    return line.size();
+	if (!line.empty()) {
+		for (auto &c: line) {
+			count += c.getWidth();
+		}
+	}
+	return count;
+}
+
+// returns teh nubmer of elements in the line
+size_t VMLine::length() {
+	return line.size();
 }
 
 // returns the number of elements in the line

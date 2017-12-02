@@ -28,8 +28,9 @@ public:
 	void addChar(VMLine::iterator &it, char c);         // inserts the given character at the iterator position
 	void removeChar(VMLine::const_iterator &it);        // removes the character at the given position
 	void replaceChar(VMLine::iterator &it, char c);     // replaces the character at the given position
-	size_t length();                // returns the sum of the widths of the elements in the line
-	size_t size();                  // returns the number of the elements in the line
+	size_t lineWidth();             // returns the sum of the widths of the elements in the line
+	size_t length();                // returns the number of elements in the line
+	size_t size();                  // returns the number of elements in the line
 	std::string toString();         // returns line as a string
 	std::string operator*();        // apparently, also returns line as a string (WHY CHASE? WHY?!)
 
