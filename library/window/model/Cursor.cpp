@@ -6,13 +6,17 @@
 
 Cursor::Cursor(VMDataSource &ds) : ds{ds}, currentLine{ds.begin()} {}
 
+// returns the x position
 size_t Cursor::getXPos() { return xPos; }
 
+// returns the y position
 size_t Cursor::getYPos() { return yPos; }
 
+// returns (a copy of?) the Cursor's DataSource iterator
 VMDataSource::iterator Cursor::getIT() { return currentLine; }
 
-size_t Cursor::getInsertPos() { return insertPos; }
+// Returns the lesser of the insertion position or the end of the line
+size_t Cursor::getInsertPos() { return std::min(insertPos, currentLine->length()); }
 
 // TODO: Add alerts to all places marked alert
 
@@ -20,26 +24,37 @@ size_t Cursor::getInsertPos() { return insertPos; }
 void Cursor::moveLeft() {
 	// If we're at the start of the line, we don't move left
 	if (insertPos == 0) {
-		// Alert
+		// ALERT
 	}
 	else {
+		if ((**currentLine)[insertPos - 1] == '\t') {
+			xPos -= xPos % 8;
+		}
+		else {
+			--xPos;
+		}
 		--insertPos;
-		--xPos;
+		// If our insertion position is past the end of the line update the insertion position
+		if (insertPos > xPos) { insertPos = xPos; }
 	}
 }
 
 // Move the cursor left one space
 void Cursor::moveRight() {
 	// If we're at the end of line, we don't move right
-	if (insertPos + 1 <= (rightOfEnd ? currentLine->length() : currentLine->length() - 1)) {
+	if (insertPos >= (rightOfEnd ? currentLine->length() : currentLine->length() - 1)) {
 		// ALERT
 	}
 	else {
+		// If the character we're moving over is a tab, we move by 4 spaces
+		if ((**currentLine)[insertPos] == '\t') {
+			xPos += 8 - xPos % 8;
+		}
+		else {
+			++xPos;
+		}
 		++insertPos;
-		++xPos;
 	}
-
-	std::cout << xPos << std::flush;
 }
 
 // Moves the cursor up one line
@@ -51,6 +66,9 @@ void Cursor::moveUp() {
 	else {
 		--currentLine;
 		--yPos;
+		// If our new line is shorter than the line we came from, our position on the line cannot be past it
+		xPos = (rightOfEnd ? std::min(insertPos, currentLine->length())
+		                   : std::min(insertPos, currentLine->length() - 1));
 	}
 }
 
@@ -63,6 +81,9 @@ void Cursor::moveDown() {
 	else {
 		++currentLine;
 		++yPos;
+		// If our new line is shorter than the line we came from, our position on the line cannot be past it
+		xPos = (rightOfEnd ? std::min(insertPos, currentLine->length())
+		                   : std::min(insertPos, currentLine->length() - 1));
 	}
 }
 
@@ -72,7 +93,6 @@ void Cursor::allowRightOfEnd() {
 }
 
 // Disables allowing the cursor to be positioned one space beyond the end of line
-//   Note: it is the responsibility of the caller to ensure
 void Cursor::disableRightOfEnd() {
 	rightOfEnd = false;
 }

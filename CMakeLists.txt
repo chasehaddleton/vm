@@ -17,6 +17,6 @@ set(SOURCE_FILES vm.cpp library/window/display/VMDisplay.cpp library/window/disp
         library/window/history/HistoryFrame.cpp library/window/history/HistoryStack.cpp
         library/window/VMWindow.h library/window/VMWindow.cpp library/window/model/Cursor.h
         library/window/model/Cursor.cpp library/input/VMKeyboard.cpp library/input/VMKeyboard.h library/ModeType.h
-        library/abstractions/Event.h library/events/VMStateChange.cpp library/events/VMStateChange.h)
+        library/abstractions/Event.h library/events/VMStateChange.cpp library/events/VMStateChange.h library/window/model/VMChar.h library/window/model/VMChar.cpp)
 add_executable(vm ${SOURCE_FILES})
 target_link_libraries(vm ${CURSES_LIBRARIES})
