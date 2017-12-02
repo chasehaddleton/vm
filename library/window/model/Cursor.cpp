@@ -42,7 +42,9 @@ void Cursor::moveLeft() {
 // Move the cursor left one space
 void Cursor::moveRight() {
 	// If we're at the end of line, we don't move right
-	if (insertPos >= (rightOfEnd ? currentLine->length() : currentLine->length() - 1)) {
+	// TODO: make this if statement nicer if possible
+	if (insertPos >= (rightOfEnd ? currentLine->length()
+	                             : (currentLine->length() == 0 ? 0 : currentLine->length() - 1))) {
 		// ALERT
 	}
 	else {

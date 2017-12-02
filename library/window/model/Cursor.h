@@ -11,6 +11,7 @@
 class Cursor {
 	const VMDataSource &ds;
 	VMDataSource::iterator currentLine;
+	VMLine::iterator currentLetter;
 
 	size_t xPos{0};
 	size_t yPos{0};
