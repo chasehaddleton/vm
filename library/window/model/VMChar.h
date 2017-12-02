@@ -17,7 +17,7 @@ public:
 	VMChar() = default;
 
 	//VMChar(char c, int colour, unsigned char width);
-	VMChar(char c, int colour, size_t startPos, unsigned char width,);
+	VMChar(char c, int colour, size_t startPos, unsigned char width);
 
 	char getChar();
 

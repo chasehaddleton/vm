@@ -27,15 +27,10 @@ void Cursor::moveLeft() {
 		// ALERT
 	}
 	else {
-		if ((**currentLine)[insertPos - 1] == '\t') {
-			xPos -= xPos % 8;
-		}
-		else {
-			--xPos;
-		}
+		--currentLetter;
 		--insertPos;
-		// If our insertion position is past the end of the line update the insertion position
-		if (insertPos > xPos) { insertPos = xPos; }
+		xPos -= currentLetter->getWidth();
+		globalXPos = xPos;
 	}
 }
 
@@ -48,13 +43,9 @@ void Cursor::moveRight() {
 		// ALERT
 	}
 	else {
-		// If the character we're moving over is a tab, we move by 4 spaces
-		if ((**currentLine)[insertPos] == '\t') {
-			xPos += 8 - xPos % 8;
-		}
-		else {
-			++xPos;
-		}
+		xPos += currentLetter->getWidth();
+		globalXPos = xPos;
+		++currentLetter;
 		++insertPos;
 	}
 }
@@ -68,9 +59,7 @@ void Cursor::moveUp() {
 	else {
 		--currentLine;
 		--yPos;
-		// If our new line is shorter than the line we came from, our position on the line cannot be past it
-		xPos = (rightOfEnd ? std::min(insertPos, currentLine->length())
-		                   : std::min(insertPos, currentLine->length() - 1));
+		updateHorizontalPos();
 	}
 }
 
@@ -83,9 +72,19 @@ void Cursor::moveDown() {
 	else {
 		++currentLine;
 		++yPos;
-		// If our new line is shorter than the line we came from, our position on the line cannot be past it
-		xPos = (rightOfEnd ? std::min(insertPos, currentLine->length())
-		                   : std::min(insertPos, currentLine->length() - 1));
+		updateHorizontalPos();
+	}
+}
+
+void Cursor::updateHorizontalPos() {
+	// Our position is the lesser of our global xPos or the length of the newLine
+	xPos = (rightOfEnd ? std::min(globalXPos, currentLine->length())
+	                   : std::min(globalXPos, currentLine->length() - 1));
+	currentLetter = currentLine->begin();
+	insertPos = 0;
+	while (currentLetter->getStartPos() + currentLetter->getWidth() <= xPos) {
+		++currentLetter;
+		++insertPos;
 	}
 }
 

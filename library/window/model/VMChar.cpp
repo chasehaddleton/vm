@@ -6,8 +6,8 @@
 
 //VMChar::VMChar(char c, int colour, unsigned char width) : c{c}, colour{colour}, width{width} {}
 
-VMChar::VMChar(char c, int colour, unsigned char width, size_t startPos) :
-		c{c}, colour{colour}, width{width}, startPos{startPos} {}
+VMChar::VMChar(char c, int colour, size_t startPos, unsigned char width) :
+		c{c}, colour{colour}, startPos{startPos}, width{width} {}
 
 char VMChar::getChar() { return c; }
 

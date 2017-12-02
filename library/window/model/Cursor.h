@@ -15,8 +15,11 @@ class Cursor {
 
 	size_t xPos{0};
 	size_t yPos{0};
+	size_t globalXPos{0};
 	size_t insertPos{0};
 	bool rightOfEnd{false};
+
+	void updateHorizontalPos();
 
 public:
 	explicit Cursor(VMDataSource &ds);

@@ -14,11 +14,11 @@ class VMDataSource {
 	std::list<VMLine> lines;
     std::string fileName;
 public:
-	using iterator = std::list<VMLine>::iterator;
-	using const_iterator = std::list<VMLine>::const_iterator;
-
     VMDataSource();
     explicit VMDataSource(const std::string &file);
+
+	using iterator = std::list<VMLine>::iterator;
+	using const_iterator = std::list<VMLine>::const_iterator;
 
     void addChar(iterator it, size_t linePos, char c);
     void removeChar(iterator it, size_t linePos);

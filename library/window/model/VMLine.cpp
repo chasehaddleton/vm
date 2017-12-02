@@ -5,8 +5,7 @@
 #include <string>
 #include "VMLine.h"
 
-VMLine::VMLine() : {
-}
+VMLine::VMLine() = default;
 
 VMLine::VMLine(std::string s) {
     size_t previousStartPos = 0;
@@ -50,7 +49,7 @@ void VMLine::removeChar(VMLine::const_iterator &it) {
     VMChar tmp = *it;
     line.erase(it);
     //VMLine::iterator updateIt = it;
-    if (tmp.getChar() == '\t') { updateStartPos(it); } // TODO: how do I make this iterator not const?
+    //if (tmp.getChar() == '\t') { updateStartPos(it); } // TODO: how do I make this iterator not const?
 }
 
 // replaces the character at the given position
@@ -116,11 +115,14 @@ size_t VMLine::tabCount(size_t pos) {
     return count;
 }
 
-// returns the length of the line
+// returns the sum of the widths of the line
 size_t VMLine::length() {
+    size_t count = 0;
+    for (auto &c: line) { count += c.getWidth(); }
     return line.size();
 }
 
+// returns the number of elements in the line
 size_t VMLine::size() {
     return line.size();
 }
@@ -138,7 +140,15 @@ std::string VMLine::operator*() {
     return toString();
 }
 
+VMLine::iterator VMLine::begin() { return line.begin(); }
+
+VMLine::iterator VMLine::end() { return line.end(); }
+
+VMLine::const_iterator VMLine::cbegin() const { return line.cbegin(); }
+
+VMLine::const_iterator VMLine::cend() const { return line.cend(); }
+
 std::ostream &operator<<(std::ostream &out, VMLine l) {
-    out << *l << std::endl;
+    out << l.toString() << std::endl;
 	return out;
 }
