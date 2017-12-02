@@ -5,22 +5,24 @@
 #include "VMWindow.h"
 
 VMWindow::VMWindow() : keyboard{}, keyIt{keyboard.begin()}, model{}, cursor{model.getCursor()},
-                       printStart{new int {0}}, display{model.getDataSource(), cursor, printStart} {}
+                       printStart{new int {0}}, display{model.getDataSource(), cursor, printStart},
+                       mode{ModeType::COMMAND} {}
 
 VMWindow::VMWindow(std::string fileName)
 		: keyboard{}, keyIt{keyboard.begin()}, model{fileName}, cursor{model.getCursor()},
-		  printStart{new int {0}}, display{model.getDataSource(), cursor, printStart} {}
+		  printStart{new int {0}}, display{model.getDataSource(), cursor, printStart},
+		  mode{ModeType::COMMAND} {}
 
 void VMWindow::run() {
 	display.update();
 	int ch = *keyIt;
 
 	while (ch != 'q') {
+		handleInput(ch);
 		display.update();
 
 		++keyIt;
 		ch = *keyIt;
-		handleInput(ch);
 	}
 }
 

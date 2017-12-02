@@ -11,3 +11,7 @@ void Command::execute(const std::string &command) const {
 MatchType Command::match(const std::string &s) const {
 	return doMatch(s);
 }
+bool Command::operator==(const Command &other) const {
+	return name == other.name;
+}
+

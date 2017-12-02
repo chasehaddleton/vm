@@ -5,7 +5,7 @@
 #ifndef VM_MODE_H
 #define VM_MODE_H
 
-enum Mode {
+enum ModeType {
 	COMMAND,
 	INSERT,
 	MACRO_RECORD,

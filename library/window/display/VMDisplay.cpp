@@ -3,6 +3,7 @@
 //
 
 #include "VMDisplay.h"
+#include <ncurses.h>
 
 void VMDisplay::init() {
 	initscr();
