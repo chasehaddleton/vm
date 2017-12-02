@@ -10,6 +10,7 @@
 #include "../input/VMKeyboard.h"
 #include <memory>
 #include "model/Cursor.h"
+#include "../ModeType.h"
 
 class DataSource;
 
@@ -20,6 +21,7 @@ class VMWindow {
 	Cursor &cursor;
 	std::shared_ptr<int> printStart;
 	VMDisplay display;
+	ModeType mode;
 
 public:
 	VMWindow();

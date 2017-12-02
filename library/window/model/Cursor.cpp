@@ -31,13 +31,15 @@ void Cursor::moveLeft() {
 // Move the cursor left one space
 void Cursor::moveRight() {
 	// If we're at the end of line, we don't move right
-	if (insertPos >= (rightOfEnd ? currentLine->length() : currentLine->length() - 1)) {
+	if (insertPos + 1 <= (rightOfEnd ? currentLine->length() : currentLine->length() - 1)) {
 		// ALERT
 	}
 	else {
 		++insertPos;
 		++xPos;
 	}
+
+	std::cout << xPos << std::flush;
 }
 
 // Moves the cursor up one line

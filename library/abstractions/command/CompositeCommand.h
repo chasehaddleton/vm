@@ -17,8 +17,6 @@ public:
 	~CompositeCommand() override = default;
 
 	MatchType match(const std::string &s) const override;
-
-	void register(std::unique_ptr<Command>);
 };
 
 #endif //VM_MOTIONCOMMAND_H
