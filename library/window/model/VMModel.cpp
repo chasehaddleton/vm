@@ -4,7 +4,8 @@
 
 #include "VMModel.h"
 
-VMModel::VMModel(const VMState &vmState) : vmStatus{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState} {}
+VMModel::VMModel(const VMState &vmState) : vmStatus{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState},
+                                           undoFrame{} {}
 
 // Adds a character at the current Cursor character position
 void VMModel::addChar(char c) {
