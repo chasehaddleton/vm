@@ -6,13 +6,13 @@
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
-		m.moveLeft();
+		m.moveCursorLeft();
 	} else if (ch == VMKeyboard::key.RIGHT) {
-		m.moveRight();
+		m.moveCursorRight();
 	} else if (ch == VMKeyboard::key.UP) {
-		m.moveUp();
+		m.moveCursorUp();
 	} else if (ch == VMKeyboard::key.DOWN) {
-		m.moveDown();
+		m.moveCursorRight();
 	} else {
 		return false;
 	}
@@ -26,6 +26,7 @@ void VM::run(const std::string &fileName) {
 	auto vmkIt = keyboard.begin();
 	int numExecutions = 0;
 
+	display.update();
 	int c = *vmkIt;
 	while (state.isRunning()) {
 		if (c == VMKeyboard::key.RESIZE) {
@@ -45,7 +46,7 @@ void VM::run(const std::string &fileName) {
 				} else {
 					if (keyBuff.empty()) {
 						// Check for special key-character/commands
-						if (keyBuff.at(0) == ':') {
+						if (c == ':') {
 							state.setDisplayCommand(true);
 							continue;
 						} else if (handleMoveCommand(c, model)) {
@@ -101,6 +102,7 @@ void VM::run(const std::string &fileName) {
 
 		++vmkIt;
 		c = *vmkIt;
+		display.update();
 	}
 }
 

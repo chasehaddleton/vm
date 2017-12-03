@@ -45,11 +45,11 @@ void VMLine::addChar(VMLine::iterator &it, char c) {
 }
 
 // removes the character at the given position
-void VMLine::removeChar(VMLine::const_iterator &it) {
+void VMLine::removeChar(VMLine::iterator &it) {
     VMChar tmp = *it;
     line.erase(it);
-    //VMLine::iterator updateIt = it;
-    //if (tmp.getChar() == '\t') { updateStartPos(it); } // TODO: how do I make this iterator not const?
+    VMLine::iterator updateIt = it;
+    if (tmp.getChar() == '\t') { updateStartPos(it); } // TODO: how do I make this iterator not const?
 }
 
 // replaces the character at the given position
