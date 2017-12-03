@@ -26,12 +26,13 @@ public:
 	using const_iterator = std::list<VMChar>::const_iterator;   // our const iterator is just list's const iterator
 
 	void addChar(VMLine::iterator &it, char c);         // inserts the given character at the iterator position
+
 	void removeChar(VMLine::iterator &it);              // removes the character at the given position
 	void replaceChar(VMLine::iterator &it, char c);     // replaces the character at the given position
 	size_t lineWidth() const;             // returns the sum of the widths of the elements in the line
 	size_t length() const;                // returns the number of elements in the line
 	size_t size() const;                  // returns the number of elements in the line
-	bool empty();
+	bool empty() const;
 
 	std::string toString() const;         // returns line as a string
 	std::string operator*() const;        // apparently, also returns line as a string (WHY CHASE? WHY?!)
@@ -47,7 +48,6 @@ public:
 	const_iterator cbegin() const;
 
 	const_iterator cend() const;
-
 };
 
 std::ostream &operator<<(std::ostream &out, VMLine line);
