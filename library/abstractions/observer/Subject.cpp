@@ -4,16 +4,16 @@
 
 #include "Subject.h"
 
-void Subject::registerOb(std::shared_ptr<Observer> &ob) {
-	observers.push_back(ob);
+void Subject::registerOb(Observer &ob) {
+	observers.push_back(&ob);
 }
 
-void Subject::deregisterOb(std::shared_ptr<Observer> &ob) {
-	observers.remove(ob);
+void Subject::deregisterOb(Observer &ob) {
+	observers.remove(&ob);
 }
 
-void Subject::notifyObservers() {
-	for(auto &ob : observers) {
-		//ob.notify();
+void Subject::notifyObservers() const {
+	for(auto ob : observers) {
+		ob->notify();
 	}
 }

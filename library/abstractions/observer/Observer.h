@@ -6,17 +6,14 @@
 #define VM_OBSERVER_H
 
 #include <string>
-#include "../Event.h"
-#include "Subject.h"
 
 class Observer {
 	std::string name;
 
-	virtual void doNotify(Subject &s) = 0;
+	virtual void doNotify() const = 0;
 
 public:
-
-	void notify(Subject &s);
+	void notify() const;
 
 	bool operator==(const Observer &other);
 };

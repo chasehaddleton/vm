@@ -4,10 +4,8 @@
 
 #include "CompositeCommand.h"
 
-void CompositeCommand::doExecute(const std::string &command) const {
-
-}
-
 MatchType CompositeCommand::match(const std::string &s) const {
 	return PARTIAL;
 }
+
+CompositeCommand::CompositeCommand(VMState &state, const std::string &name) : Command(state, name) {}

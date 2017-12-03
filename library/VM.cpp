@@ -3,6 +3,7 @@
 //
 
 #include "VM.h"
+#include "commands/Exit.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -53,6 +54,7 @@ void VM::run(const std::string &fileName) {
 						// Check for special key-character/commands
 						if (c == ':') {
 							state.setDisplayCommand(true);
+							keyBuff.push_back(c);
 							continue;
 						} else if (handleMoveCommand(c, model)) {
 							continue;
@@ -60,8 +62,6 @@ void VM::run(const std::string &fileName) {
 							numExecutions = numExecutions * 10 + (c - '0');
 							continue;
 						}
-					} else if (keyBuff.size() == 2 && keyBuff.at(0) == 'q') {
-						state.setRunning(false);
 					}
 
 					keyBuff.push_back(c);
@@ -69,13 +69,14 @@ void VM::run(const std::string &fileName) {
 					int commandMatch = 0;
 
 					for (auto &x:commands) {
-						int score = x.match(keyBuff);
+						int score = x->match(keyBuff);
 
 						if (score == MatchType::FULL) {
-							// TODO: make the command execute
+							numExecutions = std::max(1, numExecutions);
+
 							// TODO: move to insert mode if it's an insert command
 							for (int i = 0; i < numExecutions; ++i) {
-								x.execute(keyBuff);
+								x->execute(keyBuff, model);
 							}
 
 							// Command ran, clear it's content
@@ -90,9 +91,7 @@ void VM::run(const std::string &fileName) {
 						state.setDisplayCommand(false);
 						keyBuff.clear();
 					}
-
 				}
-
 				break;
 			}
 			case ModeType::INSERT: {
@@ -111,4 +110,6 @@ void VM::run(const std::string &fileName) {
 	}
 }
 
-VM::VM() : state{}, display{state}, keyboard{} {}
+VM::VM() : state{}, display{state}, keyboard{} {
+	commands.push_back(std::make_unique<Exit>(state, "Exit"));
+}

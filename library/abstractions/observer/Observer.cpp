@@ -4,10 +4,10 @@
 
 #include "Observer.h"
 
-void Observer::notify(Subject &s) {
-	doNotify(Subject &s);
+void Observer::notify() const {
+	doNotify();
 }
 
-bool Observer::operator=(const Observer &other) {
+bool Observer::operator==(const Observer &other) {
 	return name == other.name;
 }

@@ -12,7 +12,7 @@
 #include <string>
 
 class VM {
-	std::vector <Command> commands;
+	std::vector<std::unique_ptr<Command>> commands;
 	std::string keyBuff;
 
 	VMState state;

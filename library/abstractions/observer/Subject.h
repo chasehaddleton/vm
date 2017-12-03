@@ -5,21 +5,19 @@
 #ifndef VM_SUBJECT_H
 #define VM_SUBJECT_H
 
-#include "Observer.h"
+#include "./Observer.h"
 #include <list>
 #include <memory>
 
 class Subject {
-	std::list<std::shared_ptr<Observer>> observers;
+	std::list<Observer *> observers;
 
 public:
-	virtual Event &update() = 0;
+	void registerOb(Observer &ob);
 
-	void registerOb(std::shared_ptr<Observer> &ob);
+	void deregisterOb(Observer &ob);
 
-	void deregisterOb(std::shared_ptr<Observer> &ob);
-
-	void notifyObservers();
+	void notifyObservers() const;
 };
 
 #endif //VM_SUBJECT_H
