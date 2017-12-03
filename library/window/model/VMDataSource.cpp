@@ -26,22 +26,23 @@ VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
 }
 
 // Add a character to the line pointed to by iterator at the given position
-void VMDataSource::addChar(VMDataSource::iterator it, size_t linePos, char c) {
-	auto lineIter = it->begin();
-	std::advance(it, linePos);
-	it->addChar(lineIter, c);
+void VMDataSource::addChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c) {
+	dsIter->addChar(lineIter, c);
 }
 
 // Remove the character at insertPos in line pointed to by iterator
-void VMDataSource::removeChar(VMDataSource::iterator it, size_t linePos) {
-	auto lineIter = it->cbegin();
-	std::advance(it, linePos);
-	it->removeChar(lineIter);
+void VMDataSource::removeChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter) {
+	dsIter->removeChar(lineIter);
 }
 
 // Add a line at the given iterator position
-void VMDataSource::addLine(VMDataSource::iterator it, const std::string &s) {
-	lines.insert(it, VMLine(s));
+void VMDataSource::addLine(VMDataSource::iterator dsIter, const std::string &s) {
+	lines.insert(dsIter, VMLine(s));
+}
+
+// Add a line at the given iterator position
+void VMDataSource::addLine(VMDataSource::iterator dsIter, VMLine line) {
+	lines.insert(dsIter, line);
 }
 
 // Remove a line at the given iterator position and return it

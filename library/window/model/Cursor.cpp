@@ -7,21 +7,27 @@
 Cursor::Cursor(VMDataSource &ds) : ds{ds}, currentLine{ds.begin()}, currentLetter{currentLine->begin()},
                                    xPos{0}, yPos{0}, globalXPos{0}, insertPos{0}, rightOfEnd{false} {}
 
-// returns the x position
+// Returns the x position
 size_t Cursor::getXPos() { return xPos; }
 
-// returns the y position
+// Returns the y position
 size_t Cursor::getYPos() { return yPos; }
 
-// returns (a copy of?) the Cursor's DataSource iterator
+// Returns a copy of the Cursor's DataSource iterator
 VMDataSource::iterator Cursor::getIT() { return currentLine; }
 
+// Returns a copy of the Cursor's Line iterator
+VMLine::iterator Cursor::getLineIter() { return currentLetter; }
+
+// Returns the line number
+size_t Cursor::getLineNumber() { return yPos; }
+
 // Returns the lesser of the insertion position or the end of the line
-size_t Cursor::getInsertPos() { return std::min(insertPos, currentLine->length()); }
+size_t Cursor::getInsertPos() { return insertPos; }
 
 // TODO: Add alerts to all places marked alert
 
-// Moves the cursor left one space
+// Moves the cursor left one character
 void Cursor::moveLeft() {
 	// If we're at the start of the line, we don't move left
 	if (xPos == 0) {
@@ -35,7 +41,7 @@ void Cursor::moveLeft() {
 	}
 }
 
-// Move the cursor left one space
+// Move the cursor left one character
 void Cursor::moveRight() {
 	// If we're at the end of line, we don't move right
 	// TODO: make this if statement nicer if possible
