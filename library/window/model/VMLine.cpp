@@ -157,6 +157,10 @@ VMLine::const_iterator VMLine::cbegin() const { return line.cbegin(); }
 
 VMLine::const_iterator VMLine::cend() const { return line.cend(); }
 
+bool VMLine::empty() {
+	return !size();
+}
+
 std::ostream &operator<<(std::ostream &out, VMLine l) {
     out << l.toString() << std::endl;
 	return out;

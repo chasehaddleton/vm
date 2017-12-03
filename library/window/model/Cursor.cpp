@@ -100,10 +100,14 @@ void Cursor::updateHorizontalPos() {
 	currentLetter = currentLine->begin();
 	insertPos = 0;
 
-	while (currentLetter->getStartPos() + currentLetter->getWidth() <= tempPos) {
-		++currentLetter;
-		++insertPos;
-	}
+	if (currentLine->empty()) {
+		xPos = 0;
+	} else {
+		while (currentLetter->getStartPos() + currentLetter->getWidth() <= tempPos) {
+			++currentLetter;
+			++insertPos;
+		}
 
-	xPos = currentLetter->getStartPos() + currentLetter->getWidth() - 1;
+		xPos = currentLetter->getStartPos() + currentLetter->getWidth() - 1;
+	}
 }

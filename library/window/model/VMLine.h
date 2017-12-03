@@ -31,6 +31,7 @@ public:
 	size_t lineWidth();             // returns the sum of the widths of the elements in the line
 	size_t length();                // returns the number of elements in the line
 	size_t size();                  // returns the number of elements in the line
+	bool empty();
 	std::string toString();         // returns line as a string
 	std::string operator*();        // apparently, also returns line as a string (WHY CHASE? WHY?!)
 
