@@ -13,6 +13,8 @@ class Observer {
 	virtual void doNotify() const = 0;
 
 public:
+	Observer(const std::string &name);
+
 	void notify() const;
 
 	bool operator==(const Observer &other);

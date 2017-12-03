@@ -32,20 +32,20 @@ public:
 	Cursor &operator=(const Cursor &other) = delete;
 
 	// Returns the x position
-	size_t getXPos();
+	size_t getXPos() const ;
 
 	// Returns the y position
-	size_t getYPos();
+	size_t getYPos() const;
 
 	VMDataSource::iterator getDSIter();
 
 	VMLine::iterator getLineIter();
 
 	// Returns the line number
-	size_t getLineNumber();
+	size_t getLineNumber() const;
 
 	// Returns the lesser of the insertion position or the end of the line
-	size_t getInsertPos();
+	size_t getInsertPos() const;
 
 	// Returns the first line to be displayed
 	size_t &getFirstLineNumber();

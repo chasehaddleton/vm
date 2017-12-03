@@ -19,19 +19,19 @@ public:
 	//VMChar(char c, int colour, unsigned char width);
 	VMChar(char c, int colour, size_t startPos, unsigned char width);
 
-	char getChar();
+	char getChar() const;
 
 	void setChar(char newC);
 
-	int getColour();
+	int getColour() const ;
 
 	void setColour(int newColour);
 
-	size_t getStartPos();
+	size_t getStartPos() const;
 
 	void setStartPos(size_t startPos);
 
-	unsigned char getWidth();
+	unsigned char getWidth() const;
 
 	void setWidth(unsigned char newWidth);
 };

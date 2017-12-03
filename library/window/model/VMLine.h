@@ -18,9 +18,9 @@ class VMLine {
 	//std::string line;
 
 public:
-    VMLine();
+	VMLine();
 
-    explicit VMLine(std::string str);
+	explicit VMLine(std::string str);
 
 	using iterator = std::list<VMChar>::iterator;               // our iterator is just lists's iterator
 	using const_iterator = std::list<VMChar>::const_iterator;   // our const iterator is just list's const iterator
@@ -28,16 +28,17 @@ public:
 	void addChar(VMLine::iterator &it, char c);         // inserts the given character at the iterator position
 	void removeChar(VMLine::iterator &it);              // removes the character at the given position
 	void replaceChar(VMLine::iterator &it, char c);     // replaces the character at the given position
-	size_t lineWidth();             // returns the sum of the widths of the elements in the line
-	size_t length();                // returns the number of elements in the line
-	size_t size();                  // returns the number of elements in the line
+	size_t lineWidth() const;             // returns the sum of the widths of the elements in the line
+	size_t length() const;                // returns the number of elements in the line
+	size_t size() const;                  // returns the number of elements in the line
 	bool empty();
-	std::string toString();         // returns line as a string
-	std::string operator*();        // apparently, also returns line as a string (WHY CHASE? WHY?!)
+
+	std::string toString() const;         // returns line as a string
+	std::string operator*() const;        // apparently, also returns line as a string (WHY CHASE? WHY?!)
 
 	void updateStartPos(VMLine::iterator it);          // updates the start positions relative to the beginning
-	size_t tabCount();              // returns number of tabs on line
-	size_t tabCount(size_t pos);    // returns number of tabs prior to pos on line
+	size_t tabCount() const;              // returns number of tabs on line
+	size_t tabCount(size_t pos) const;    // returns number of tabs prior to pos on line
 
 	iterator begin();
 

@@ -23,7 +23,9 @@ class VMDisplay : public Display {
 
 	void end();
 
-	void doUpdate() override;
+	void doUpdate() const override;
+
+	void print(std::string s, int y) const;
 
 public:
 	explicit VMDisplay(VMState &vmState);
@@ -33,8 +35,6 @@ public:
 	void bind(VMModel &vmModel);
 
 	void resize();
-
-	void print(std::string s, int y);
 };
 
 

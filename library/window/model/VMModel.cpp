@@ -52,9 +52,18 @@ void VMModel::undo() {}
 void VMModel::redo() {}
 
 // Output the DataSource's text to a file
-void VMModel::saveFile() {
+void VMModel::saveFile() const {
 	try {
 		ds.saveFile();
+	}
+	catch (std::invalid_argument &ia) {
+		throw;
+	}
+}
+
+void VMModel::saveFile(std::string fileName) {
+	try {
+		ds.saveFile(fileName);
 	}
 	catch (std::invalid_argument &ia) {
 		throw;

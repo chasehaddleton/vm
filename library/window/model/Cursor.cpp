@@ -8,10 +8,10 @@ Cursor::Cursor(VMDataSource &ds, const VMState &vmState) : ds{ds}, state{vmState
                                                            currentLetter{currentLine->begin()} {}
 
 // Returns the x position
-size_t Cursor::getXPos() { return xPos; }
+size_t Cursor::getXPos() const { return xPos; }
 
 // Returns the y position
-size_t Cursor::getYPos() { return yPos; }
+size_t Cursor::getYPos() const { return yPos; }
 
 // Returns a copy of the Cursor's DataSource iterator
 VMDataSource::iterator Cursor::getDSIter() { return currentLine; }
@@ -20,10 +20,10 @@ VMDataSource::iterator Cursor::getDSIter() { return currentLine; }
 VMLine::iterator Cursor::getLineIter() { return currentLetter; }
 
 // Returns the line number
-size_t Cursor::getLineNumber() { return yPos; }
+size_t Cursor::getLineNumber() const { return yPos; }
 
 // Returns the lesser of the insertion position or the end of the line
-size_t Cursor::getInsertPos() { return insertPos; }
+size_t Cursor::getInsertPos() const { return insertPos; }
 
 // Returns the first line to be displayed
 size_t &Cursor::getFirstLineNumber() { return firstLineNumber; }

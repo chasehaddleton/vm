@@ -9,18 +9,18 @@
 VMChar::VMChar(char c, int colour, size_t startPos, unsigned char width) :
 		c{c}, colour{colour}, startPos{startPos}, width{width} {}
 
-char VMChar::getChar() { return c; }
+char VMChar::getChar() const { return c; }
 
 void VMChar::setChar(char newC) { c = newC; }
 
-int VMChar::getColour() { return colour; }
+int VMChar::getColour() const { return colour; }
 
 void VMChar::setColour(int newColour) { colour = newColour; }
 
-size_t VMChar::getStartPos() { return startPos; }
+size_t VMChar::getStartPos() const { return startPos; }
 
 void VMChar::setStartPos(size_t newStart) { startPos = newStart; }
 
-unsigned char VMChar::getWidth() { return width; }
+unsigned char VMChar::getWidth() const { return width; }
 
 void VMChar::setWidth(unsigned char newWidth) { width = newWidth; }
