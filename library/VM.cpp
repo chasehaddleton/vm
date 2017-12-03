@@ -12,7 +12,7 @@ bool handleMoveCommand(const int &ch, VMModel &m) {
 	} else if (ch == VMKeyboard::key.UP) {
 		m.moveCursorUp();
 	} else if (ch == VMKeyboard::key.DOWN) {
-		m.moveCursorRight();
+		m.moveCursorDown();
 	} else {
 		return false;
 	}
@@ -28,10 +28,12 @@ void VM::run(const std::string &fileName) {
 
 	auto vmkIt = keyboard.begin();
 	int numExecutions = 0;
+	int c;
 
-	display.update();
-	int c = *vmkIt;
 	while (state.isRunning()) {
+		display.update();
+		c = *vmkIt;
+
 		if (c == VMKeyboard::key.RESIZE) {
 			display.resize();
 			continue;
@@ -106,8 +108,6 @@ void VM::run(const std::string &fileName) {
 		}
 
 		++vmkIt;
-		c = *vmkIt;
-		display.update();
 	}
 }
 

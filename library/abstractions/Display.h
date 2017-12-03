@@ -5,6 +5,8 @@
 #ifndef VM_DISPLAY_H
 #define VM_DISPLAY_H
 
+#include <iostream>
+
 class Display {
 	virtual void doUpdate() = 0;
 
