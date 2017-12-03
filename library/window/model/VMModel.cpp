@@ -4,7 +4,8 @@
 
 #include "VMModel.h"
 
-VMModel::VMModel(const VMState &vmState) : vmStatus{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState} {}
+VMModel::VMModel(const VMState &vmState) : vmStatus{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState},
+                                           undoFrame{} {}
 
 // Adds a character at the current Cursor character position
 void VMModel::addChar(char c) {
@@ -52,9 +53,18 @@ void VMModel::undo() {}
 void VMModel::redo() {}
 
 // Output the DataSource's text to a file
-void VMModel::saveFile() {
+void VMModel::saveFile() const {
 	try {
 		ds.saveFile();
+	}
+	catch (std::invalid_argument &ia) {
+		throw;
+	}
+}
+
+void VMModel::saveFile(std::string fileName) {
+	try {
+		ds.saveFile(fileName);
 	}
 	catch (std::invalid_argument &ia) {
 		throw;

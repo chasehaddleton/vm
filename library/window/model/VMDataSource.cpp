@@ -52,21 +52,26 @@ VMLine VMDataSource::removeLine(VMDataSource::iterator it) {
 	return tmp;
 }
 
-void VMDataSource::saveFile() {
-	saveFile(fileName);
-}
-
-void VMDataSource::saveFile(std::string file) {
-	std::ofstream f(file);
+void VMDataSource::doSaveFile() const {
+	std::ofstream f(fileName);
 	if (f.fail()) {
 		throw std::invalid_argument("ERROR WHILE TRYING TO SAVE FILE!");
 	} else {
-		fileName = file;
 		for (auto &line:lines) {
-			f << *line << std::endl;
+			f << line.toString() << std::endl;
 		}
 	}
 	f.close();
+}
+
+void VMDataSource::saveFile() const {
+	doSaveFile();
+}
+
+void VMDataSource::saveFile(std::string file) {
+	std::swap(fileName, file);
+	doSaveFile();
+	std::swap(fileName, file);
 }
 
 // Return an iterator at the beginning of DataSource

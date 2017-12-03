@@ -9,11 +9,14 @@
 #include <memory>
 #include <vector>
 
-class CompositeCommand : Command {
+class CompositeCommand : public Command {
+
+protected:
 	std::vector<std::unique_ptr<Command>> subCommands; // This will hold the different motion commands
-	void doExecute(const std::string &command) const override;
 
 public:
+	explicit CompositeCommand(VMState &state, const std::string &name);
+
 	~CompositeCommand() override = default;
 
 	MatchType match(const std::string &s) const override;

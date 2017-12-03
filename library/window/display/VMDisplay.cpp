@@ -30,7 +30,7 @@ void VMDisplay::resize() {
 	doUpdate();
 }
 
-void VMDisplay::print(std::string s, int y) {
+void VMDisplay::print(std::string s, int y) const {
 	move(y, 0);
 	clrtoeol();
 
@@ -42,7 +42,7 @@ void VMDisplay::print(std::string s, int y) {
 	mvaddstr(y, 0, s.c_str());
 }
 
-void VMDisplay::doUpdate() {
+void VMDisplay::doUpdate() const {
 	auto &cursor = m->getCursor();
 	
 	if (cursor.getFirstLineNumber() + vmState.getWindowX() < cursor.getYPos()) {

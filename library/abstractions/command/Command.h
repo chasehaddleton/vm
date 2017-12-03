@@ -6,22 +6,29 @@
 #define VM_COMMAND_H
 
 #include "../../status/MatchType.h"
+#include "../../status/VMState.h"
+#include "../../window/model/VMModel.h"
+#include "../observer/Subject.h"
 #include <string>
 
-class Command {
-	std::string name;
-
-	virtual void doExecute(const std::string &command) const = 0;
+class Command : public Subject {
+	virtual void doExecute(const std::string &command, VMModel &model) const = 0;
 
 	virtual MatchType doMatch(const std::string &s) const = 0;
 
+protected:
+	VMState &state;
+	std::string name;
+
 public:
+
+	explicit Command(VMState &state, const std::string &name);
 
 	virtual ~Command() = default;
 
 	virtual MatchType match(const std::string &s) const;
 
-	void execute(const std::string &command) const;
+	void execute(const std::string &command, VMModel &model) const;
 
 	bool operator==(const Command &other) const;
 };

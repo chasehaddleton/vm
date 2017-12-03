@@ -13,6 +13,9 @@
 class VMDataSource {
 	std::list<VMLine> lines;
     std::string fileName;
+
+	void doSaveFile() const;
+
 public:
     VMDataSource();
     explicit VMDataSource(const std::string &file);
@@ -30,7 +33,7 @@ public:
 
 	VMLine removeLine(iterator it);
 
-    void saveFile();
+    void saveFile() const;
     void saveFile(std::string fileName);
 
     iterator begin();
