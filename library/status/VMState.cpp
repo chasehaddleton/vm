@@ -48,8 +48,10 @@ void VMState::displayCommand() {
 }
 
 void VMState::hideCommand() {
-	showCommand = false;
-	statusBar.setMessage("");
+	if (showCommand) {
+		showCommand = false;
+		statusBar.setMessage("");
+	}
 }
 
 bool VMState::isRunning() const {
@@ -99,4 +101,13 @@ bool VMState::isCommandShown() const {
 void VMState::bind(VMModel &m) {
 	statusBar.bind(*this, m.getCursor());
 	keyBuff.registerOb(statusBar);
+}
+
+void VMState::resetCommandState() {
+	if (showCommand) {
+		hideCommand();
+		showCommand = false;
+	}
+
+	keyBuff.clear();
 }

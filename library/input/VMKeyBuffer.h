@@ -21,6 +21,8 @@ public:
 	void clear();
 
 	bool empty();
+
+	size_t size() const;
 };
 
 

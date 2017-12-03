@@ -88,3 +88,7 @@ Cursor &VMModel::getCursor() {
 VMDataSource &VMModel::getDataSource() {
 	return ds;
 }
+
+size_t VMModel::size() const {
+	return ds.size();
+}

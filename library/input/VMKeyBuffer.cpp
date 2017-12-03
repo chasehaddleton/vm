@@ -3,9 +3,10 @@
 //
 
 #include "VMKeyBuffer.h"
+#include "VMKeyboard.h"
 
 void VMKeyBuffer::push_back(int ch) {
-	keyBuffer.push_back(ch);
+	keyBuffer.append(VMKeyboard::getKeyname(ch));
 	notifyObservers();
 }
 
@@ -23,6 +24,10 @@ void VMKeyBuffer::clear() {
 
 bool VMKeyBuffer::empty() {
 	return keyBuffer.empty();
+}
+
+size_t VMKeyBuffer::size() const {
+	return keyBuffer.size();
 }
 
 

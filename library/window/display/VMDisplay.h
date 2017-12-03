@@ -14,8 +14,11 @@
 #include "../../status/VMState.h"
 
 class VMDisplay : public Display {
-	VMState &vmState;
+	VMState &state;
 	VMModel* m;
+
+	int xSize;
+	int ySize;
 
 	bool enablePreProcessing = false;
 

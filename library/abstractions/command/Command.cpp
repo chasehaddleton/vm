@@ -6,8 +6,8 @@
 
 Command::Command(VMState &state, const std::string &name) : state{state}, name{name} {}
 
-void Command::execute(const std::string &command, VMModel &model) const {
-	doExecute(command, model);
+void Command::execute(const std::string &command, VMModel &model, int count) const {
+	doExecute(command, model, std::max(count, 1));
 	notifyObservers();
 }
 

@@ -36,6 +36,8 @@ public:
     void saveFile() const;
     void saveFile(std::string fileName);
 
+	size_t size() const;
+
     iterator begin();
     iterator end();
     const_iterator cbegin() const;

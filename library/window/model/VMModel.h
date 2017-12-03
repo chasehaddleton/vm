@@ -81,6 +81,8 @@ public:
 	// Output the DataSource's text to a file with the given filename
 	void saveFile(std::string fileName);
 
+	size_t size() const;
+
 	// Returns an iterator at the beginning of the DataSource
 	VMDataSource::iterator getDataSourceBegin();
 

@@ -57,9 +57,8 @@ void VMStatusBar::doNotify(const Subject *sub) {
 	if (state->isCommandShown()) {
 		try {
 			auto buff = dynamic_cast<const VMKeyBuffer *>(sub);
-			VMStatusBar::message = buff->toString();
+			message = buff->toString();
 		} catch (...) {
-			std::cout << "oops";
 		}
 	}
 }

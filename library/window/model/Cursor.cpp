@@ -113,5 +113,5 @@ void Cursor::updateHorizontalPos() {
 }
 
 std::string Cursor::toString() const {
-	return "(" + std::to_string(yPos) + ":" + std::to_string(xPos) + ")";
+	return "(" + std::to_string(yPos + 1) + ":" + std::to_string(xPos + 1) + ")";
 }

@@ -86,6 +86,10 @@ VMDataSource::const_iterator VMDataSource::cbegin() const { return lines.cbegin(
 // Return a const iterator at the end of the DataSource
 VMDataSource::const_iterator VMDataSource::cend() const { return lines.cend(); }
 
+size_t VMDataSource::size() const {
+	return lines.size();
+}
+
 // Prints our DataSource to the provided output stream
 std::ostream &operator<<(std::ostream &out, VMDataSource &ds) {
 	for (auto &line:ds) {

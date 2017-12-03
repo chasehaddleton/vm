@@ -5,6 +5,7 @@
 #include "VM.h"
 #include "commands/Exit.h"
 #include "commands/Save.h"
+#include "commands/FileInfo.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -47,8 +48,7 @@ void VM::run(const std::string &fileName) {
 					// Special key which erases the current command, nothing else if then required to be done until
 					// the next keypress
 
-					state.hideCommand();
-					state.keyBuff.clear();
+					state.resetCommandState();
 					continue;
 				} else {
 					if (state.keyBuff.empty()) {
@@ -73,12 +73,7 @@ void VM::run(const std::string &fileName) {
 						int score = x->match(*state.keyBuff);
 
 						if (score == MatchType::FULL) {
-							numExecutions = std::max(1, numExecutions);
-
-							// TODO: move to insert mode if it's an insert command
-							for (int i = 0; i < numExecutions; ++i) {
-								x->execute(*state.keyBuff, model);
-							}
+							x->execute(*state.keyBuff, model, numExecutions);
 
 							// Command ran, reset state
 							commandMatch = 0;
@@ -90,8 +85,7 @@ void VM::run(const std::string &fileName) {
 
 					if (commandMatch == 0) {
 						numExecutions = 0;
-						state.hideCommand();
-						state.keyBuff.clear();
+						state.resetCommandState();
 					}
 				}
 				break;
@@ -115,5 +109,7 @@ void VM::run(const std::string &fileName) {
 VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<Exit>(state, "Exit"));
 	commands.push_back(std::make_unique<Save>(state, "Save"));
+	commands.push_back(std::make_unique<FileInfo>(state, "File Info"));
+
 
 }

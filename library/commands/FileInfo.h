@@ -1,23 +1,21 @@
 //
-// Created by Chase Haddleton on 2017-12-02.
+// Created by Chase Haddleton on 2017-12-03.
 //
 
-#ifndef VM_EXIT_H
-#define VM_EXIT_H
+#ifndef VM_FILEINFO_H
+#define VM_FILEINFO_H
 
 
 #include "../abstractions/command/Command.h"
 
-class Exit : public Command {
-	std::string partialMatch;
-
+class FileInfo : public Command {
 	void doExecute(const std::string &command, VMModel &model, int count) const override;
 
 	MatchType doMatch(const std::string &s) const override;
 
 public:
-	Exit(VMState &vmState, const std::string &name);
+	explicit FileInfo(VMState &state, const std::string &name);
+
 };
 
-
-#endif //VM_EXIT_H
+#endif //VM_FILEINFO_H

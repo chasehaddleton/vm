@@ -70,6 +70,8 @@ public:
 
 	void bind(VMModel &m);
 
+	void resetCommandState();
+
 	friend class VM;
 };
 

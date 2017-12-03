@@ -5,6 +5,7 @@
 #ifndef VM_VMKEYBOARD_H
 #define VM_VMKEYBOARD_H
 
+#include <string>
 #include "VMKeyMap.h"
 
 class VMKeyboard {
@@ -29,6 +30,8 @@ public:
 	Iterator begin();
 
 	Iterator end();
+
+	static std::string getKeyname(int c);
 };
 
 #endif //VM_VMKEYBOARD_H

@@ -6,7 +6,7 @@
 
 #include "../input/VMKeyMap.h"
 
-void Save::doExecute(const std::string &command, VMModel &model) const {
+void Save::doExecute(const std::string &command, VMModel &model, int count) const {
 	if (command.size() > 3) {
 		model.saveFile(command.substr(3));
 	} else {
@@ -20,14 +20,14 @@ MatchType Save::doMatch(const std::string &s) const {
 	} else if (s.size() > partialMatch.size() && s.substr(0, partialMatch.size()) == partialMatch) {
 		if (s.size() > 3) {
 			// use the rest as a new file name, as long as the last char is enter
-			if (s.back() == VMKeyMap::ENTER || s.back() == VMKeyMap::ENTER_ASCII) {
+			if (s.substr(s.size() - VMKeyMap::ENTER.size()) == VMKeyMap::ENTER) {
 				return MatchType::FULL;
 			} else {
 				return MatchType::PARTIAL;
 			}
 		} else {
 			// Extra key should be enter
-			if (s.at(2) == VMKeyMap::ENTER || s.at(2) == VMKeyMap::ENTER_ASCII) {
+			if (s == (partialMatch + VMKeyMap::ENTER)) {
 				return MatchType::FULL;
 			}
 		}
