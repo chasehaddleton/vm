@@ -5,22 +5,24 @@
 #ifndef VM_VMSTATUSBAR_H
 #define VM_VMSTATUSBAR_H
 
-
 #include <string>
 
+class VMState;
+class Cursor;
+
 class VMStatusBar {
-	std::string leftSide;
-	std::string rightSide;
+	VMState *state{nullptr};
+	Cursor *cursor{nullptr};
+	std::string message;
+
 public:
-	VMStatusBar(const std::string &leftSide = "", const std::string &rightSide = "");
+	explicit VMStatusBar() = default;
 
-	const std::string &getLeftSide() const;
+	void bind(VMState &state, Cursor &cursor);
 
-	void setLeftSide(const std::string &leftSide);
+	std::string operator*();
 
-	const std::string &getRightSide() const;
-
-	void setRightSide(const std::string &rightSide);
+	void setMessage(const std::string &m);
 };
 
 

@@ -15,17 +15,23 @@ class VMState {
 	std::string openFileName{""};
 	bool running{true};
 	bool displayPastEnd{false};
-	bool displayCommand{false};
+	bool showCommand{false};
+	bool fileModified{false};
 	int windowX{0};
 	int windowY{0};
 
+	void reset();
+
 public:
+	std::string keyBuff;
 
 	explicit VMState(const std::string &openFileName = "");
 
-	bool isDisplayCommand() const;
+	void addChar(int ch);
 
-	void setDisplayCommand(bool displayCommand);
+	void displayCommand();
+
+	void hideCommand();
 
 	ModeType getMode() const;
 
@@ -50,6 +56,14 @@ public:
 	int getWindowY() const;
 
 	void setWindowY(int windowY);
+
+	bool isFileModified() const;
+
+	void setFileModified(bool fileModified);
+
+	VMStatusBar &getStatusBar();
+
+	friend class VM;
 };
 
 #endif //VM_VMSTATUS_H

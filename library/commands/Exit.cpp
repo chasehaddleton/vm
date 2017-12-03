@@ -6,7 +6,11 @@
 #include "../input/VMKeyMap.h"
 
 void Exit::doExecute(const std::string &command, VMModel &model) const {
-	state.setRunning(false);
+	if (state.isFileModified()) {
+		// TODO: implement some alert on the status bar
+	} else {
+		state.setRunning(false);
+	}
 }
 
 MatchType Exit::doMatch(const std::string &s) const {

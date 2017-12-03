@@ -61,6 +61,8 @@ public:
 
 	// Moves the cursor down one line
 	void moveDown();
+
+	std::string toString() const;
 };
 
 #endif //VM_CURSOR_H

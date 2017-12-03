@@ -18,8 +18,8 @@ class VMModel {
 	VMDataSource ds;
 	Cursor cursor;
 	// TODO: Implement History
-	HistoryFrame undoFrame;
-	HistoryStack undoStack;
+	//HistoryFrame undoFrame;
+	//HistoryStack undoStack;
 	// HistoryStack redoStack;
 	// TODO: Implement StatusBar
 	// InfoBar statusBar;

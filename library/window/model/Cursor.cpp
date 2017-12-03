@@ -111,3 +111,7 @@ void Cursor::updateHorizontalPos() {
 		xPos = currentLetter->getStartPos() + currentLetter->getWidth() - 1;
 	}
 }
+
+std::string Cursor::toString() const {
+	return "(" + std::to_string(yPos) + ":" + std::to_string(xPos) + ")";
+}

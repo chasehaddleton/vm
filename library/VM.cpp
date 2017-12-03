@@ -26,7 +26,8 @@ void VM::run(const std::string &fileName) {
 	state.setOpenFileName(fileName);
 	VMModel model{state};
 	display.bind(model);
-	keyBuff = "";
+	state.getStatusBar().bind(state, model.getCursor());
+	state.keyBuff = "";
 
 	auto vmkIt = keyboard.begin();
 	int numExecutions = 0;
@@ -47,15 +48,15 @@ void VM::run(const std::string &fileName) {
 					// Special key which erases the current command, nothing else if then required to be done until
 					// the next keypress
 
-					state.setDisplayCommand(false);
-					keyBuff.clear();
+					state.hideCommand();
+					state.keyBuff.clear();
 					continue;
 				} else {
-					if (keyBuff.empty()) {
+					if (state.keyBuff.empty()) {
 						// Check for special key-character/commands
 						if (c == ':') {
-							state.setDisplayCommand(true);
-							keyBuff.push_back(c);
+							state.displayCommand();
+							state.addChar(c);
 							continue;
 						} else if (handleMoveCommand(c, model)) {
 							continue;
@@ -65,19 +66,19 @@ void VM::run(const std::string &fileName) {
 						}
 					}
 
-					keyBuff.push_back(c);
+					state.addChar(c);
 
 					int commandMatch = 0;
 
 					for (auto &x:commands) {
-						int score = x->match(keyBuff);
+						int score = x->match(state.keyBuff);
 
 						if (score == MatchType::FULL) {
 							numExecutions = std::max(1, numExecutions);
 
 							// TODO: move to insert mode if it's an insert command
 							for (int i = 0; i < numExecutions; ++i) {
-								x->execute(keyBuff, model);
+								x->execute(state.keyBuff, model);
 							}
 
 							// Command ran, reset state
@@ -90,8 +91,8 @@ void VM::run(const std::string &fileName) {
 
 					if (commandMatch == 0) {
 						numExecutions = 0;
-						state.setDisplayCommand(false);
-						keyBuff.clear();
+						state.hideCommand();
+						state.keyBuff.clear();
 					}
 				}
 				break;

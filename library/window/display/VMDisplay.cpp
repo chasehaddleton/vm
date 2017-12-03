@@ -58,7 +58,7 @@ void VMDisplay::doUpdate() const {
 	std::advance(it, -(static_cast<std::ptrdiff_t>(cursor.getYPos()) -
 	                   static_cast<std::ptrdiff_t>(cursor.getFirstLineNumber())));
 
-	for (int i = 0; i < vmState.getWindowY(); ++i) {
+	for (int i = 0; i < (vmState.getWindowY() - 1); ++i) {
 		if (it != m->getDataSourceEnd()) {
 			print(it->toString(), i);
 
@@ -73,6 +73,8 @@ void VMDisplay::doUpdate() const {
 			print("~", i);
 		}
 	}
+
+	print(*vmState.getStatusBar(), vmState.getWindowY() - 2);
 
 	if (cursor.getXPos() >= vmState.getWindowX()) {
 		++longLineSkip;

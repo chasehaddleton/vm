@@ -16,6 +16,6 @@ public:
 	void saveFile() const;
 
 	void saveFile(std::string fileName);
-};=
+};
 
 #endif //VM_SAVEABLE_H

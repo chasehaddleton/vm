@@ -3,22 +3,51 @@
 //
 
 #include "VMStatusBar.h"
+#include "../window/model/Cursor.h"
+#include "VMState.h"
 
-const std::string &VMStatusBar::getLeftSide() const {
-	return leftSide;
+std::string VMStatusBar::operator*() {
+	std::string left;
+
+	if (message.empty()) {
+		switch (state->getMode()) {
+			case ModeType::COMMAND: {
+				left = "-- Command Mode --";
+				break;
+			}
+			case ModeType::INSERT : {
+				left = "-- Insert Mode --";
+				break;
+			}
+			case ModeType::MACRO_RECORD: {
+				left = "recording";
+				break;
+			}
+			default: {
+				left = "";
+				break;
+			}
+		}
+	} else {
+		left = message;
+	}
+
+	std::string cur = cursor->toString();
+
+	auto leftOverWidth = state->getWindowX() - left.size() - cur.size();
+
+	std::string padd;
+	for (int i = 0; i < leftOverWidth; ++i) {
+		padd.push_back(' ');
+	}
+	return left + padd + cur;
 }
 
-void VMStatusBar::setLeftSide(const std::string &leftSide) {
-	VMStatusBar::leftSide = leftSide;
+void VMStatusBar::bind(VMState &state, Cursor &cursor) {
+	this->state = &state;
+	this->cursor = &cursor;
 }
 
-const std::string &VMStatusBar::getRightSide() const {
-	return rightSide;
-}
-
-void VMStatusBar::setRightSide(const std::string &rightSide) {
-	VMStatusBar::rightSide = rightSide;
-}
-
-VMStatusBar::VMStatusBar(const std::string &leftSide , const std::string &rightSide) : leftSide(leftSide),
-                                                                                      rightSide(rightSide) {}
+void VMStatusBar::setMessage(const std::string &m) {
+	message = m;
+};
