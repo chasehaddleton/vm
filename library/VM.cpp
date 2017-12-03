@@ -4,6 +4,7 @@
 
 #include "VM.h"
 #include "commands/Exit.h"
+#include "commands/Save.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -113,4 +114,6 @@ void VM::run(const std::string &fileName) {
 
 VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<Exit>(state, "Exit"));
+	commands.push_back(std::make_unique<Save>(state, "Save"));
+
 }

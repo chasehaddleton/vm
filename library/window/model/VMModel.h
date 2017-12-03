@@ -12,9 +12,8 @@
 #include "../history/HistoryFrame.h"
 #include "Cursor.h"
 #include "../../status/VMState.h"
-#include "../../abstractions/Saveable.h"
 
-class VMModel : public Saveable {
+class VMModel {
 	const VMState &vmStatus;
 	VMDataSource ds;
 	Cursor cursor;
@@ -77,10 +76,10 @@ public:
 	void saveHistFrame();
 
 	// Output the DataSource's text to a file
-	void saveFile() const override;
+	void saveFile() const;
 
 	// Output the DataSource's text to a file with the given filename
-	void saveFile(std::string fileName) override ;
+	void saveFile(std::string fileName);
 
 	// Returns an iterator at the beginning of the DataSource
 	VMDataSource::iterator getDataSourceBegin();

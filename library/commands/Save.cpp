@@ -7,7 +7,11 @@
 #include "../input/VMKeyMap.h"
 
 void Save::doExecute(const std::string &command, VMModel &model) const {
-	// TODO: this command should notify save to save the file... somehow we need to tell VM to save...
+	if (command.size() > 3) {
+		model.saveFile(command.substr(3));
+	} else {
+		model.saveFile();
+	}
 }
 
 MatchType Save::doMatch(const std::string &s) const {
