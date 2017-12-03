@@ -3,13 +3,14 @@
 //
 
 #include "MotionUp.h"
+#include "../input/VMKeyMap.h"
 
 void MotionUp::doExecute(const std::string &command, VMModel &model) const {
 	model.moveCursorUp();
 }
 
 MatchType MotionUp::doMatch(const std::string &s) const {
-	if (s == "k") {
+	if (s == "k" || VMKeyMap::UP) {
 		return MatchType::FULL;
 	}
 	return MatchType::NONE;

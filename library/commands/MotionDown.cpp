@@ -3,13 +3,14 @@
 //
 
 #include "MotionDown.h"
+#include "../input/VMKeyMap.h"
 
 void MotionDown::doExecute(const std::string &command, VMModel &model) const {
 	model.moveCursorDown();
 }
 
 MatchType MotionDown::doMatch(const std::string &s) const {
-	if (s == "j") {
+	if (s == "j" || VMKeyMap::DOWN) {
 		return MatchType::FULL;
 	}
 	return MatchType::NONE;

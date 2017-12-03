@@ -3,13 +3,14 @@
 //
 
 #include "MotionLeft.h"
+#include "../input/VMKeyMap.h"
 
 void MotionLeft::doExecute(const std::string &command, VMModel &model) const {
 	model.moveCursorLeft();
 }
 
 MatchType MotionLeft::doMatch(const std::string &s) const {
-	if (s == "h") {
+	if (s == "h" || VMKeyMap::LEFT) {
 		return MatchType::FULL;
 	}
 	return MatchType::NONE;
