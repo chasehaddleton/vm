@@ -9,6 +9,8 @@
 #include "../abstractions/command/Command.h"
 
 class Exit : public Command {
+	std::string partialMatch;
+
 	void doExecute(const std::string &command, VMModel &model) const override;
 
 	MatchType doMatch(const std::string &s) const override;

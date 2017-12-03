@@ -42,7 +42,7 @@ void VM::run(const std::string &fileName) {
 
 		switch (state.getMode()) {
 			case ModeType::COMMAND: {
-				if (c == VMKeyboard::key.ESCAPE) {
+				if (c == VMKeyboard::key.ESCAPE_ASCII) {
 					// Special key which erases the current command, nothing else if then required to be done until
 					// the next keypress
 
@@ -79,15 +79,16 @@ void VM::run(const std::string &fileName) {
 								x->execute(keyBuff, model);
 							}
 
-							// Command ran, clear it's content
-							keyBuff.clear();
-							numExecutions = 0;
+							// Command ran, reset state
+							commandMatch = 0;
+							break;
+						} else {
+							commandMatch += score;
 						}
-
-						commandMatch += score;
 					}
 
 					if (commandMatch == 0) {
+						numExecutions = 0;
 						state.setDisplayCommand(false);
 						keyBuff.clear();
 					}

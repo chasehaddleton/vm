@@ -19,6 +19,6 @@ set(SOURCE_FILES main.cpp library/window/display/VMDisplay.cpp library/window/di
         library/window/model/VMChar.h library/window/model/VMChar.cpp library/status/VMState.cpp library/status/VMState.h
         library/status/VMStatusBar.cpp library/status/VMStatusBar.h library/VM.cpp library/VM.h
         library/abstractions/observer/Observer.cpp library/abstractions/observer/Observer.h library/abstractions/observer/Subject.cpp
-        library/abstractions/observer/Subject.h library/commands/Exit.cpp library/commands/Exit.h)
+        library/abstractions/observer/Subject.h library/commands/Exit.cpp library/commands/Exit.h library/input/VMKeyMap.cpp library/input/VMKeyMap.h)
 add_executable(vm ${SOURCE_FILES})
 target_link_libraries(vm ${CURSES_LIBRARIES})

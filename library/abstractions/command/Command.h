@@ -21,6 +21,7 @@ protected:
 	std::string name;
 
 public:
+
 	explicit Command(VMState &state, const std::string &name);
 
 	virtual ~Command() = default;
