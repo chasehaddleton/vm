@@ -4,11 +4,12 @@
 
 #include "VMDisplay.h"
 #include <ncurses.h>
+#include <cstddef>
 
 void VMDisplay::init() {
 	initscr();
-	xSize = COLS;
-	ySize = LINES;
+	vmState.setWindowX(COLS);
+	vmState.setWindowY(LINES);
 	keypad(stdscr, true);
 	noecho();
 	raw();
@@ -17,11 +18,6 @@ void VMDisplay::init() {
 void VMDisplay::end() {
 	clear();
 	endwin();
-}
-
-VMDisplay::VMDisplay(VMDisplay::dataType &ds, Cursor &c, std::shared_ptr<int> printStart)
-		: ds{ds}, cursor{c}, printStart{std::move(printStart)} {
-	init();
 }
 
 VMDisplay::~VMDisplay() {
@@ -38,7 +34,7 @@ void VMDisplay::print(std::string s, int y) {
 	move(y, 0);
 	clrtoeol();
 
-	if (s.size() > xSize) {
+	if (s.size() > vmState.getWindowX()) {
 		move(y + 1, 0);
 		clrtoeol();
 	}
@@ -47,19 +43,26 @@ void VMDisplay::print(std::string s, int y) {
 }
 
 void VMDisplay::doUpdate() {
+	auto &cursor = m->getCursor();
+	
+	if (cursor.getFirstLineNumber() + vmState.getWindowX() < cursor.getYPos()) {
+		cursor.getFirstLineNumber() += (cursor.getYPos() - (cursor.getFirstLineNumber() + vmState.getWindowX()));
+	}
+
 	int longLineSkip = 0;
-	int displayXPos = static_cast<int>(cursor.getXPos());
-	int displayYPos = static_cast<int>(cursor.getYPos()) - *printStart;
-	auto it = cursor.getIT();
+	auto displayXPos = static_cast<int>(cursor.getXPos());
+	auto displayYPos = static_cast<int>(cursor.getYPos() - cursor.getFirstLineNumber());
+	auto it = cursor.getDSIter();
 
 	// curPos.y + printStart == position in file wrt screen cursor
-	std::advance(it, -displayYPos);
+	std::advance(it, -(static_cast<std::ptrdiff_t>(cursor.getYPos()) -
+	                   static_cast<std::ptrdiff_t>(cursor.getFirstLineNumber())));
 
-	for (int i = 0; i < ySize; ++i) {
-		if (it != ds.end()) {
-			print(**it, i);
+	for (int i = 0; i < vmState.getWindowY(); ++i) {
+		if (it != m->getDataSourceEnd()) {
+			print(it->toString(), i);
 
-			if (it->size() > xSize) {
+			if (it->size() > vmState.getWindowX()) {
 				if ((i - longLineSkip) < cursor.getYPos()) {
 					++longLineSkip;
 				}
@@ -71,9 +74,9 @@ void VMDisplay::doUpdate() {
 		}
 	}
 
-	if (cursor.getXPos() >= xSize) {
+	if (cursor.getXPos() >= vmState.getWindowX()) {
 		++longLineSkip;
-		displayXPos -= xSize;
+		displayXPos -= vmState.getWindowX();
 	}
 
 	move(displayYPos + longLineSkip, displayXPos);
@@ -81,12 +84,10 @@ void VMDisplay::doUpdate() {
 	refresh();
 }
 
-int VMDisplay::getXSize() const {
-	return xSize;
+VMDisplay::VMDisplay(VMState &vmState) : vmState{vmState} {
+	init();
 }
 
-int VMDisplay::getYSize() const {
-	return ySize;
+void VMDisplay::bind(VMModel &vmModel) {
+	m = &vmModel;
 }
-
-// TODO: move handle input into the VMWindow class

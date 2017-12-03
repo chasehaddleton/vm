@@ -9,47 +9,46 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <list>
+#include "VMChar.h"
 
 class VMLine {
-    std::string line;
+	std::list<VMChar> line;
+	int DEFAUT_COLOUR = 0;
+	//std::string line;
 
 public:
     VMLine();
 
     explicit VMLine(std::string str);
 
-    void addChar(size_t pos, char c);   // inserts the given character at the iterator position
-    void removeChar(size_t pos);        // removes the character at the given position
-    size_t tabCount();                  // returns number of tabs on line
-    size_t tabCount(size_t pos);        // returns number of tabs prior to pos on line
-    size_t length();                    // returns length of line
-	size_t size();
+	using iterator = std::list<VMChar>::iterator;               // our iterator is just lists's iterator
+	using const_iterator = std::list<VMChar>::const_iterator;   // our const iterator is just list's const iterator
 
-	std::string toString();             // returns line as a string
-	std::string &operator*();
-    using iterator = std::string::iterator;
+	void addChar(VMLine::iterator &it, char c);         // inserts the given character at the iterator position
+	void removeChar(VMLine::iterator &it);              // removes the character at the given position
+	void replaceChar(VMLine::iterator &it, char c);     // replaces the character at the given position
+	size_t lineWidth();             // returns the sum of the widths of the elements in the line
+	size_t length();                // returns the number of elements in the line
+	size_t size();                  // returns the number of elements in the line
+	bool empty();
+	std::string toString();         // returns line as a string
+	std::string operator*();        // apparently, also returns line as a string (WHY CHASE? WHY?!)
+
+	void updateStartPos(VMLine::iterator it);          // updates the start positions relative to the beginning
+	size_t tabCount();              // returns number of tabs on line
+	size_t tabCount(size_t pos);    // returns number of tabs prior to pos on line
+
+	iterator begin();
+
+	iterator end();
+
+	const_iterator cbegin() const;
+
+	const_iterator cend() const;
 
 };
 
 std::ostream &operator<<(std::ostream &out, VMLine line);
 
 #endif //VM_LINE_H
-
-
-
-// TODO: SOME LEGACY CODE DELETE BEFORE SUBMISSION
-// possibly deprecated iterator wrapper
-/*class iterator {
-    std::string::iterator it;
-    explicit iterator(std::string::iterator inputIt);
-
-public:
-    using iterator_tag = std::bidirectional_iterator_tag;
-
-    bool operator!=(const iterator &other) const;
-    char &operator*() const;
-    char *operator->() const;
-
-    iterator operator++();
-    iterator operator--();
-};*/
