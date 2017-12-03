@@ -20,11 +20,13 @@ public:
 	using iterator = std::list<VMLine>::iterator;
 	using const_iterator = std::list<VMLine>::const_iterator;
 
-    void addChar(iterator it, size_t linePos, char c);
-    void removeChar(iterator it, size_t linePos);
-    void addLine(iterator it, const std::string &str);
+	void addChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c);
 
-	void addLine(iterator it, VMLine line);
+	void removeChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter);
+
+	void addLine(VMDataSource::iterator dsIter, const std::string &str);
+
+	void addLine(VMDataSource::iterator dsIter, VMLine line);
 
 	VMLine removeLine(iterator it);
 
