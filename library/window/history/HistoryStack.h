@@ -10,11 +10,13 @@
 #include "HistoryFrame.h"
 
 class HistoryStack {
-    std::stack<std::shared_ptr<HistoryFrame>> history;
+	std::stack<HistoryFrame> history;
 public:
     void clear();
-    void push(std::shared_ptr<HistoryFrame> &frame);
-    std::shared_ptr<HistoryFrame> pop();
+
+	void push(HistoryFrame &frame);
+
+	HistoryFrame pop();
 };
 
 #endif //VM_HISTORYSTACK_H

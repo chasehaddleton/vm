@@ -140,8 +140,9 @@ std::string VMLine::toString() const {
 	return tmp;
 }
 
+// returns the VMLine as a string
 std::string VMLine::operator*() const {
-	return toString();
+    return toString();
 }
 
 VMLine::iterator VMLine::begin() { return line.begin(); }
@@ -152,11 +153,12 @@ VMLine::const_iterator VMLine::cbegin() const { return line.cbegin(); }
 
 VMLine::const_iterator VMLine::cend() const { return line.cend(); }
 
-bool VMLine::empty() {
-	return !size();
+// Returns true if the line is empty
+bool VMLine::empty() const {
+    return !size();
 }
 
 std::ostream &operator<<(std::ostream &out, VMLine l) {
-	out << l.toString() << std::endl;
+    out << l.toString() << std::endl;
 	return out;
 }

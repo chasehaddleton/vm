@@ -9,6 +9,7 @@
 #include <memory>
 #include "VMDataSource.h"
 #include "../history/HistoryStack.h"
+#include "../history/HistoryFrame.h"
 #include "Cursor.h"
 #include "../../status/VMState.h"
 #include "../../abstractions/Saveable.h"
@@ -18,7 +19,8 @@ class VMModel : public Saveable {
 	VMDataSource ds;
 	Cursor cursor;
 	// TODO: Implement History
-	// HistoryStack undoStack;
+	HistoryFrame undoFrame;
+	HistoryStack undoStack;
 	// HistoryStack redoStack;
 	// TODO: Implement StatusBar
 	// InfoBar statusBar;
