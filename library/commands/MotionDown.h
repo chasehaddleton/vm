@@ -8,8 +8,7 @@
 #include "../abstractions/command/Command.h"
 
 class MotionDown : public Command {
-
-	void doExecute(const std::string &command, VMModel &model) const override;
+	void doExecute(const std::string &command, VMModel &model, int count) const override;
 
 	virtual MatchType doMatch(const std::string &s) const override;
 

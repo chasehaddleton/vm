@@ -61,6 +61,13 @@ public:
 
 	// Moves the cursor down one line
 	void moveDown();
+
+	// Moves the cursor to the start of the line
+	void moveSOL();
+
+	// Moves the cursor to the end of the line
+	void moveEOL();
+
 };
 
 #endif //VM_CURSOR_H

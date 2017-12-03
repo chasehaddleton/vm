@@ -5,14 +5,12 @@
 #include "MotionRight.h"
 #include "../input/VMKeyMap.h"
 
-void MotionRight::doExecute(const std::string &command, VMModel &model) const {
-	model.moveCursorRight();
+void MotionRight::doExecute(const std::string &command, VMModel &model, int count) const {
+	for (int i = 0; i < count; ++i) model.moveCursorRight();
 }
 
 MatchType MotionRight::doMatch(const std::string &s) const {
-	if (s == "l" || VMKeyMap::RIGHT) {
-		return MatchType::FULL;
-	}
+	if (s == "l" || VMKeyMap::RIGHT) { return MatchType::FULL; }
 	return MatchType::NONE;
 }
 

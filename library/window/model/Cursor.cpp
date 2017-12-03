@@ -83,6 +83,21 @@ void Cursor::moveDown() {
 	}
 }
 
+// Moves the cursor to the start of the line
+void Cursor::moveSOL() {
+	globalXPos = 0;
+	xPos = 0;
+	currentLetter = currentLine->begin();
+	insertPos = 0;
+}
+
+// Moves the cursor to the end of the line
+void Cursor::moveEOL() {
+	globalXPos = currentLine->lineWidth();
+	if (!state.isDisplayPastEnd()) { --globalXPos; }
+	updateHorizontalPos();
+}
+
 // Updates the horizontal position of the cursor
 void Cursor::updateHorizontalPos() {
 	// Our position is the lesser of our global xPos or the length of the newLine

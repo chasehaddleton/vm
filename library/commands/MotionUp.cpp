@@ -5,14 +5,12 @@
 #include "MotionUp.h"
 #include "../input/VMKeyMap.h"
 
-void MotionUp::doExecute(const std::string &command, VMModel &model) const {
-	model.moveCursorUp();
+void MotionUp::doExecute(const std::string &command, VMModel &model, int count) const {
+	for (int i = 0; i < count; ++i) model.moveCursorUp();
 }
 
 MatchType MotionUp::doMatch(const std::string &s) const {
-	if (s == "k" || VMKeyMap::UP) {
-		return MatchType::FULL;
-	}
+	if (s == "k" || VMKeyMap::UP) { return MatchType::FULL; }
 	return MatchType::NONE;
 }
 
