@@ -8,6 +8,9 @@
 #include <string>
 #include "ModeType.h"
 #include "VMStatusBar.h"
+#include "../input/VMKeyBuffer.h"
+
+class VMModel;
 
 class VMState {
 	ModeType mode{ModeType::COMMAND};
@@ -23,13 +26,15 @@ class VMState {
 	void reset();
 
 public:
-	std::string keyBuff;
+	VMKeyBuffer keyBuff;
 
 	explicit VMState(const std::string &openFileName = "");
 
 	void addChar(int ch);
 
 	void displayCommand();
+
+	bool isCommandShown() const;
 
 	void hideCommand();
 
@@ -62,6 +67,8 @@ public:
 	void setFileModified(bool fileModified);
 
 	VMStatusBar &getStatusBar();
+
+	void bind(VMModel &m);
 
 	friend class VM;
 };

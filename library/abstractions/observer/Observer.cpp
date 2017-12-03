@@ -3,11 +3,12 @@
 //
 
 #include "Observer.h"
+#include "Subject.h"
 
 Observer::Observer(const std::string &name) : name{name} {}
 
-void Observer::notify() const {
-	doNotify();
+void Observer::notify(const Subject *sub) {
+	doNotify(sub);
 }
 
 bool Observer::operator==(const Observer &other) {

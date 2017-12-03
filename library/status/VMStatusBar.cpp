@@ -5,6 +5,7 @@
 #include "VMStatusBar.h"
 #include "../window/model/Cursor.h"
 #include "VMState.h"
+#include "../input/VMKeyBuffer.h"
 
 std::string VMStatusBar::operator*() {
 	std::string left;
@@ -50,4 +51,17 @@ void VMStatusBar::bind(VMState &state, Cursor &cursor) {
 
 void VMStatusBar::setMessage(const std::string &m) {
 	message = m;
-};
+}
+
+void VMStatusBar::doNotify(const Subject *sub) {
+	if (state->isCommandShown()) {
+		try {
+			auto buff = dynamic_cast<const VMKeyBuffer *>(sub);
+			VMStatusBar::message = buff->toString();
+		} catch (...) {
+			std::cout << "oops";
+		}
+	}
+}
+
+VMStatusBar::VMStatusBar(std::string name) : Observer(name) {}

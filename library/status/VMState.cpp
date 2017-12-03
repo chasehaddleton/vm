@@ -3,6 +3,7 @@
 //
 
 #include "VMState.h"
+#include "../window/model/VMModel.h"
 
 VMState::VMState(const std::string &openFileName) : openFileName(openFileName) {}
 
@@ -43,7 +44,7 @@ bool VMState::isDisplayPastEnd() const {
 
 void VMState::displayCommand() {
 	showCommand = true;
-	statusBar.setMessage(keyBuff);
+	statusBar.setMessage(*keyBuff);
 }
 
 void VMState::hideCommand() {
@@ -89,6 +90,13 @@ VMStatusBar &VMState::getStatusBar() {
 
 void VMState::addChar(int ch) {
 	keyBuff.push_back(ch);
+}
 
-	if (showCommand) statusBar.setMessage(keyBuff);
+bool VMState::isCommandShown() const {
+	return showCommand;
+}
+
+void VMState::bind(VMModel &m) {
+	statusBar.bind(*this, m.getCursor());
+	keyBuff.registerOb(statusBar);
 }

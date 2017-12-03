@@ -25,9 +25,8 @@ bool handleMoveCommand(const int &ch, VMModel &m) {
 void VM::run(const std::string &fileName) {
 	state.setOpenFileName(fileName);
 	VMModel model{state};
+	state.bind(model);
 	display.bind(model);
-	state.getStatusBar().bind(state, model.getCursor());
-	state.keyBuff = "";
 
 	auto vmkIt = keyboard.begin();
 	int numExecutions = 0;
@@ -71,14 +70,14 @@ void VM::run(const std::string &fileName) {
 					int commandMatch = 0;
 
 					for (auto &x:commands) {
-						int score = x->match(state.keyBuff);
+						int score = x->match(*state.keyBuff);
 
 						if (score == MatchType::FULL) {
 							numExecutions = std::max(1, numExecutions);
 
 							// TODO: move to insert mode if it's an insert command
 							for (int i = 0; i < numExecutions; ++i) {
-								x->execute(state.keyBuff, model);
+								x->execute(*state.keyBuff, model);
 							}
 
 							// Command ran, reset state
