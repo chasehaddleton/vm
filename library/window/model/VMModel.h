@@ -25,7 +25,7 @@ class VMModel {
 public:
 	using dataSource = VMDataSource;
 
-	explicit VMModel(const VMState &vmStatus);
+	explicit VMModel(const VMState &vmState);
 
 	VMModel(const VMModel &other) = delete;
 
@@ -90,7 +90,6 @@ public:
 
 	// Returns a reference to VMModel's DataSource
 	VMDataSource &getDataSource();
-
 };
 
 #endif //VM_VMMODEL_H

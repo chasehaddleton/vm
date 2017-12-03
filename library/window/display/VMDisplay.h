@@ -14,13 +14,8 @@
 #include "../../status/VMState.h"
 
 class VMDisplay : public Display {
-	using dataType = VMModel::dataSource;
-	using dataTypeIt = VMModel::dataSource::iterator;
-
 	VMState &vmState;
-	dataType* ds;
-	Cursor* cursor;
-	size_t* printStart;
+	VMModel* m;
 
 	bool enablePreProcessing = false;
 
@@ -35,7 +30,7 @@ public:
 
 	~VMDisplay();
 
-	void bind(VMModel vmModel);
+	void bind(VMModel &vmModel);
 
 	void resize();
 

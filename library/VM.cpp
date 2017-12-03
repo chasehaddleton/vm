@@ -23,6 +23,9 @@ bool handleMoveCommand(const int &ch, VMModel &m) {
 void VM::run(const std::string &fileName) {
 	state.setOpenFileName(fileName);
 	VMModel model{state};
+	display.bind(model);
+	keyBuff = "";
+
 	auto vmkIt = keyboard.begin();
 	int numExecutions = 0;
 
@@ -55,6 +58,8 @@ void VM::run(const std::string &fileName) {
 							numExecutions = numExecutions * 10 + (c - '0');
 							continue;
 						}
+					} else if (keyBuff.size() == 2 && keyBuff.at(0) == 'q') {
+						state.setRunning(false);
 					}
 
 					keyBuff.push_back(c);

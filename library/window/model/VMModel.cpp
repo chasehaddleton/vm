@@ -4,33 +4,33 @@
 
 #include "VMModel.h"
 
-VMModel::VMModel(const VMState &vmStatus) : vmStatus{vmStatus}, ds{vmStatus.getOpenFileName()}, cursor{ds} {}
+VMModel::VMModel(const VMState &vmState) : vmStatus{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState} {}
 
 // Adds a character at the current Cursor character position
 void VMModel::addChar(char c) {
 	// Adds a character at the current Cursor character position
-	ds.addChar(cursor.getIT(), cursor.getLineIter(), c);
+	ds.addChar(cursor.getDSIter(), cursor.getLineIter(), c);
 	cursor.moveRight();
 }
 
 // Removes the character at the current Cursor character position
 void VMModel::removeChar() {
-	ds.removeChar(cursor.getIT(), cursor.getLineIter());
+	ds.removeChar(cursor.getDSIter(), cursor.getLineIter());
 	cursor.moveLeft();
 }
 
 // Adds a line at the current Cursor line position using a string as input
 void VMModel::addLine(std::string s) {
-	ds.addLine(cursor.getIT(), s);
+	ds.addLine(cursor.getDSIter(), s);
 }
 
 void VMModel::addLine(VMLine line) {
-	ds.addLine(cursor.getIT(), line);
+	ds.addLine(cursor.getDSIter(), line);
 }
 
 // Remove the line at the current Cursor line position
 void VMModel::removeLine() {
-	ds.removeLine(cursor.getIT());
+	ds.removeLine(cursor.getDSIter());
 }
 
 // Move the cursor left one character

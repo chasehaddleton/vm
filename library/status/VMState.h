@@ -12,7 +12,7 @@
 class VMState {
 	ModeType mode{ModeType::COMMAND};
 	VMStatusBar statusBar{};
-	std::string openFileName{};
+	std::string openFileName{""};
 	bool running{true};
 	bool displayPastEnd{false};
 	bool displayCommand{false};
