@@ -98,6 +98,32 @@ void Cursor::moveEOL() {
 	updateHorizontalPos();
 }
 
+// Returns true if cursor is at the start of a line
+bool Cursor::startOfLine() {
+	return xPos == 0;
+}
+
+// Returns true if cursor is at the end of a line
+bool Cursor::endOfLine() {
+	size_t width = currentLine->lineWidth();
+	if (state.isDisplayPastEnd()) { return xPos == width; }
+	return xPos == width - 1;
+}
+
+// Returns true if cursor is at the start of the data
+bool Cursor::startOfData() {
+	return (yPos == 0) && (xPos == 0);
+}
+
+// Returns true if cursor is at the end of the data
+bool Cursor::endOfData() {
+	auto lastLineIter = ds.end();
+	--lastLineIter;
+	auto lastLetterIter = lastLineIter->end();
+	--lastLetterIter;
+	return (currentLine == lastLineIter) && (currentLetter == lastLetterIter);
+}
+
 // Updates the horizontal position of the cursor
 void Cursor::updateHorizontalPos() {
 	// Our position is the lesser of our global xPos or the length of the newLine

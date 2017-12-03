@@ -68,6 +68,18 @@ public:
 	// Moves the cursor to the end of the line
 	void moveEOL();
 
+	// Returns true if cursor is at the start of a line
+	bool startOfLine();
+
+	// Returns true if cursor is at the end of a line
+	bool endOfLine();
+
+	// Returns true if cursor is at the start of the data
+	bool startOfData();
+
+	// Returns true if cursor is at the end of the data
+	bool endOfData();
+
 };
 
 #endif //VM_CURSOR_H

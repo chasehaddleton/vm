@@ -10,7 +10,7 @@
 class MotionRight : public Command {
 	void doExecute(const std::string &command, VMModel &model, int count) const override;
 
-	virtual MatchType doMatch(const std::string &s) const override;
+	MatchType doMatch(const std::string &s) const override;
 
 public:
 	MotionRight(VMState &vmState, const std::string &name);
