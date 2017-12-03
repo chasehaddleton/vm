@@ -4,9 +4,7 @@
 
 #include "VMModel.h"
 
-VMModel::VMModel() : ds{}, cursor{ds} {};
-
-VMModel::VMModel(const std::string &fileName) : ds{fileName}, cursor{ds} {}
+VMModel::VMModel(const VMState &vmStatus) : vmStatus{vmStatus}, ds{vmStatus.getOpenFileName()}, cursor{ds} {}
 
 void VMModel::addChar(size_t linePos, char c) {
 	ds.addChar(cursor.getIT(), cursor.getInsertPos(), c);
@@ -47,10 +45,10 @@ VMDataSource::iterator VMModel::end() {
 	return ds.end();
 }
 
-Cursor &VMModel::getCursor() {
-	return cursor;
+Cursor *VMModel::getCursor() {
+	return &cursor;
 }
 
-VMDataSource &VMModel::getDataSource() {
-	return ds;
+VMDataSource *VMModel::getDataSource() {
+	return &ds;
 }

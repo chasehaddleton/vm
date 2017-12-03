@@ -6,9 +6,9 @@
 #define VM_MATCHTYPE_H
 
 enum MatchType {
-	FULL,
-	PARTIAL,
-	NONE
+	NONE = 0,
+	PARTIAL = 1,
+	FULL = 2
 };
 
 #endif //VM_MATCHTYPE_H

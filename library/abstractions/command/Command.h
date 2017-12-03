@@ -5,7 +5,7 @@
 #ifndef VM_COMMAND_H
 #define VM_COMMAND_H
 
-#include "../../MatchType.h"
+#include "../../status/MatchType.h"
 #include <string>
 
 class Command {

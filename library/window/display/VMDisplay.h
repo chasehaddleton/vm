@@ -7,22 +7,22 @@
 
 #include <list>
 #include <string>
-#include "../../Point.h"
 #include <memory>
 #include "../../abstractions/Display.h"
 #include "../model/VMModel.h"
 #include "../model/Cursor.h"
+#include "../../status/VMState.h"
 
 class VMDisplay : public Display {
 	using dataType = VMModel::dataSource;
 	using dataTypeIt = VMModel::dataSource::iterator;
 
-	dataType &ds;
-	Cursor &cursor;
-	std::shared_ptr<int> printStart;
+	VMState &vmState;
+	dataType* ds;
+	Cursor* cursor;
+	size_t* printStart;
 
-	int xSize = 0;
-	int ySize = 0;
+	bool enablePreProcessing = false;
 
 	void init();
 
@@ -31,20 +31,15 @@ class VMDisplay : public Display {
 	void doUpdate() override;
 
 public:
-
-	VMDisplay(dataType &ds, Cursor &c, std::shared_ptr<int> printStart);
+	explicit VMDisplay(VMState &vmState);
 
 	~VMDisplay();
+
+	void bind(VMModel vmModel);
 
 	void resize();
 
 	void print(std::string s, int y);
-
-	bool handleInput(int ch);
-
-	int getXSize() const;
-
-	int getYSize() const;
 };
 
 

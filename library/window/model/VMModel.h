@@ -10,8 +10,10 @@
 #include "VMDataSource.h"
 #include "../history/HistoryStack.h"
 #include "Cursor.h"
+#include "../../status/VMState.h"
 
 class VMModel {
+	const VMState &vmStatus;
 	VMDataSource ds;
 	Cursor cursor;
 	// TODO: Implement History
@@ -23,9 +25,11 @@ class VMModel {
 public:
 	using dataSource = VMDataSource;
 
-	VMModel();
+	explicit VMModel(const VMState &vmStatus);
 
-	explicit VMModel(const std::string &fileName);
+	VMModel(const VMModel &other) = delete;
+
+	VMModel &operator=(const VMModel &other) = delete;
 
 	void addChar(size_t linePos, char c);
 
@@ -51,13 +55,21 @@ public:
 
 	void saveFile(std::string);
 
+	void moveLeft();
+
+	void moveRight();
+
+	void moveUp();
+
+	void moveDown();
+
 	dataSource::iterator begin();
 
 	dataSource::iterator end();
 
-	Cursor &getCursor();
+	Cursor *getCursor();
 
-	VMDataSource &getDataSource();
+	VMDataSource *getDataSource();
 
 };
 
