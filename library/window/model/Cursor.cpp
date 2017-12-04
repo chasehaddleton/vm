@@ -85,14 +85,15 @@ void Cursor::moveDown() {
 
 // Moves the cursor to the start of the line
 void Cursor::moveSOL() {
+	currentLetter = currentLine->begin();
 	globalXPos = 0;
 	xPos = 0;
-	currentLetter = currentLine->begin();
 	insertPos = 0;
 }
 
 // Moves the cursor to the end of the line
 void Cursor::moveEOL() {
+	currentLetter = --currentLine->end();
 	globalXPos = currentLine->lineWidth();
 	if (!state.isDisplayPastEnd()) { --globalXPos; }
 	updateHorizontalPos();

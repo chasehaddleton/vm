@@ -21,9 +21,9 @@ void MoveToLineNum::doExecute(const std::string &command, VMModel &model, int co
 }
 
 MatchType MoveToLineNum::doMatch(const std::string &s) const {
-	if (regex_match(s, partialMatch)) {
+	if (std::regex_match(s, partialMatch)) {
 		return MatchType::PARTIAL;
-	} else if (regex_match(s.substr(0, s.size() - 2), partialMatch) && s.substr(s.size() - 2) == VMKeyMap::ENTER) {
+	} else if (std::regex_match(s.substr(0, s.size() - 2), partialMatch) && s.substr(s.size() - 2) == VMKeyMap::ENTER) {
 		return MatchType::FULL;
 	} else {
 		return MatchType::NONE;

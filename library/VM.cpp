@@ -16,6 +16,8 @@
 #include "commands/MoveToLastLine.h"
 #include "commands/ScrollDownPage.h"
 #include "commands/ScrollUpPage.h"
+#include "commands/MoveToFirstNonBlank.h"
+#include "commands/SearchForward.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -67,7 +69,7 @@ void VM::run(const std::string &fileName) {
 				} else {
 					if (state.keyBuff.empty()) {
 						// Check for special key-character/commands
-						if (c == ':') {
+						if (c == ':' || c == '/') {
 							state.displayCommand();
 							state.addChar(c);
 							continue;
@@ -150,4 +152,7 @@ VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<Insert>(state, "Insert"));
 	commands.push_back(std::make_unique<ScrollDownPage>(state, "Scroll Down a Page"));
 	commands.push_back(std::make_unique<ScrollUpPage>(state, "Scroll Up a Page"));
+	commands.push_back(std::make_unique<MoveToFirstNonBlank>(state, "Move to First Non Blank Line"));
+	commands.push_back(std::make_unique<SearchForward>(state, "Search Forward"));
+
 }

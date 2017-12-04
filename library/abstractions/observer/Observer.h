@@ -20,6 +20,8 @@ public:
 	void notify(const Subject *sub);
 
 	bool operator==(const Observer &other);
+
+	const std::string &getName() const;
 };
 
 #endif //VM_OBSERVER_H
