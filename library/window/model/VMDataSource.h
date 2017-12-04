@@ -24,14 +24,20 @@ public:
 	using iterator = std::list<VMLine>::iterator;
 	using const_iterator = std::list<VMLine>::const_iterator;
 
-	//returns the number of lines in VMDataSource
+	// Returns the number of lines in VMDataSource
 	size_t size();
 
+	// Adds a character to the line at the given lineIter position
 	void addChar(VMDataSource::iterator &dsIter, VMLine::iterator &lineIter, char c);
 
+	// Remove a character from the line at the given lineIter position
 	void removeChar(VMDataSource::iterator &dsIter, VMLine::iterator &lineIter);
 
+	// Replace the character at the given lineIter position
 	void replaceChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c);
+
+	// Joins all lines between two iterators, startIter must be before endIter or undefined behaviour
+	void joinLines(VMDataSource::iterator startIter, VMDataSource::iterator endIter);
 
 	void addLine(VMDataSource::iterator dsIter, const std::string &str);
 

@@ -58,6 +58,7 @@ void VMLine::replaceChar(VMLine::iterator &it, char c) {
 	if (tmp.getChar() == '\t') { updateStartPos(it); }
 }
 
+
 // updates the start positions relative to the beginning
 void VMLine::updateStartPos(VMLine::iterator &it) {
 	size_t previousStartPos;
