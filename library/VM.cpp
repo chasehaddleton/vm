@@ -3,10 +3,12 @@
 //
 
 #include "VM.h"
-#include "commands/Exit.h"
-#include "commands/Save.h"
+#include "commands/Quit.h"
+#include "commands/Write.h"
 #include "commands/FileInfo.h"
 #include "commands/DeleteLine.h"
+#include "commands/WriteQuit.h"
+#include "commands/ReplaceChar.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -113,9 +115,11 @@ void VM::run(const std::string &fileName) {
 }
 
 VM::VM() : state{}, display{state}, keyboard{} {
-	commands.push_back(std::make_unique<Exit>(state, "Exit"));
-	commands.push_back(std::make_unique<Save>(state, "Save"));
+	commands.push_back(std::make_unique<Quit>(state, "Quit"));
+	commands.push_back(std::make_unique<Write>(state, "Write"));
 	commands.push_back(std::make_unique<FileInfo>(state, "File Info"));
 	commands.push_back(std::make_unique<DeleteLine>(state, "Delete Line"));
+	commands.push_back(std::make_unique<WriteQuit>(state, "Write Quit"));
+	commands.push_back(std::make_unique<ReplaceChar>(state, "Replace Char"));
 
 }

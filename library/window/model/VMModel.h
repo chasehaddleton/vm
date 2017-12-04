@@ -34,10 +34,12 @@ public:
 	VMModel &operator=(const VMModel &other) = delete;
 
 	// Adds a character at the current Cursor character position
-	void addChar(char c);
+	void addChar(int c);
 
 	// Removes the character at the current Cursor character position
 	void removeChar();
+
+	void replaceChar(int c);
 
 	// Adds the next word in the line (CURRENTLY NOT NEEDED)
 	void addWord(std::string);
@@ -78,7 +80,7 @@ public:
 	// Redo the last undone command
 	void redo();
 
-	// Save the current HistoryFrame
+	// Write the current HistoryFrame
 	void saveHistFrame();
 
 	// Output the DataSource's text to a file

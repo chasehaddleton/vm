@@ -2,11 +2,11 @@
 // Created by Chase Haddleton on 2017-12-03.
 //
 
-#include "Save.h"
+#include "Write.h"
 
 #include "../input/VMKeyMap.h"
 
-void Save::doExecute(const std::string &command, VMModel &model, int count) const {
+void Write::doExecute(const std::string &command, VMModel &model, int count) const {
 	if (command.size() > 3) {
 		model.saveFile(command.substr(3, command.size() - 3 - 2));
 	} else if (state.isFileModified()) {
@@ -14,7 +14,7 @@ void Save::doExecute(const std::string &command, VMModel &model, int count) cons
 	}
 }
 
-MatchType Save::doMatch(const std::string &s) const {
+MatchType Write::doMatch(const std::string &s) const {
 	if (s == ":" || s == ":w" || s == ":w ") {
 		return MatchType::PARTIAL;
 	}
@@ -33,4 +33,4 @@ MatchType Save::doMatch(const std::string &s) const {
 	return MatchType::NONE;
 }
 
-Save::Save(VMState &vmState, const std::string &name) : Command(vmState, name) {}
+Write::Write(VMState &vmState, const std::string &name) : Command(vmState, name) {}
