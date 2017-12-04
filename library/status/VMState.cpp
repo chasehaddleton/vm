@@ -76,6 +76,7 @@ int VMState::getWindowY() const {
 
 void VMState::setWindowY(int windowY) {
 	VMState::windowY = windowY;
+	scrollAmount = windowY / 2;
 }
 
 bool VMState::isFileModified() const {
@@ -84,6 +85,14 @@ bool VMState::isFileModified() const {
 
 void VMState::setFileModified(bool fileModified) {
 	VMState::fileModified = fileModified;
+}
+
+bool VMState::isEnableSaveHistory() {
+	return enableHistorySave;
+}
+
+void VMState::setEnableHistorySave(bool enable) {
+	enableHistorySave = enable;
 }
 
 VMStatusBar &VMState::getStatusBar() {
@@ -109,4 +118,20 @@ void VMState::resetCommandState() {
 	}
 
 	keyBuff.clear();
+}
+
+int VMState::getScrollAmount() const {
+	return scrollAmount;
+}
+
+void VMState::setScrollAmount(int scrollAmount) {
+	VMState::scrollAmount = scrollAmount;
+}
+
+void VMState::setCurrentCount(int count) {
+	currentCount = count;
+}
+
+int VMState::getCurrentCount() {
+	return currentCount;
 }

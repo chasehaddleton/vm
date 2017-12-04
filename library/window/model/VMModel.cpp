@@ -7,7 +7,7 @@
 VMModel::VMModel(VMState &vmState) : state{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState} {}
 
 // Adds a character at the current Cursor character position
-void VMModel::addChar(char c) {
+void VMModel::addChar(int c) {
 	// Adds a character at the current Cursor character position
 	ds.addChar(cursor.getDSIter(), cursor.getLineIter(), c);
 	cursor.moveRight();
@@ -63,6 +63,9 @@ void VMModel::undo() {}
 // Redo the last undone command
 void VMModel::redo() {}
 
+// Saves the current history
+void VMModel::saveHistory() {}
+
 // Output the DataSource's text to a file
 void VMModel::saveFile() const {
 	try {
@@ -105,4 +108,8 @@ VMDataSource &VMModel::getDataSource() {
 
 size_t VMModel::size() const {
 	return ds.size();
+}
+
+void VMModel::replaceChar(int c) {
+	ds.replaceChar(cursor.getDSIter(), cursor.getLineIter(), c);
 }

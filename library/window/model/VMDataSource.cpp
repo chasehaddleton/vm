@@ -92,6 +92,10 @@ size_t VMDataSource::size() const {
 	return lines.size();
 }
 
+void VMDataSource::replaceChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c) {
+	dsIter->replaceChar(lineIter, c);
+}
+
 // Prints our DataSource to the provided output stream
 std::ostream &operator<<(std::ostream &out, VMDataSource &ds) {
 	for (auto &line:ds) {

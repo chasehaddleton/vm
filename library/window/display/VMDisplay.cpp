@@ -50,7 +50,7 @@ void VMDisplay::doUpdate() const {
 	if (cursor.getYPos() < cursor.getFirstLineNumber()) {
 		cursor.getFirstLineNumber() = cursor.getYPos();
 	} else if (cursor.getYPos() >= (cursor.getFirstLineNumber() + ySize - 2)) {
-		cursor.getFirstLineNumber() += cursor.getYPos() - (cursor.getFirstLineNumber() + state.getWindowY() - 3);
+		cursor.getFirstLineNumber() += cursor.getYPos() - (cursor.getFirstLineNumber() + state.getWindowY() - 2);
 	}
 
 	int longLineSkip = 0;

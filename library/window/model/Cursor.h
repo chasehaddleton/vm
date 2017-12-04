@@ -74,6 +74,9 @@ public:
 	// Moves the cursor to the given line
 	void moveToLine(size_t lineNum);
 
+	// Moves the cursor to the last line
+	void moveToLastLine();
+
 	// Moves the cursor to the end of the data
 	void moveEOD();
 
@@ -88,6 +91,10 @@ public:
 
 	// Returns true if cursor is at the end of the data
 	bool endOfData();
+
+	void moveFrameDown();
+
+	void moveFrameUp();
 
 	std::string toString() const;
 };

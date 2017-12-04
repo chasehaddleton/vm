@@ -2,10 +2,10 @@
 // Created by Chase Haddleton on 2017-12-02.
 //
 
-#include "Exit.h"
+#include "Quit.h"
 #include "../input/VMKeyMap.h"
 
-void Exit::doExecute(const std::string &command, VMModel &model, int count) const {
+void Quit::doExecute(const std::string &command, VMModel &model, int count) const {
 	if (state.isFileModified() && command != (":q!" + VMKeyMap::ENTER)) {
 		state.getStatusBar().setMessage("ERR: file modified, save or use ! to override");
 		return;
@@ -14,7 +14,7 @@ void Exit::doExecute(const std::string &command, VMModel &model, int count) cons
 	state.setRunning(false);
 }
 
-MatchType Exit::doMatch(const std::string &s) const {
+MatchType Quit::doMatch(const std::string &s) const {
 	if (s == ":" || s == ":q") {
 		return MatchType::PARTIAL;
 	}
@@ -28,4 +28,4 @@ MatchType Exit::doMatch(const std::string &s) const {
 	return MatchType::NONE;
 }
 
-Exit::Exit(VMState &vmState, const std::string &name) : Command(vmState, name) {}
+Quit::Quit(VMState &vmState, const std::string &name) : Command(vmState, name) {}

@@ -110,10 +110,18 @@ void Cursor::moveSOD() {
 
 // Moves the cursor to the given line
 void Cursor::moveToLine(size_t lineNum) {
-	std::ptrdiff_t lineDiff = static_cast<std::ptrdiff_t>(lineNum) - static_cast<std::ptrdiff_t>(yPos);
-	if (-lineDiff > yPos && yPos + lineDiff <= ds.size() - 1) { std::advance(currentLine, lineDiff); }
-	else if (-lineDiff > yPos) { std::advance(currentLine, -static_cast<std::ptrdiff_t>(yPos)); }
-	else { std::advance(currentLine, static_cast<std::ptrdiff_t>(ds.size()) - static_cast<std::ptrdiff_t>(yPos)); }
+	lineNum = std::max(size_t{1}, lineNum);
+	--lineNum;
+
+	if (lineNum > ds.size()) {
+		return moveToLine(std::min(lineNum, ds.size()));
+	}
+
+	std::advance(currentLine, -(static_cast<std::ptrdiff_t>(yPos) - static_cast<std::ptrdiff_t>(lineNum)));
+
+	currentLetter = currentLine->begin();
+	xPos = 0;
+	yPos = lineNum;
 }
 
 // Moves the cursor to the end of the data
@@ -124,6 +132,16 @@ void Cursor::moveEOD() {
 	xPos = globalXPos;
 	yPos = ds.size();
 	insertPos = currentLine->size() - 1;
+}
+
+// Moves the cursor to the last line
+void Cursor::moveToLastLine() {
+	currentLine = --(ds.end());
+	currentLetter = currentLine->begin();
+	globalXPos = 0;
+	xPos = 0;
+	yPos = ds.size();
+	insertPos = 0;
 }
 
 // Returns true if cursor is at the start of a line
@@ -183,4 +201,18 @@ void Cursor::updateHorizontalPos() {
 
 std::string Cursor::toString() const {
 	return "(" + std::to_string(yPos + 1) + ":" + std::to_string(xPos + 1) + ")";
+}
+
+void Cursor::moveFrameDown() {
+	if (firstLineNumber + state.getWindowY() + 1 < ds.size()) {
+		++firstLineNumber;
+	}
+	moveDown();
+}
+
+void Cursor::moveFrameUp() {
+	if (firstLineNumber > 0) {
+		--firstLineNumber;
+	}
+	moveUp();
 }
