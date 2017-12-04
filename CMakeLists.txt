@@ -19,6 +19,6 @@ set(SOURCE_FILES main.cpp library/window/display/VMDisplay.cpp library/window/di
         library/abstractions/observer/Subject.h library/commands/Exit.cpp library/commands/Exit.h library/input/VMKeyMap.cpp
         library/input/VMKeyMap.h library/commands/Save.cpp library/commands/Save.h library/abstractions/Display.cpp
         library/abstractions/Display.h library/abstractions/Model.cpp library/abstractions/Model.h
-        library/abstractions/Saveable.cpp library/abstractions/Saveable.h library/input/VMKeyBuffer.cpp library/input/VMKeyBuffer.h library/commands/FileInfo.cpp library/commands/FileInfo.h library/commands/JumpToLastLine.cpp library/commands/JumpToLastLine.h library/commands/DeleteLine.cpp library/commands/DeleteLine.h)
+        library/abstractions/Saveable.cpp library/abstractions/Saveable.h library/input/VMKeyBuffer.cpp library/input/VMKeyBuffer.h library/commands/FileInfo.cpp library/commands/FileInfo.h library/commands/JumpToLastLine.cpp library/commands/JumpToLastLine.h library/commands/DeleteLine.cpp library/commands/DeleteLine.h library/commands/Insert.h library/commands/Insert.cpp)
 add_executable(vm ${SOURCE_FILES})
 target_link_libraries(vm ${CURSES_LIBRARIES})

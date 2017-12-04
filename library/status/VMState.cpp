@@ -86,6 +86,14 @@ void VMState::setFileModified(bool fileModified) {
 	VMState::fileModified = fileModified;
 }
 
+bool VMState::isEnableSaveHistory() {
+	return enableHistorySave;
+}
+
+void VMState::setEnableHistorySave(bool enable) {
+	enableHistorySave = enable;
+}
+
 VMStatusBar &VMState::getStatusBar() {
 	return statusBar;
 }
@@ -109,4 +117,12 @@ void VMState::resetCommandState() {
 	}
 
 	keyBuff.clear();
+}
+
+void VMState::setCurrentCount(int count) {
+	currentCount = count;
+}
+
+int VMState::getCurrentCount() {
+	return currentCount;
 }

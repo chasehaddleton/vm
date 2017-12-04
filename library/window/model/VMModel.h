@@ -79,7 +79,7 @@ public:
 	void redo();
 
 	// Save the current HistoryFrame
-	void saveHistFrame();
+	void saveHistory();
 
 	// Output the DataSource's text to a file
 	void saveFile() const;

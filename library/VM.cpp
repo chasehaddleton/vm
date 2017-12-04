@@ -97,8 +97,26 @@ void VM::run(const std::string &fileName) {
 				break;
 			}
 			case ModeType::INSERT: {
-
-				break;
+				if (c == VMKeyboard::key.ESCAPE_ASCII) {
+					state.setEnableHistorySave(true);
+					model.saveHistory();
+					ModeType::COMMAND;
+					state.resetCommandState();
+				}
+				else if (handleMoveCommand(c, model)) {
+					model.saveHistory();
+				}
+				else if ((' ' <= c) && (c <= '~')) {
+					model.addChar(c);
+					state.addChar(c);
+				}
+				else if (c == 127) {
+					model.removeChar();
+					state.addChar(c);
+				}
+				else {
+					continue;
+				}
 			}
 			case ModeType::MACRO_RECORD: {
 				break;
