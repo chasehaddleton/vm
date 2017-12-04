@@ -8,13 +8,13 @@
 
 #include "../abstractions/command/Command.h"
 
-class JumpToLastLine : public Command {
+class MoveToLastLine : public Command {
 	void doExecute(const std::string &command, VMModel &model, int count) const override;
 
 	MatchType doMatch(const std::string &s) const override;
 
 public:
-	JumpToLastLine(VMState &state, const std::string &name);
+	MoveToLastLine(VMState &state, const std::string &name);
 };
 
 

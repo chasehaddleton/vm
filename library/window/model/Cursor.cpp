@@ -120,8 +120,10 @@ void Cursor::moveToLine(size_t lineNum) {
 	std::advance(currentLine, -(static_cast<std::ptrdiff_t>(yPos) - static_cast<std::ptrdiff_t>(lineNum)));
 
 	currentLetter = currentLine->begin();
+	globalXPos = 0;
 	xPos = 0;
 	yPos = lineNum;
+	insertPos = 0;
 }
 
 // Moves the cursor to the end of the data
@@ -130,7 +132,7 @@ void Cursor::moveEOD() {
 	currentLetter = --(currentLine->end());
 	globalXPos = currentLine->lineWidth();
 	xPos = globalXPos;
-	yPos = ds.size();
+	yPos = ds.size() - 1;
 	insertPos = currentLine->size() - 1;
 }
 
@@ -140,7 +142,7 @@ void Cursor::moveToLastLine() {
 	currentLetter = currentLine->begin();
 	globalXPos = 0;
 	xPos = 0;
-	yPos = ds.size();
+	yPos = ds.size() - 1;
 	insertPos = 0;
 }
 
