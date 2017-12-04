@@ -23,6 +23,9 @@ public:
 	using iterator = std::list<VMLine>::iterator;
 	using const_iterator = std::list<VMLine>::const_iterator;
 
+	//returns the number of lines in VMDataSource
+	size_t size();
+
 	void addChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c);
 
 	void removeChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter);

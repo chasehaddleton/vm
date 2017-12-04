@@ -66,6 +66,12 @@ public:
 	// Move the cursor down one line
 	void moveCursorDown();
 
+	// Move the cursor to the start of the line
+	void moveCursorSOL();
+
+	// Move the cursor to the end of the line
+	void moveCursorEOL();
+
 	// Undo the last top-level command
 	void undo();
 

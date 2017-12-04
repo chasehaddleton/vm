@@ -51,6 +51,12 @@ void VMModel::moveCursorUp() { cursor.moveUp(); }
 // Move the cursor down one line
 void VMModel::moveCursorDown() { cursor.moveDown(); }
 
+// Move the cursor to the start of the line
+void VMModel::moveCursorSOL() { cursor.moveSOL(); }
+
+// Move the cursor to the end of the line
+void VMModel::moveCursorEOL() { cursor.moveEOL(); }
+
 // Undo the last top-level command
 void VMModel::undo() {}
 

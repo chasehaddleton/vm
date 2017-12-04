@@ -25,6 +25,10 @@ VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
 	f.close();
 }
 
+size_t VMDataSource::size() {
+	return lines.size();
+};
+
 // Add a character to the line pointed to by iterator at the given position
 void VMDataSource::addChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c) {
 	dsIter->addChar(lineIter, c);

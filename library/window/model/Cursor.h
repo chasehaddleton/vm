@@ -62,6 +62,33 @@ public:
 	// Moves the cursor down one line
 	void moveDown();
 
+	// Moves the cursor to the start of the line
+	void moveSOL();
+
+	// Moves the cursor to the end of the line
+	void moveEOL();
+
+	// Moves the cursor to the start of the data
+	void moveSOD();
+
+	// Moves the cursor to the given line
+	void moveToLine(size_t lineNum);
+
+	// Moves the cursor to the end of the data
+	void moveEOD();
+
+	// Returns true if cursor is at the start of a line
+	bool startOfLine();
+
+	// Returns true if cursor is at the end of a line
+	bool endOfLine();
+
+	// Returns true if cursor is at the start of the data
+	bool startOfData();
+
+	// Returns true if cursor is at the end of the data
+	bool endOfData();
+
 	std::string toString() const;
 };
 
