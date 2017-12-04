@@ -96,6 +96,10 @@ public:
 
 	void moveFrameUp();
 
+	void movePageDown();
+
+	void movePageUp();
+
 	std::string toString() const;
 };
 

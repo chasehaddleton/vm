@@ -8,13 +8,13 @@
 
 #include "../abstractions/command/Command.h"
 
-class ScrollUpPage : public Command {
+class ScrollUpLine : public Command {
 	void doExecute(const std::string &command, VMModel &model, int count) const override;
 
 	MatchType doMatch(const std::string &s) const override;
 
 public:
-	ScrollUpPage(VMState &state, const std::string &name);
+	ScrollUpLine(VMState &state, const std::string &name);
 };
 
 

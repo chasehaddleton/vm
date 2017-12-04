@@ -2,11 +2,11 @@
 // Created by Chase Haddleton on 2017-12-03.
 //
 
-#include "ScrollUpPage.h"
+#include "ScrollUpLine.h"
 
-ScrollUpPage::ScrollUpPage(VMState &state, const std::string &name) : Command(state, name) {}
+ScrollUpLine::ScrollUpLine(VMState &state, const std::string &name) : Command(state, name) {}
 
-void ScrollUpPage::doExecute(const std::string &command, VMModel &model, int count) const {
+void ScrollUpLine::doExecute(const std::string &command, VMModel &model, int count) const {
 	if (count != 1) {
 		state.setScrollAmount(count);
 	}
@@ -16,7 +16,7 @@ void ScrollUpPage::doExecute(const std::string &command, VMModel &model, int cou
 	}
 }
 
-MatchType ScrollUpPage::doMatch(const std::string &s) const {
+MatchType ScrollUpLine::doMatch(const std::string &s) const {
 	if (s == "^U") {
 		return MatchType::FULL;
 	} else {

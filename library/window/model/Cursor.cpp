@@ -218,3 +218,13 @@ void Cursor::moveFrameUp() {
 	}
 	moveUp();
 }
+
+void Cursor::movePageDown() {
+	firstLineNumber = std::min(firstLineNumber + state.getWindowY(),  ds.size() - 1);
+	moveToLine(std::min(yPos + state.getWindowY(), ds.size() - 1));
+}
+
+void Cursor::movePageUp() {
+	firstLineNumber = std::max(firstLineNumber - state.getWindowY(), size_t{0});
+	moveToLine(std::max(yPos - state.getWindowY(), size_t{0}));
+}

@@ -10,10 +10,11 @@
 #include "commands/WriteQuit.h"
 #include "commands/ReplaceChar.h"
 #include "commands/MoveToLineNum.h"
-#include "commands/ScrollDownPage.h"
-#include "commands/ScrollUpPage.h"
+#include "commands/ScrollDownLine.h"
+#include "commands/ScrollUpLine.h"
 #include "commands/Insert.h"
 #include "commands/MoveToLastLine.h"
+#include "commands/ScrollDownPage.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -142,9 +143,9 @@ VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<WriteQuit>(state, "Write Quit"));
 	commands.push_back(std::make_unique<ReplaceChar>(state, "Replace Char"));
 	commands.push_back(std::make_unique<MoveToLineNum>(state, "Move to Line Number"));
-	commands.push_back(std::make_unique<ScrollDownPage>(state, "Move the Frame Down"));
-	commands.push_back(std::make_unique<ScrollUpPage>(state, "Move the Frame Up"));
+	commands.push_back(std::make_unique<ScrollDownLine>(state, "Move the Frame Down"));
+	commands.push_back(std::make_unique<ScrollUpLine>(state, "Move the Frame Up"));
 	commands.push_back(std::make_unique<MoveToLastLine>(state, "Move to the Last Line"));
 	commands.push_back(std::make_unique<Insert>(state, "Insert"));
-
+	commands.push_back(std::make_unique<ScrollDownPage>(state, "Scroll Down a Page"));
 }
