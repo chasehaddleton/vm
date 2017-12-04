@@ -30,12 +30,12 @@ size_t VMDataSource::size() {
 };
 
 // Add a character to the line pointed to by iterator at the given position
-void VMDataSource::addChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c) {
+void VMDataSource::addChar(VMDataSource::iterator &dsIter, VMLine::iterator &lineIter, char c) {
 	dsIter->addChar(lineIter, c);
 }
 
 // Remove the character at insertPos in line pointed to by iterator
-void VMDataSource::removeChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter) {
+void VMDataSource::removeChar(VMDataSource::iterator &dsIter, VMLine::iterator &lineIter) {
 	dsIter->removeChar(lineIter);
 }
 
@@ -47,6 +47,20 @@ void VMDataSource::addLine(VMDataSource::iterator dsIter, const std::string &s) 
 // Add a line at the given iterator position
 void VMDataSource::addLine(VMDataSource::iterator dsIter, VMLine line) {
 	lines.insert(dsIter, line);
+}
+
+// Joins all lines between two iterators, startIter must be before endIter or undefined behaviour
+void VMDataSource::joinLines(VMDataSource::iterator startIter, VMDataSource::iterator endIter) {
+	VMDataSource::iterator addedLine = startIter;
+	while (addedLine != endIter) {
+		++addedLine;
+
+		// Join the lines
+		for (VMLine::iterator lineIt = addedLine->begin(); lineIt != addedLine->end(); ++lineIt) {
+			VMLine::iterator endOfLine = startIter->end();
+			startIter->addChar(endOfLine, lineIt->getChar());
+		}
+	}
 }
 
 // Remove a line at the given iterator position and return it

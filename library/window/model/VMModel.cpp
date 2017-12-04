@@ -16,8 +16,24 @@ void VMModel::addChar(int c) {
 
 // Removes the character at the current Cursor character position
 void VMModel::removeChar() {
-	ds.removeChar(cursor.getDSIter(), cursor.getLineIter());
-	cursor.moveLeft();
+	if (!cursor.startOfData()) {
+		if (!cursor.startOfLine()) {
+			cursor.moveLeft();
+			ds.removeChar(cursor.getDSIter(), cursor.getLineIter());
+		}
+			// If the cursor is at the start of the line, the line must be joined with the previous line
+		else {
+			VMDataSource::iterator firstLine = cursor.getDSIter();
+			--firstLine;
+			VMDataSource::iterator secondLine = cursor.getDSIter();
+			cursor.moveUp();
+			cursor.moveEOL();
+			cursor.moveLeft();
+			ds.joinLines(firstLine, secondLine);
+			cursor.moveRight();
+		}
+	}
+	// TODO: logic for not removing when at SOF
 	state.setFileModified(true);
 }
 

@@ -109,8 +109,8 @@ void VM::run(const std::string &fileName) {
 				break;
 			}
 			case ModeType::INSERT: {
+				// std::cout << std::flush;
 				if (c == VMKeyboard::key.ESCAPE_ASCII) {
-					//std::cout << "DID WE DO THIS?" << std::flush;
 					state.setEnableHistorySave(true);
 					model.saveHistory();
 					state.setMode(ModeType::COMMAND);
@@ -120,7 +120,8 @@ void VM::run(const std::string &fileName) {
 				} else if ((' ' <= c) && (c <= '~')) {
 					model.addChar(c);
 					state.addChar(c);
-				} else if (c == 127) {
+				}
+				else if (c == VMKeyboard::key.DELETE_ASCII) {
 					model.removeChar();
 					state.addChar(c);
 				} else {
