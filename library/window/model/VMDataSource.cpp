@@ -30,13 +30,15 @@ size_t VMDataSource::size() {
 };
 
 // Add a character to the line pointed to by iterator at the given position
-void VMDataSource::addChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c) {
+void VMDataSource::addChar(VMDataSource::iterator &dsIter, VMLine::iterator &lineIter, char c) {
 	dsIter->addChar(lineIter, c);
 }
 
 // Remove the character at insertPos in line pointed to by iterator
-void VMDataSource::removeChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter) {
+void VMDataSource::removeChar(VMDataSource::iterator &dsIter, VMLine::iterator &lineIter) {
+	;
 	dsIter->removeChar(lineIter);
+	// TODO: logic for joining two lines
 }
 
 // Add a line at the given iterator position

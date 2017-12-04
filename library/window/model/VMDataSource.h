@@ -27,9 +27,9 @@ public:
 	//returns the number of lines in VMDataSource
 	size_t size();
 
-	void addChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c);
+	void addChar(VMDataSource::iterator &dsIter, VMLine::iterator &lineIter, char c);
 
-	void removeChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter);
+	void removeChar(VMDataSource::iterator &dsIter, VMLine::iterator &lineIter);
 
 	void replaceChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c);
 

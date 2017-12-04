@@ -17,6 +17,7 @@ void VMModel::addChar(int c) {
 // Removes the character at the current Cursor character position
 void VMModel::removeChar() {
 	ds.removeChar(cursor.getDSIter(), cursor.getLineIter());
+	// TODO: logic for not removing when at SOF
 	cursor.moveLeft();
 	state.setFileModified(true);
 }
