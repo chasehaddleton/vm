@@ -15,6 +15,7 @@
 #include "commands/Insert.h"
 #include "commands/MoveToLastLine.h"
 #include "commands/ScrollDownPage.h"
+#include "commands/ScrollUpPage.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -148,4 +149,5 @@ VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<MoveToLastLine>(state, "Move to the Last Line"));
 	commands.push_back(std::make_unique<Insert>(state, "Insert"));
 	commands.push_back(std::make_unique<ScrollDownPage>(state, "Scroll Down a Page"));
+	commands.push_back(std::make_unique<ScrollUpPage>(state, "Scroll Up a Page"));
 }

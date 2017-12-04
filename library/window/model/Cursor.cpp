@@ -114,7 +114,7 @@ void Cursor::moveToLine(size_t lineNum) {
 	--lineNum;
 
 	if (lineNum > ds.size()) {
-		return moveToLine(std::min(lineNum, ds.size()));
+		return moveToLine(ds.size());
 	}
 
 	std::advance(currentLine, -(static_cast<std::ptrdiff_t>(yPos) - static_cast<std::ptrdiff_t>(lineNum)));
@@ -220,11 +220,16 @@ void Cursor::moveFrameUp() {
 }
 
 void Cursor::movePageDown() {
-	firstLineNumber = std::min(firstLineNumber + state.getWindowY(),  ds.size() - 1);
-	moveToLine(std::min(yPos + state.getWindowY(), ds.size() - 1));
+	firstLineNumber = std::min(firstLineNumber + state.getWindowY() , ds.size());
+	moveToLine(firstLineNumber);
 }
 
 void Cursor::movePageUp() {
-	firstLineNumber = std::max(firstLineNumber - state.getWindowY(), size_t{0});
-	moveToLine(std::max(yPos - state.getWindowY(), size_t{0}));
+	if (firstLineNumber > state.getWindowY()) {
+		firstLineNumber = firstLineNumber - state.getWindowY();
+		moveToLine(yPos - state.getWindowY());
+	} else {
+		firstLineNumber = 0;
+		moveToLine(0);
+	}
 }

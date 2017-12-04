@@ -2,8 +2,8 @@
 // Created by Chase Haddleton on 2017-12-03.
 //
 
-#ifndef VM_SCROLLUPPAGE_H
-#define VM_SCROLLUPPAGE_H
+#ifndef VM_SCROLLUPLINE_H
+#define VM_SCROLLUPLINE_H
 
 
 #include "../abstractions/command/Command.h"
@@ -18,4 +18,4 @@ public:
 };
 
 
-#endif //VM_SCROLLUPPAGE_H
+#endif //VM_SCROLLUPLINE_H

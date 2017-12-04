@@ -24,6 +24,6 @@ set(SOURCE_FILES main.cpp library/window/display/VMDisplay.cpp library/window/di
         library/commands/DeleteLine.cpp library/commands/DeleteLine.h library/commands/WriteQuit.cpp library/commands/WriteQuit.h
         library/commands/ReplaceChar.cpp library/commands/ReplaceChar.h library/commands/MoveToLineNum.cpp library/commands/MoveToLineNum.h
         library/commands/ScrollDownLine.cpp library/commands/ScrollDownLine.h library/commands/ScrollUpLine.cpp library/commands/ScrollUpLine.h
-        library/commands/Insert.cpp library/commands/Insert.h library/commands/ScrollDownPage.cpp library/commands/ScrollDownPage.h)
+        library/commands/Insert.cpp library/commands/Insert.h library/commands/ScrollDownPage.cpp library/commands/ScrollDownPage.h library/commands/ScrollUpPage.cpp library/commands/ScrollUpPage.h)
 add_executable(vm ${SOURCE_FILES})
 target_link_libraries(vm ${CURSES_LIBRARIES})

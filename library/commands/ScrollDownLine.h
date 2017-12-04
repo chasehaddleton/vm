@@ -2,8 +2,8 @@
 // Created by Chase Haddleton on 2017-12-03.
 //
 
-#ifndef VM_SCROLLDOWNPAGE_H
-#define VM_SCROLLDOWNPAGE_H
+#ifndef VM_SCROLLDOWNLINE_H
+#define VM_SCROLLDOWNLINE_H
 
 
 #include "../abstractions/command/Command.h"
@@ -18,4 +18,4 @@ public:
 };
 
 
-#endif //VM_SCROLLDOWNPAGE_H
+#endif //VM_SCROLLDOWNLINE_H
