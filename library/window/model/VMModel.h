@@ -14,7 +14,7 @@
 #include "../../status/VMState.h"
 
 class VMModel {
-	const VMState &vmStatus;
+	VMState &state;
 	VMDataSource ds;
 	Cursor cursor;
 	// TODO: Implement History
@@ -27,7 +27,7 @@ class VMModel {
 public:
 	using dataSource = VMDataSource;
 
-	explicit VMModel(const VMState &vmState);
+	explicit VMModel(VMState &vmState);
 
 	VMModel(const VMModel &other) = delete;
 

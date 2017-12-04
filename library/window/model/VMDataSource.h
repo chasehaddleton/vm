@@ -31,7 +31,7 @@ public:
 
 	void addLine(VMDataSource::iterator dsIter, VMLine line);
 
-	VMLine removeLine(iterator it);
+	VMDataSource::iterator removeLine(iterator it);
 
     void saveFile() const;
     void saveFile(std::string fileName);

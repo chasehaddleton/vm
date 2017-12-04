@@ -37,9 +37,9 @@ public:
 	// Returns the y position
 	size_t getYPos() const;
 
-	VMDataSource::iterator getDSIter();
+	VMDataSource::iterator& getDSIter();
 
-	VMLine::iterator getLineIter();
+	VMLine::iterator& getLineIter();
 
 	// Returns the line number
 	size_t getLineNumber() const;

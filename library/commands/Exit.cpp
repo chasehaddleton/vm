@@ -6,22 +6,27 @@
 #include "../input/VMKeyMap.h"
 
 void Exit::doExecute(const std::string &command, VMModel &model, int count) const {
-	if (state.isFileModified()) {
-		// TODO: implement some alert on the status bar
-	} else {
-		state.setRunning(false);
-	}
+	state.setRunning(false);
 }
 
 MatchType Exit::doMatch(const std::string &s) const {
-	if (s == ":" || s == partialMatch) {
+	if (s == ":" || s == ":q") {
 		return MatchType::PARTIAL;
-	} else if (s == (partialMatch + VMKeyMap::ENTER)) {
-		return MatchType ::FULL;
 	}
+
+	if (state.isFileModified()) {
+		if (s == ":q!") {
+			return MatchType::PARTIAL;
+		} else if (s == (":q!" + VMKeyMap::ENTER)) {
+			return MatchType::FULL;
+		}
+	} else {
+		if (s == (":q" + VMKeyMap::ENTER)) {
+			return MatchType::FULL;
+		}
+	}
+
 	return MatchType::NONE;
 }
 
-Exit::Exit(VMState &vmState, const std::string &name) : Command(vmState, name) {
-	partialMatch = ":q";
-}
+Exit::Exit(VMState &vmState, const std::string &name) : Command(vmState, name) {}

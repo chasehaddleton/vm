@@ -30,4 +30,9 @@ size_t VMKeyBuffer::size() const {
 	return keyBuffer.size();
 }
 
+void VMKeyBuffer::removeLast() {
+	keyBuffer.pop_back();
+	notifyObservers();
+}
+
 

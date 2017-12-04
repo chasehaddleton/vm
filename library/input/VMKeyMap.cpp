@@ -29,6 +29,7 @@ const int VMKeyMap::UNDO = KEY_UNDO;
 const int VMKeyMap::RESIZE = KEY_RESIZE;
 const int VMKeyMap::ESCAPE_ASCII = 27;
 const int VMKeyMap::DELETE = KEY_DC;
+const int VMKeyMap::DELETE_ASCII = 127;
 /*#define KEY_SF        0520        *//* scroll-forward key *//*
 #define KEY_SR        0521        *//* scroll-backward key *//*
 #define KEY_NPAGE    0522        *//* next-page key *//*

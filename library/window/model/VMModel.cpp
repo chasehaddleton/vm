@@ -4,7 +4,7 @@
 
 #include "VMModel.h"
 
-VMModel::VMModel(const VMState &vmState) : vmStatus{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState} {}
+VMModel::VMModel(VMState &vmState) : state{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState} {}
 
 // Adds a character at the current Cursor character position
 void VMModel::addChar(char c) {
@@ -30,7 +30,9 @@ void VMModel::addLine(VMLine line) {
 
 // Remove the line at the current Cursor line position
 void VMModel::removeLine() {
-	ds.removeLine(cursor.getDSIter());
+	state.setFileModified(true);
+	cursor.getDSIter() = ds.removeLine(cursor.getDSIter());
+	cursor.getLineIter() = (*cursor.getDSIter()).begin();
 }
 
 // Move the cursor left one character

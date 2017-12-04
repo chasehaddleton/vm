@@ -46,10 +46,8 @@ void VMDataSource::addLine(VMDataSource::iterator dsIter, VMLine line) {
 }
 
 // Remove a line at the given iterator position and return it
-VMLine VMDataSource::removeLine(VMDataSource::iterator it) {
-	VMLine tmp{std::move(*it)};
-	lines.erase(it);
-	return tmp;
+VMDataSource::iterator VMDataSource::removeLine(VMDataSource::iterator it) {
+	return lines.erase(it);
 }
 
 void VMDataSource::doSaveFile() const {

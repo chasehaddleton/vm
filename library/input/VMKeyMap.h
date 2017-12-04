@@ -16,6 +16,7 @@ struct VMKeyMap {
 	static const int HOME;
 	static const int BACKSPACE;
 	static const int DELETE;
+	static const int DELETE_ASCII;
 	static const int F0;
 	static const int F1;
 	static const int DELETE_LINE;

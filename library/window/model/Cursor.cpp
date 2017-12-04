@@ -14,10 +14,10 @@ size_t Cursor::getXPos() const { return xPos; }
 size_t Cursor::getYPos() const { return yPos; }
 
 // Returns a copy of the Cursor's DataSource iterator
-VMDataSource::iterator Cursor::getDSIter() { return currentLine; }
+VMDataSource::iterator &Cursor::getDSIter() { return currentLine; }
 
 // Returns a copy of the Cursor's Line iterator
-VMLine::iterator Cursor::getLineIter() { return currentLetter; }
+VMLine::iterator &Cursor::getLineIter() { return currentLetter; }
 
 // Returns the line number
 size_t Cursor::getLineNumber() const { return yPos; }

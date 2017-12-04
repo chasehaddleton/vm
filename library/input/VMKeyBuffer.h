@@ -20,6 +20,8 @@ public:
 
 	void clear();
 
+	void removeLast();
+
 	bool empty();
 
 	size_t size() const;

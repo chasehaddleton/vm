@@ -6,6 +6,7 @@
 #include "commands/Exit.h"
 #include "commands/Save.h"
 #include "commands/FileInfo.h"
+#include "commands/DeleteLine.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -50,6 +51,10 @@ void VM::run(const std::string &fileName) {
 
 					state.resetCommandState();
 					continue;
+				} else if (c == VMKeyboard::key.DELETE_ASCII || c == VMKeyboard::key.DELETE) {
+					if (!state.keyBuff.empty()) {
+						state.keyBuff.removeLast();
+					}
 				} else {
 					if (state.keyBuff.empty()) {
 						// Check for special key-character/commands
@@ -110,6 +115,6 @@ VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<Exit>(state, "Exit"));
 	commands.push_back(std::make_unique<Save>(state, "Save"));
 	commands.push_back(std::make_unique<FileInfo>(state, "File Info"));
-
+	commands.push_back(std::make_unique<DeleteLine>(state, "Delete Line"));
 
 }

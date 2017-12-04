@@ -8,33 +8,29 @@
 
 void Save::doExecute(const std::string &command, VMModel &model, int count) const {
 	if (command.size() > 3) {
-		model.saveFile(command.substr(3));
-	} else {
+		model.saveFile(command.substr(3, command.size() - 3 - 2));
+	} else if (state.isFileModified()) {
 		model.saveFile();
 	}
 }
 
 MatchType Save::doMatch(const std::string &s) const {
-	if (s == ":" || s == partialMatch) {
+	if (s == ":" || s == ":w" || s == ":w ") {
 		return MatchType::PARTIAL;
-	} else if (s.size() > partialMatch.size() && s.substr(0, partialMatch.size()) == partialMatch) {
-		if (s.size() > 3) {
-			// use the rest as a new file name, as long as the last char is enter
-			if (s.substr(s.size() - VMKeyMap::ENTER.size()) == VMKeyMap::ENTER) {
-				return MatchType::FULL;
-			} else {
-				return MatchType::PARTIAL;
-			}
-		} else {
-			// Extra key should be enter
-			if (s == (partialMatch + VMKeyMap::ENTER)) {
-				return MatchType::FULL;
-			}
-		}
 	}
+	if (s.size() > 3) {
+		// use the rest as a new file name, as long as the last char is enter
+		if (s.substr(0, 3) == ":w " && s.substr(s.length() - 2) == VMKeyMap::ENTER) {
+			return MatchType::FULL;
+		} else {
+			return MatchType::PARTIAL;
+		}
+	} else if (s == (":w" + VMKeyMap::ENTER)) {
+		// Extra key should be enter
+		return MatchType::FULL;
+	}
+
 	return MatchType::NONE;
 }
 
-Save::Save(VMState &vmState, const std::string &name) : Command(vmState, name) {
-	partialMatch = ":w";
-}
+Save::Save(VMState &vmState, const std::string &name) : Command(vmState, name) {}
