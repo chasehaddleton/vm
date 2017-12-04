@@ -11,28 +11,32 @@ void VMModel::addChar(char c) {
 	// Adds a character at the current Cursor character position
 	ds.addChar(cursor.getDSIter(), cursor.getLineIter(), c);
 	cursor.moveRight();
+	state.setFileModified(true);
 }
 
 // Removes the character at the current Cursor character position
 void VMModel::removeChar() {
 	ds.removeChar(cursor.getDSIter(), cursor.getLineIter());
 	cursor.moveLeft();
+	state.setFileModified(true);
 }
 
 // Adds a line at the current Cursor line position using a string as input
 void VMModel::addLine(std::string s) {
 	ds.addLine(cursor.getDSIter(), s);
+	state.setFileModified(true);
 }
 
 void VMModel::addLine(VMLine line) {
 	ds.addLine(cursor.getDSIter(), line);
+	state.setFileModified(true);
 }
 
 // Remove the line at the current Cursor line position
 void VMModel::removeLine() {
-	state.setFileModified(true);
 	cursor.getDSIter() = ds.removeLine(cursor.getDSIter());
 	cursor.getLineIter() = (*cursor.getDSIter()).begin();
+	state.setFileModified(true);
 }
 
 // Move the cursor left one character
@@ -57,6 +61,7 @@ void VMModel::redo() {}
 void VMModel::saveFile() const {
 	try {
 		ds.saveFile();
+		state.setFileModified(false);
 	}
 	catch (std::invalid_argument &ia) {
 		throw;
@@ -66,6 +71,7 @@ void VMModel::saveFile() const {
 void VMModel::saveFile(std::string fileName) {
 	try {
 		ds.saveFile(fileName);
+		state.setFileModified(false);
 	}
 	catch (std::invalid_argument &ia) {
 		throw;

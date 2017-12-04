@@ -78,6 +78,7 @@ void VM::run(const std::string &fileName) {
 						int score = x->match(*state.keyBuff);
 
 						if (score == MatchType::FULL) {
+							state.hideCommand();
 							x->execute(*state.keyBuff, model, numExecutions);
 
 							// Command ran, reset state

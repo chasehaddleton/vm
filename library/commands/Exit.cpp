@@ -6,6 +6,11 @@
 #include "../input/VMKeyMap.h"
 
 void Exit::doExecute(const std::string &command, VMModel &model, int count) const {
+	if (state.isFileModified() && command != (":q!" + VMKeyMap::ENTER)) {
+		state.getStatusBar().setMessage("ERR: file modified, save or use ! to override");
+		return;
+	}
+
 	state.setRunning(false);
 }
 
@@ -14,16 +19,10 @@ MatchType Exit::doMatch(const std::string &s) const {
 		return MatchType::PARTIAL;
 	}
 
-	if (state.isFileModified()) {
-		if (s == ":q!") {
-			return MatchType::PARTIAL;
-		} else if (s == (":q!" + VMKeyMap::ENTER)) {
-			return MatchType::FULL;
-		}
-	} else {
-		if (s == (":q" + VMKeyMap::ENTER)) {
-			return MatchType::FULL;
-		}
+	if (s == ":q!") {
+		return MatchType::PARTIAL;
+	} else if (s == (":q!" + VMKeyMap::ENTER) || s == (":q" + VMKeyMap::ENTER)) {
+		return MatchType::FULL;
 	}
 
 	return MatchType::NONE;

@@ -106,7 +106,6 @@ void VMState::bind(VMModel &m) {
 void VMState::resetCommandState() {
 	if (showCommand) {
 		hideCommand();
-		showCommand = false;
 	}
 
 	keyBuff.clear();
