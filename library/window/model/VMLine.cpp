@@ -39,15 +39,16 @@ void VMLine::addChar(VMLine::iterator &it, char c) {
 	if (c == '\t') {
 		width = 8 - startPos % 8;
 	}
-	line.insert(it, VMChar(c, DEFAUT_COLOUR, width, startPos));
+	line.insert(it, VMChar(c, DEFAUT_COLOUR, startPos, width));
+	--it;
 }
 
 // removes the character at the given position
 void VMLine::removeChar(VMLine::iterator &it) {
 	VMChar tmp = *it;
-	line.erase(it);
+	it = line.erase(it);
 	VMLine::iterator updateIt = it;
-	if (tmp.getChar() == '\t') { updateStartPos(it); } // TODO: how do I make this iterator not const?
+	updateStartPos(updateIt);
 }
 
 // replaces the character at the given position
@@ -57,14 +58,16 @@ void VMLine::replaceChar(VMLine::iterator &it, char c) {
 	if (tmp.getChar() == '\t') { updateStartPos(it); }
 }
 
-//
-void VMLine::updateStartPos(VMLine::iterator it) {
+
+// updates the start positions relative to the beginning
+void VMLine::updateStartPos(VMLine::iterator &it) {
 	size_t previousStartPos;
 	unsigned char previousWidth;
 	size_t newStartPos;
 	unsigned char newWidth;
+	std::ptrdiff_t count;
 	// Get the information about the startPos of the previous character
-	if (it != line.cbegin()) {
+	if (it != this->begin()) {
 		std::advance(it, -1);
 		previousStartPos = it->getStartPos();
 		previousWidth = it->getWidth();
@@ -73,7 +76,7 @@ void VMLine::updateStartPos(VMLine::iterator it) {
 		previousStartPos = 0;
 		previousWidth = 0;
 	}
-	while (true) {
+	while (it != this->end()) {
 		newStartPos = previousStartPos + previousWidth;
 		if (newStartPos == it->getStartPos()) {
 			break;
@@ -88,8 +91,10 @@ void VMLine::updateStartPos(VMLine::iterator it) {
 			it->setWidth(newWidth);
 			previousStartPos = newStartPos;
 			previousWidth = newWidth;
+			++it;
 		}
 	}
+	//std::advance(it, -count);
 }
 
 // returns the number of tabs in the line

@@ -20,10 +20,10 @@ set(SOURCE_FILES main.cpp library/window/display/VMDisplay.cpp library/window/di
         library/input/VMKeyMap.h library/commands/Write.cpp library/commands/Write.h library/abstractions/Display.cpp
         library/abstractions/Display.h library/abstractions/Model.cpp library/abstractions/Model.h
         library/abstractions/Saveable.cpp library/abstractions/Saveable.h library/input/VMKeyBuffer.cpp library/input/VMKeyBuffer.h
-        library/commands/FileInfo.cpp library/commands/FileInfo.h library/commands/JumpToLastLine.cpp library/commands/JumpToLastLine.h
+        library/commands/FileInfo.cpp library/commands/FileInfo.h library/commands/MoveToLastLine.cpp library/commands/MoveToLastLine.h
         library/commands/DeleteLine.cpp library/commands/DeleteLine.h library/commands/WriteQuit.cpp library/commands/WriteQuit.h
         library/commands/ReplaceChar.cpp library/commands/ReplaceChar.h library/commands/MoveToLineNum.cpp library/commands/MoveToLineNum.h
-        library/commands/ScrollDownPage.cpp library/commands/ScrollDownPage.h library/commands/ScrollUpPage.cpp library/commands/ScrollUpPage.h
-        library/commands/Insert.cpp library/commands/Insert.h)
+        library/commands/ScrollDownLine.cpp library/commands/ScrollDownLine.h library/commands/ScrollUpLine.cpp library/commands/ScrollUpLine.h
+        library/commands/Insert.cpp library/commands/Insert.h library/commands/ScrollDownPage.cpp library/commands/ScrollDownPage.h library/commands/ScrollUpPage.cpp library/commands/ScrollUpPage.h library/commands/MoveToFirstNonBlank.cpp library/commands/MoveToFirstNonBlank.h library/commands/SearchForward.cpp library/commands/SearchForward.h library/commands/SearchBackward.cpp library/commands/SearchBackward.h)
 add_executable(vm ${SOURCE_FILES})
 target_link_libraries(vm ${CURSES_LIBRARIES})

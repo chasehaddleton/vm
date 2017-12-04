@@ -6,6 +6,7 @@
 
 void Insert::doExecute(const std::string &command, VMModel &model, int count) const {
 	state.setMode(ModeType::INSERT);
+	state.setDisplayPastEnd(true);
 	state.setEnableHistorySave(false);
 	state.resetCommandState();
 	state.addChar(count);

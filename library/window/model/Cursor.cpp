@@ -36,27 +36,59 @@ void Cursor::moveLeft() {
 	if (xPos == 0) {
 		// ALERT
 	} else {
-		xPos -= currentLetter->getWidth();
-		globalXPos = xPos;
-		--currentLetter;
-		--insertPos;
+		if (state.getMode() == ModeType::INSERT) {
+			--currentLetter;
+			--insertPos;
+			xPos -= currentLetter->getWidth();
+			globalXPos = xPos;
+		}
+		else {
+			if (currentLetter == currentLine->end()) {
+				--xPos;
+			}
+			else {
+				xPos -= currentLetter->getWidth();
+			}
+			globalXPos = xPos;
+			--currentLetter;
+			--insertPos;
+		}
 	}
 }
 
 // Move the cursor left one character
 void Cursor::moveRight() {
 	// If we're at the end of line, we don't move right
-	// TODO: make this if statement nicer if possible
 	size_t currentLineWidth = currentLine->lineWidth();
+	if (state.isDisplayPastEnd()) ++currentLineWidth;
 
-	if (xPos >= (state.isDisplayPastEnd() ? currentLineWidth
-	                                      : (currentLineWidth == 0 ? 0 : currentLineWidth - 1))) {
+	if (xPos >= (currentLineWidth == 0 ? currentLineWidth : currentLineWidth - 1)) {
 		// ALERT
 	} else {
-		++currentLetter;
-		++insertPos;
-		xPos += currentLetter->getWidth();
-		globalXPos = xPos;
+		// If we're in insert mode the cursor should move to the front of wide characters
+		if (state.getMode() == ModeType::INSERT) {
+			if (currentLetter == currentLine->end()) {
+				++xPos;
+			}
+			else {
+				xPos += currentLetter->getWidth();
+			}
+			globalXPos = xPos;
+			++currentLetter;
+			++insertPos;
+		}
+			// Otherwise the cursor should move to the back of wide characters
+		else {
+			++currentLetter;
+			++insertPos;
+			if (currentLetter == currentLine->end()) {
+				++xPos;
+			}
+			else {
+				xPos += currentLetter->getWidth();
+			}
+			globalXPos = xPos;
+		}
 	}
 }
 
@@ -85,14 +117,15 @@ void Cursor::moveDown() {
 
 // Moves the cursor to the start of the line
 void Cursor::moveSOL() {
+	currentLetter = currentLine->begin();
 	globalXPos = 0;
 	xPos = 0;
-	currentLetter = currentLine->begin();
 	insertPos = 0;
 }
 
 // Moves the cursor to the end of the line
 void Cursor::moveEOL() {
+	currentLetter = --currentLine->end();
 	globalXPos = currentLine->lineWidth();
 	if (!state.isDisplayPastEnd()) { --globalXPos; }
 	updateHorizontalPos();
@@ -114,14 +147,16 @@ void Cursor::moveToLine(size_t lineNum) {
 	--lineNum;
 
 	if (lineNum > ds.size()) {
-		return moveToLine(std::min(lineNum, ds.size()));
+		return moveToLine(ds.size());
 	}
 
 	std::advance(currentLine, -(static_cast<std::ptrdiff_t>(yPos) - static_cast<std::ptrdiff_t>(lineNum)));
 
 	currentLetter = currentLine->begin();
+	globalXPos = 0;
 	xPos = 0;
 	yPos = lineNum;
+	insertPos = 0;
 }
 
 // Moves the cursor to the end of the data
@@ -130,7 +165,7 @@ void Cursor::moveEOD() {
 	currentLetter = --(currentLine->end());
 	globalXPos = currentLine->lineWidth();
 	xPos = globalXPos;
-	yPos = ds.size();
+	yPos = ds.size() - 1;
 	insertPos = currentLine->size() - 1;
 }
 
@@ -140,7 +175,7 @@ void Cursor::moveToLastLine() {
 	currentLetter = currentLine->begin();
 	globalXPos = 0;
 	xPos = 0;
-	yPos = ds.size();
+	yPos = ds.size() - 1;
 	insertPos = 0;
 }
 
@@ -172,14 +207,19 @@ bool Cursor::endOfData() {
 
 // Updates the horizontal position of the cursor
 void Cursor::updateHorizontalPos() {
-	// Our position is the lesser of our global xPos or the length of the newLine
 	size_t currentLineWidth = currentLine->lineWidth();
 	size_t tempPos;
 
+	// Our position is the lesser of our global xPos or the length of the newLine
 	if (state.isDisplayPastEnd()) {
 		tempPos = std::min(globalXPos, currentLineWidth);
 	} else if (currentLineWidth == 0) {
-		tempPos = 0;
+		if (state.getMode() == ModeType::INSERT) {
+			tempPos = std::min(globalXPos, size_t{1});
+		}
+		else {
+			tempPos = 0;
+		}
 	} else {
 		tempPos = std::min(globalXPos, currentLineWidth - 1);
 	}
@@ -187,15 +227,31 @@ void Cursor::updateHorizontalPos() {
 	currentLetter = currentLine->begin();
 	insertPos = 0;
 
+
+	//std::cout << "here" << std::flush;
+	//std::cout << "[" << (currentLetter->getStartPos() + currentLetter->getWidth()) << "," << tempPos << std::flush;
 	if (currentLine->empty()) {
-		xPos = 0;
+		xPos = tempPos;
 	} else {
-		while (currentLetter->getStartPos() + currentLetter->getWidth() <= tempPos) {
+		while (currentLetter != currentLine->end()) {
+			if ((currentLetter->getStartPos() + currentLetter->getWidth()) > tempPos) { break; }
 			++currentLetter;
 			++insertPos;
 		}
 
-		xPos = currentLetter->getStartPos() + currentLetter->getWidth() - 1;
+		if (state.getMode() == ModeType::INSERT) {
+			// If we're past the end of the end of the line xPos should be too
+			if (currentLetter == currentLine->end()) {
+				xPos = currentLineWidth;
+				//std::cout << "here" << std::flush;
+			}
+			else {
+				xPos = currentLetter->getStartPos();
+			}
+		}
+		else {
+			xPos = currentLetter->getStartPos() + currentLetter->getWidth() - 1;
+		}
 	}
 }
 
@@ -215,4 +271,19 @@ void Cursor::moveFrameUp() {
 		--firstLineNumber;
 	}
 	moveUp();
+}
+
+void Cursor::movePageDown() {
+	firstLineNumber = std::min(firstLineNumber + state.getWindowY() , ds.size());
+	moveToLine(firstLineNumber);
+}
+
+void Cursor::movePageUp() {
+	if (firstLineNumber > state.getWindowY()) {
+		firstLineNumber = firstLineNumber - state.getWindowY();
+		moveToLine(yPos - state.getWindowY());
+	} else {
+		firstLineNumber = 0;
+		moveToLine(0);
+	}
 }

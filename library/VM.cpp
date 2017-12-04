@@ -10,9 +10,15 @@
 #include "commands/WriteQuit.h"
 #include "commands/ReplaceChar.h"
 #include "commands/MoveToLineNum.h"
+#include "commands/ScrollDownLine.h"
+#include "commands/ScrollUpLine.h"
+#include "commands/Insert.h"
+#include "commands/MoveToLastLine.h"
 #include "commands/ScrollDownPage.h"
 #include "commands/ScrollUpPage.h"
-#include "commands/Insert.h"
+#include "commands/MoveToFirstNonBlank.h"
+#include "commands/SearchForward.h"
+#include "commands/SearchBackward.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -64,7 +70,7 @@ void VM::run(const std::string &fileName) {
 				} else {
 					if (state.keyBuff.empty()) {
 						// Check for special key-character/commands
-						if (c == ':') {
+						if (c == ':' || c == '/' || c == '?') {
 							state.displayCommand();
 							state.addChar(c);
 							continue;
@@ -103,8 +109,8 @@ void VM::run(const std::string &fileName) {
 				break;
 			}
 			case ModeType::INSERT: {
+				// std::cout << std::flush;
 				if (c == VMKeyboard::key.ESCAPE_ASCII) {
-					//std::cout << "DID WE DO THIS?" << std::flush;
 					state.setEnableHistorySave(true);
 					model.saveHistory();
 					state.setMode(ModeType::COMMAND);
@@ -114,7 +120,8 @@ void VM::run(const std::string &fileName) {
 				} else if ((' ' <= c) && (c <= '~')) {
 					model.addChar(c);
 					state.addChar(c);
-				} else if (c == 127) {
+				}
+				else if (c == VMKeyboard::key.DELETE_ASCII) {
 					model.removeChar();
 					state.addChar(c);
 				} else {
@@ -141,8 +148,14 @@ VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<WriteQuit>(state, "Write Quit"));
 	commands.push_back(std::make_unique<ReplaceChar>(state, "Replace Char"));
 	commands.push_back(std::make_unique<MoveToLineNum>(state, "Move to Line Number"));
-	commands.push_back(std::make_unique<ScrollDownPage>(state, "Move the Frame Down"));
-	commands.push_back(std::make_unique<ScrollUpPage>(state, "Move the Frame Up"));
+	commands.push_back(std::make_unique<ScrollDownLine>(state, "Move the Frame Down"));
+	commands.push_back(std::make_unique<ScrollUpLine>(state, "Move the Frame Up"));
+	commands.push_back(std::make_unique<MoveToLastLine>(state, "Move to the Last Line"));
 	commands.push_back(std::make_unique<Insert>(state, "Insert"));
+	commands.push_back(std::make_unique<ScrollDownPage>(state, "Scroll Down a Page"));
+	commands.push_back(std::make_unique<ScrollUpPage>(state, "Scroll Up a Page"));
+	commands.push_back(std::make_unique<MoveToFirstNonBlank>(state, "Move to First Non Blank Line"));
+	commands.push_back(std::make_unique<SearchForward>(state, "Search Forward"));
+	commands.push_back(std::make_unique<SearchBackward>(state, "Search Backward"));
 
 }

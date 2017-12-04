@@ -14,3 +14,7 @@ void Observer::notify(const Subject *sub) {
 bool Observer::operator==(const Observer &other) {
 	return name == other.name;
 }
+
+const std::string &Observer::getName() const {
+	return name;
+}
