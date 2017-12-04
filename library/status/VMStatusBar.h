@@ -5,22 +5,27 @@
 #ifndef VM_VMSTATUSBAR_H
 #define VM_VMSTATUSBAR_H
 
-
 #include <string>
+#include "../abstractions/observer/Observer.h"
 
-class VMStatusBar {
-	std::string leftSide;
-	std::string rightSide;
+class VMState;
+class Cursor;
+
+class VMStatusBar : public Observer {
+	VMState *state{nullptr};
+	Cursor *cursor{nullptr};
+	std::string message;
+
+	void doNotify(const Subject *sub) override;
+
 public:
-	VMStatusBar(const std::string &leftSide = "", const std::string &rightSide = "");
+	explicit VMStatusBar(std::string name = "Status Bar");
 
-	const std::string &getLeftSide() const;
+	void bind(VMState &state, Cursor &cursor);
 
-	void setLeftSide(const std::string &leftSide);
+	std::string operator*();
 
-	const std::string &getRightSide() const;
-
-	void setRightSide(const std::string &rightSide);
+	void setMessage(const std::string &m);
 };
 
 

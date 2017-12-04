@@ -25,6 +25,10 @@ VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
 	f.close();
 }
 
+size_t VMDataSource::size() {
+	return lines.size();
+};
+
 // Add a character to the line pointed to by iterator at the given position
 void VMDataSource::addChar(VMDataSource::iterator dsIter, VMLine::iterator lineIter, char c) {
 	dsIter->addChar(lineIter, c);
@@ -46,10 +50,8 @@ void VMDataSource::addLine(VMDataSource::iterator dsIter, VMLine line) {
 }
 
 // Remove a line at the given iterator position and return it
-VMLine VMDataSource::removeLine(VMDataSource::iterator it) {
-	VMLine tmp{std::move(*it)};
-	lines.erase(it);
-	return tmp;
+VMDataSource::iterator VMDataSource::removeLine(VMDataSource::iterator it) {
+	return lines.erase(it);
 }
 
 void VMDataSource::doSaveFile() const {
@@ -85,6 +87,10 @@ VMDataSource::const_iterator VMDataSource::cbegin() const { return lines.cbegin(
 
 // Return a const iterator at the end of the DataSource
 VMDataSource::const_iterator VMDataSource::cend() const { return lines.cend(); }
+
+size_t VMDataSource::size() const {
+	return lines.size();
+}
 
 // Prints our DataSource to the provided output stream
 std::ostream &operator<<(std::ostream &out, VMDataSource &ds) {

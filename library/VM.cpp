@@ -4,6 +4,9 @@
 
 #include "VM.h"
 #include "commands/Exit.h"
+#include "commands/Save.h"
+#include "commands/FileInfo.h"
+#include "commands/DeleteLine.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -24,8 +27,8 @@ bool handleMoveCommand(const int &ch, VMModel &m) {
 void VM::run(const std::string &fileName) {
 	state.setOpenFileName(fileName);
 	VMModel model{state};
+	state.bind(model);
 	display.bind(model);
-	keyBuff = "";
 
 	auto vmkIt = keyboard.begin();
 	int numExecutions = 0;
@@ -46,15 +49,18 @@ void VM::run(const std::string &fileName) {
 					// Special key which erases the current command, nothing else if then required to be done until
 					// the next keypress
 
-					state.setDisplayCommand(false);
-					keyBuff.clear();
+					state.resetCommandState();
 					continue;
+				} else if (c == VMKeyboard::key.DELETE_ASCII || c == VMKeyboard::key.DELETE) {
+					if (!state.keyBuff.empty()) {
+						state.keyBuff.removeLast();
+					}
 				} else {
-					if (keyBuff.empty()) {
+					if (state.keyBuff.empty()) {
 						// Check for special key-character/commands
 						if (c == ':') {
-							state.setDisplayCommand(true);
-							keyBuff.push_back(c);
+							state.displayCommand();
+							state.addChar(c);
 							continue;
 						} else if (handleMoveCommand(c, model)) {
 							continue;
@@ -64,20 +70,16 @@ void VM::run(const std::string &fileName) {
 						}
 					}
 
-					keyBuff.push_back(c);
+					state.addChar(c);
 
 					int commandMatch = 0;
 
 					for (auto &x:commands) {
-						int score = x->match(keyBuff);
+						int score = x->match(*state.keyBuff);
 
 						if (score == MatchType::FULL) {
-							numExecutions = std::max(1, numExecutions);
-
-							// TODO: move to insert mode if it's an insert command
-							for (int i = 0; i < numExecutions; ++i) {
-								x->execute(keyBuff, model);
-							}
+							state.hideCommand();
+							x->execute(*state.keyBuff, model, numExecutions);
 
 							// Command ran, reset state
 							commandMatch = 0;
@@ -89,8 +91,7 @@ void VM::run(const std::string &fileName) {
 
 					if (commandMatch == 0) {
 						numExecutions = 0;
-						state.setDisplayCommand(false);
-						keyBuff.clear();
+						state.resetCommandState();
 					}
 				}
 				break;
@@ -113,4 +114,8 @@ void VM::run(const std::string &fileName) {
 
 VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<Exit>(state, "Exit"));
+	commands.push_back(std::make_unique<Save>(state, "Save"));
+	commands.push_back(std::make_unique<FileInfo>(state, "File Info"));
+	commands.push_back(std::make_unique<DeleteLine>(state, "Delete Line"));
+
 }

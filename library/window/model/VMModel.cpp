@@ -4,34 +4,39 @@
 
 #include "VMModel.h"
 
-VMModel::VMModel(const VMState &vmState) : vmStatus{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState},
-                                           undoFrame{} {}
+VMModel::VMModel(VMState &vmState) : state{vmState}, ds{vmState.getOpenFileName()}, cursor{ds, vmState} {}
 
 // Adds a character at the current Cursor character position
 void VMModel::addChar(char c) {
 	// Adds a character at the current Cursor character position
 	ds.addChar(cursor.getDSIter(), cursor.getLineIter(), c);
 	cursor.moveRight();
+	state.setFileModified(true);
 }
 
 // Removes the character at the current Cursor character position
 void VMModel::removeChar() {
 	ds.removeChar(cursor.getDSIter(), cursor.getLineIter());
 	cursor.moveLeft();
+	state.setFileModified(true);
 }
 
 // Adds a line at the current Cursor line position using a string as input
 void VMModel::addLine(std::string s) {
 	ds.addLine(cursor.getDSIter(), s);
+	state.setFileModified(true);
 }
 
 void VMModel::addLine(VMLine line) {
 	ds.addLine(cursor.getDSIter(), line);
+	state.setFileModified(true);
 }
 
 // Remove the line at the current Cursor line position
 void VMModel::removeLine() {
-	ds.removeLine(cursor.getDSIter());
+	cursor.getDSIter() = ds.removeLine(cursor.getDSIter());
+	cursor.getLineIter() = (*cursor.getDSIter()).begin();
+	state.setFileModified(true);
 }
 
 // Move the cursor left one character
@@ -46,6 +51,12 @@ void VMModel::moveCursorUp() { cursor.moveUp(); }
 // Move the cursor down one line
 void VMModel::moveCursorDown() { cursor.moveDown(); }
 
+// Move the cursor to the start of the line
+void VMModel::moveCursorSOL() { cursor.moveSOL(); }
+
+// Move the cursor to the end of the line
+void VMModel::moveCursorEOL() { cursor.moveEOL(); }
+
 // Undo the last top-level command
 void VMModel::undo() {}
 
@@ -56,6 +67,7 @@ void VMModel::redo() {}
 void VMModel::saveFile() const {
 	try {
 		ds.saveFile();
+		state.setFileModified(false);
 	}
 	catch (std::invalid_argument &ia) {
 		throw;
@@ -65,6 +77,7 @@ void VMModel::saveFile() const {
 void VMModel::saveFile(std::string fileName) {
 	try {
 		ds.saveFile(fileName);
+		state.setFileModified(false);
 	}
 	catch (std::invalid_argument &ia) {
 		throw;
@@ -88,4 +101,8 @@ Cursor &VMModel::getCursor() {
 // Returns a reference to VMModel's DataSource
 VMDataSource &VMModel::getDataSource() {
 	return ds;
+}
+
+size_t VMModel::size() const {
+	return ds.size();
 }

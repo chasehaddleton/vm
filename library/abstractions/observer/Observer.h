@@ -7,15 +7,17 @@
 
 #include <string>
 
+class Subject;
+
 class Observer {
 	std::string name;
 
-	virtual void doNotify() const = 0;
+	virtual void doNotify(const Subject *sub) = 0;
 
 public:
-	Observer(const std::string &name);
+	explicit Observer(const std::string &name);
 
-	void notify() const;
+	void notify(const Subject *sub);
 
 	bool operator==(const Observer &other);
 };

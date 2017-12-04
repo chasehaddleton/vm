@@ -6,6 +6,8 @@
 #define VM_VMKEYMAP_H
 
 
+#include <string>
+
 struct VMKeyMap {
 	static const int DOWN;
 	static const int UP;
@@ -14,13 +16,14 @@ struct VMKeyMap {
 	static const int HOME;
 	static const int BACKSPACE;
 	static const int DELETE;
+	static const int DELETE_ASCII;
 	static const int F0;
 	static const int F1;
 	static const int DELETE_LINE;
 	static const int INSERT_LINE;
 	static const int DELECT_CHARACTER;
 	static const int INSERT_CHARACTER;
-	static const int ENTER;
+	static const std::string ENTER;
 	static const int ENTER_ASCII;
 	static const int CANCEL;
 	static const int COMMAND;

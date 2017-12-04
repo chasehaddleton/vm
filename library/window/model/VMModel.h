@@ -12,15 +12,14 @@
 #include "../history/HistoryFrame.h"
 #include "Cursor.h"
 #include "../../status/VMState.h"
-#include "../../abstractions/Saveable.h"
 
-class VMModel : public Saveable {
-	const VMState &vmStatus;
+class VMModel {
+	VMState &state;
 	VMDataSource ds;
 	Cursor cursor;
 	// TODO: Implement History
-	HistoryFrame undoFrame;
-	HistoryStack undoStack;
+	//HistoryFrame undoFrame;
+	//HistoryStack undoStack;
 	// HistoryStack redoStack;
 	// TODO: Implement StatusBar
 	// InfoBar statusBar;
@@ -28,7 +27,7 @@ class VMModel : public Saveable {
 public:
 	using dataSource = VMDataSource;
 
-	explicit VMModel(const VMState &vmState);
+	explicit VMModel(VMState &vmState);
 
 	VMModel(const VMModel &other) = delete;
 
@@ -67,6 +66,12 @@ public:
 	// Move the cursor down one line
 	void moveCursorDown();
 
+	// Move the cursor to the start of the line
+	void moveCursorSOL();
+
+	// Move the cursor to the end of the line
+	void moveCursorEOL();
+
 	// Undo the last top-level command
 	void undo();
 
@@ -77,10 +82,12 @@ public:
 	void saveHistFrame();
 
 	// Output the DataSource's text to a file
-	void saveFile() const override;
+	void saveFile() const;
 
 	// Output the DataSource's text to a file with the given filename
-	void saveFile(std::string fileName) override ;
+	void saveFile(std::string fileName);
+
+	size_t size() const;
 
 	// Returns an iterator at the beginning of the DataSource
 	VMDataSource::iterator getDataSourceBegin();

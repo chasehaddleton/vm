@@ -12,7 +12,7 @@
 #include <string>
 
 class Command : public Subject {
-	virtual void doExecute(const std::string &command, VMModel &model) const = 0;
+	virtual void doExecute(const std::string &command, VMModel &model, int count) const = 0;
 
 	virtual MatchType doMatch(const std::string &s) const = 0;
 
@@ -28,7 +28,7 @@ public:
 
 	virtual MatchType match(const std::string &s) const;
 
-	void execute(const std::string &command, VMModel &model) const;
+	void execute(const std::string &command, VMModel &model, int count) const;
 
 	bool operator==(const Command &other) const;
 };

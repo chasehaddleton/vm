@@ -14,6 +14,6 @@ void Subject::deregisterOb(Observer &ob) {
 
 void Subject::notifyObservers() const {
 	for(auto ob : observers) {
-		ob->notify();
+		ob->notify(this);
 	}
 }

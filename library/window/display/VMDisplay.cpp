@@ -8,8 +8,10 @@
 
 void VMDisplay::init() {
 	initscr();
-	vmState.setWindowX(COLS);
-	vmState.setWindowY(LINES);
+	xSize = COLS;
+	ySize = LINES;
+	state.setWindowX(xSize);
+	state.setWindowY(ySize - 1);
 	keypad(stdscr, true);
 	noecho();
 	raw();
@@ -34,7 +36,7 @@ void VMDisplay::print(std::string s, int y) const {
 	move(y, 0);
 	clrtoeol();
 
-	if (s.size() > vmState.getWindowX()) {
+	if (s.size() > xSize) {
 		move(y + 1, 0);
 		clrtoeol();
 	}
@@ -44,9 +46,11 @@ void VMDisplay::print(std::string s, int y) const {
 
 void VMDisplay::doUpdate() const {
 	auto &cursor = m->getCursor();
-	
-	if (cursor.getFirstLineNumber() + vmState.getWindowX() < cursor.getYPos()) {
-		cursor.getFirstLineNumber() += (cursor.getYPos() - (cursor.getFirstLineNumber() + vmState.getWindowX()));
+
+	if (cursor.getYPos() < cursor.getFirstLineNumber()) {
+		cursor.getFirstLineNumber() = cursor.getYPos();
+	} else if (cursor.getYPos() >= (cursor.getFirstLineNumber() + ySize - 2)) {
+		cursor.getFirstLineNumber() += cursor.getYPos() - (cursor.getFirstLineNumber() + state.getWindowY() - 3);
 	}
 
 	int longLineSkip = 0;
@@ -58,11 +62,11 @@ void VMDisplay::doUpdate() const {
 	std::advance(it, -(static_cast<std::ptrdiff_t>(cursor.getYPos()) -
 	                   static_cast<std::ptrdiff_t>(cursor.getFirstLineNumber())));
 
-	for (int i = 0; i < vmState.getWindowY(); ++i) {
+	for (int i = 0; i < ySize - 1; ++i) {
 		if (it != m->getDataSourceEnd()) {
 			print(it->toString(), i);
 
-			if (it->size() > vmState.getWindowX()) {
+			if (it->size() > xSize) {
 				if ((i - longLineSkip) < cursor.getYPos()) {
 					++longLineSkip;
 				}
@@ -74,9 +78,11 @@ void VMDisplay::doUpdate() const {
 		}
 	}
 
-	if (cursor.getXPos() >= vmState.getWindowX()) {
+	print(*state.getStatusBar(), ySize - 1);
+
+	if (cursor.getXPos() >= xSize) {
 		++longLineSkip;
-		displayXPos -= vmState.getWindowX();
+		displayXPos -= xSize;
 	}
 
 	move(displayYPos + longLineSkip, displayXPos);
@@ -84,7 +90,7 @@ void VMDisplay::doUpdate() const {
 	refresh();
 }
 
-VMDisplay::VMDisplay(VMState &vmState) : vmState{vmState} {
+VMDisplay::VMDisplay(VMState &vmState) : state{vmState} {
 	init();
 }
 

@@ -13,6 +13,8 @@ class Subject {
 	std::list<Observer *> observers;
 
 public:
+	virtual ~Subject() = default;
+
 	void registerOb(Observer &ob);
 
 	void deregisterOb(Observer &ob);

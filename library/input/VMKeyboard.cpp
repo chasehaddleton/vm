@@ -25,3 +25,7 @@ VMKeyboard::Iterator VMKeyboard::begin() {
 VMKeyboard::Iterator VMKeyboard::end() {
 	return Iterator{};
 }
+
+std::string VMKeyboard::getKeyname(int c) {
+	return std::string(keyname(c));
+}

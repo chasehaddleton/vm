@@ -17,7 +17,7 @@ const int VMKeyMap::DELETE_LINE = KEY_DL;
 const int VMKeyMap::INSERT_LINE = KEY_IL;
 const int VMKeyMap::DELECT_CHARACTER = KEY_DC;
 const int VMKeyMap::INSERT_CHARACTER = KEY_IC;
-const int VMKeyMap::ENTER = KEY_ENTER;
+const std::string VMKeyMap::ENTER = "^J";
 const int VMKeyMap::ENTER_ASCII = 10;
 const int VMKeyMap::CANCEL = KEY_CANCEL;
 const int VMKeyMap::COMMAND = KEY_COMMAND;
@@ -29,6 +29,7 @@ const int VMKeyMap::UNDO = KEY_UNDO;
 const int VMKeyMap::RESIZE = KEY_RESIZE;
 const int VMKeyMap::ESCAPE_ASCII = 27;
 const int VMKeyMap::DELETE = KEY_DC;
+const int VMKeyMap::DELETE_ASCII = 127;
 /*#define KEY_SF        0520        *//* scroll-forward key *//*
 #define KEY_SR        0521        *//* scroll-backward key *//*
 #define KEY_NPAGE    0522        *//* next-page key *//*

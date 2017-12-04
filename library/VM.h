@@ -13,7 +13,6 @@
 
 class VM {
 	std::vector<std::unique_ptr<Command>> commands;
-	std::string keyBuff;
 
 	VMState state;
 	VMDisplay display;

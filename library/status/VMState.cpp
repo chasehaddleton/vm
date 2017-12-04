@@ -3,11 +3,27 @@
 //
 
 #include "VMState.h"
+#include "../window/model/VMModel.h"
 
 VMState::VMState(const std::string &openFileName) : openFileName(openFileName) {}
 
+void VMState::reset() {
+	mode = ModeType::COMMAND;
+	VMStatusBar statusBar{};
+	openFileName = "";
+	running = true;
+	displayPastEnd = false;
+	fileModified = false;
+	windowX = 0;
+	windowY = 0;
+}
+
 void VMState::setOpenFileName(const std::string &openFileName) {
 	VMState::openFileName = openFileName;
+}
+
+const std::string &VMState::getOpenFileName() const {
+	return openFileName;
 }
 
 void VMState::setDisplayPastEnd(bool displayPastEnd) {
@@ -18,24 +34,24 @@ ModeType VMState::getMode() const {
 	return mode;
 }
 
-const std::string &VMState::getOpenFileName() const {
-	return openFileName;
+void VMState::setMode(ModeType mode) {
+	VMState::mode = mode;
 }
 
 bool VMState::isDisplayPastEnd() const {
 	return displayPastEnd;
 }
 
-void VMState::setMode(ModeType mode) {
-	VMState::mode = mode;
+void VMState::displayCommand() {
+	showCommand = true;
+	statusBar.setMessage(*keyBuff);
 }
 
-bool VMState::isDisplayCommand() const {
-	return displayCommand;
-}
-
-void VMState::setDisplayCommand(bool displayCommand) {
-	VMState::displayCommand = true;
+void VMState::hideCommand() {
+	if (showCommand) {
+		showCommand = false;
+		statusBar.setMessage("");
+	}
 }
 
 bool VMState::isRunning() const {
@@ -60,4 +76,37 @@ int VMState::getWindowY() const {
 
 void VMState::setWindowY(int windowY) {
 	VMState::windowY = windowY;
+}
+
+bool VMState::isFileModified() const {
+	return fileModified;
+}
+
+void VMState::setFileModified(bool fileModified) {
+	VMState::fileModified = fileModified;
+}
+
+VMStatusBar &VMState::getStatusBar() {
+	return statusBar;
+}
+
+void VMState::addChar(int ch) {
+	keyBuff.push_back(ch);
+}
+
+bool VMState::isCommandShown() const {
+	return showCommand;
+}
+
+void VMState::bind(VMModel &m) {
+	statusBar.bind(*this, m.getCursor());
+	keyBuff.registerOb(statusBar);
+}
+
+void VMState::resetCommandState() {
+	if (showCommand) {
+		hideCommand();
+	}
+
+	keyBuff.clear();
 }
