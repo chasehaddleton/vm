@@ -134,6 +134,16 @@ void Cursor::moveEOD() {
 	insertPos = currentLine->size() - 1;
 }
 
+// Moves the cursor to the last line
+void Cursor::moveToLastLine() {
+	currentLine = --(ds.end());
+	currentLetter = currentLine->begin();
+	globalXPos = 0;
+	xPos = 0;
+	yPos = ds.size();
+	insertPos = 0;
+}
+
 // Returns true if cursor is at the start of a line
 bool Cursor::startOfLine() {
 	return xPos == 0;

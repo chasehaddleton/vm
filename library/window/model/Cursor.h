@@ -74,6 +74,9 @@ public:
 	// Moves the cursor to the given line
 	void moveToLine(size_t lineNum);
 
+	// Moves the cursor to the last line
+	void moveToLastLine();
+
 	// Moves the cursor to the end of the data
 	void moveEOD();
 
