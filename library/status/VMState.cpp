@@ -76,6 +76,7 @@ int VMState::getWindowY() const {
 
 void VMState::setWindowY(int windowY) {
 	VMState::windowY = windowY;
+	scrollAmount = windowY / 2;
 }
 
 bool VMState::isFileModified() const {
@@ -109,4 +110,12 @@ void VMState::resetCommandState() {
 	}
 
 	keyBuff.clear();
+}
+
+int VMState::getScrollAmount() const {
+	return scrollAmount;
+}
+
+void VMState::setScrollAmount(int scrollAmount) {
+	VMState::scrollAmount = scrollAmount;
 }

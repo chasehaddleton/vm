@@ -89,6 +89,10 @@ public:
 	// Returns true if cursor is at the end of the data
 	bool endOfData();
 
+	void moveFrameDown();
+
+	void moveFrameUp();
+
 	std::string toString() const;
 };
 

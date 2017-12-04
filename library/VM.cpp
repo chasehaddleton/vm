@@ -9,6 +9,9 @@
 #include "commands/DeleteLine.h"
 #include "commands/WriteQuit.h"
 #include "commands/ReplaceChar.h"
+#include "commands/MoveToLineNum.h"
+#include "commands/ScrollDownPage.h"
+#include "commands/ScrollUpPage.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -121,5 +124,8 @@ VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<DeleteLine>(state, "Delete Line"));
 	commands.push_back(std::make_unique<WriteQuit>(state, "Write Quit"));
 	commands.push_back(std::make_unique<ReplaceChar>(state, "Replace Char"));
+	commands.push_back(std::make_unique<MoveToLineNum>(state, "Move to Line Number"));
+	commands.push_back(std::make_unique<ScrollDownPage>(state, "Move the Frame Down"));
+	commands.push_back(std::make_unique<ScrollUpPage>(state, "Move the Frame Up"));
 
 }

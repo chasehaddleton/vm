@@ -22,6 +22,7 @@ class VMState {
 	bool fileModified{false};
 	int windowX{0};
 	int windowY{0};
+	int scrollAmount{0};
 
 	void reset();
 
@@ -61,6 +62,10 @@ public:
 	int getWindowY() const;
 
 	void setWindowY(int windowY);
+
+	int getScrollAmount() const;
+
+	void setScrollAmount(int scrollAmount);
 
 	bool isFileModified() const;
 
