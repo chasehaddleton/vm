@@ -16,5 +16,4 @@ MatchType Insert::doMatch(const std::string &s) const {
 	return MatchType::NONE;
 }
 
-
 Insert::Insert(VMState &vmState, const std::string &name) : Command(vmState, name) {}
