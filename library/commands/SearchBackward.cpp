@@ -2,9 +2,9 @@
 // Created by Chase Haddleton on 2017-12-04.
 //
 
-#include "SearchForward.h"
+#include "SearchBackward.h"
 
-void SearchForward::doExecute(const std::string &command, VMModel &model, int count) const {
+void SearchBackward::doExecute(const std::string &command, VMModel &model, int count) const {
 	std::smatch match;
 
 	if (std::regex_match(command, match, fullMatch)) {
@@ -16,8 +16,8 @@ void SearchForward::doExecute(const std::string &command, VMModel &model, int co
 		size_t lineCounter = model.getCursor().getYPos();
 		ptrdiff_t matchPos = 0;
 
-		while (matches < count && tmpIt != model.getDataSourceEnd()) {
-			while (tmpIt != model.getDataSourceEnd()) {
+		while (matches < count) {
+			while (true) {
 				std::smatch m;
 				auto s = tmpIt->toString();
 
@@ -29,19 +29,25 @@ void SearchForward::doExecute(const std::string &command, VMModel &model, int co
 					}
 				}
 
-				++tmpIt;
-				++lineCounter;
+				if (tmpIt != model.getDataSourceBegin()) {
+					--tmpIt;
+					++lineCounter;
+				} else {
+					break;
+				}
 			}
 
 			if (matches != count && (freePass || matches > 0)) {
 				freePass = false;
-				tmpIt = model.getDataSourceBegin();
-				state.getStatusBar().setMessage("Search hit bottom, resuming from top");
+				tmpIt = --model.getDataSourceEnd();
+				state.getStatusBar().setMessage("Search hit top, resuming from from");
+			} else {
+				break;
 			}
 		}
 
 		if (matches > 0) {
-			model.getCursor().moveToLine(lineCounter % model.size() + 1);
+			model.getCursor().moveToLine(lineCounter % model.size() - 1);
 
 			while (matchPos > 0) {
 				model.getCursor().moveRight();
@@ -53,7 +59,7 @@ void SearchForward::doExecute(const std::string &command, VMModel &model, int co
 	}
 }
 
-MatchType SearchForward::doMatch(const std::string &s) const {
+MatchType SearchBackward::doMatch(const std::string &s) const {
 	if (std::regex_match(s, fullMatch)) {
 		return MatchType::FULL;
 	} else if (std::regex_match(s, partialMatch)) {
@@ -63,4 +69,4 @@ MatchType SearchForward::doMatch(const std::string &s) const {
 	}
 }
 
-SearchForward::SearchForward(VMState &state, const std::string &name) : Command(state, name) {}
+SearchBackward::SearchBackward(VMState &state, const std::string &name) : Command(state, name) {}
