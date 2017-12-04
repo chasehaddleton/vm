@@ -78,7 +78,7 @@ public:
 	// Redo the last undone command
 	void redo();
 
-	// Save the current HistoryFrame
+	// Saves the current history
 	void saveHistory();
 
 	// Output the DataSource's text to a file

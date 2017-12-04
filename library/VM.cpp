@@ -7,6 +7,7 @@
 #include "commands/Save.h"
 #include "commands/FileInfo.h"
 #include "commands/DeleteLine.h"
+#include "commands/Insert.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -98,9 +99,10 @@ void VM::run(const std::string &fileName) {
 			}
 			case ModeType::INSERT: {
 				if (c == VMKeyboard::key.ESCAPE_ASCII) {
+					std::cout << "DID WE DO THIS?" << std::flush;
 					state.setEnableHistorySave(true);
 					model.saveHistory();
-					ModeType::COMMAND;
+					state.setMode(ModeType::COMMAND);
 					state.resetCommandState();
 				}
 				else if (handleMoveCommand(c, model)) {
@@ -135,5 +137,6 @@ VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<Save>(state, "Save"));
 	commands.push_back(std::make_unique<FileInfo>(state, "File Info"));
 	commands.push_back(std::make_unique<DeleteLine>(state, "Delete Line"));
+	commands.push_back(std::make_unique<Insert>(state, "Insert"));
 
 }

@@ -63,6 +63,9 @@ void VMModel::undo() {}
 // Redo the last undone command
 void VMModel::redo() {}
 
+// Saves the current history
+void VMModel::saveHistory() {}
+
 // Output the DataSource's text to a file
 void VMModel::saveFile() const {
 	try {
