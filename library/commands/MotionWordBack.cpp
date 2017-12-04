@@ -13,14 +13,6 @@ void MotionWordBack::doExecute(const std::string &command, VMModel &model, int c
 }
 
 void MotionWordBack::moveToPreviousWord(VMModel &model) const {
-	// Check until we hit start of line
-	// If it's start of file, we don't move
-	// If it's start of line, we move to the next line and back to the previous word
-	// If it's white space, ignore it
-
-	// Ignore whitespace until character
-	// Check until we hit start of file or until the character type changes
-
 	bool movedUp = false;
 	CharType wordType = CharType::BLANK;
 	model.moveCursorLeft();

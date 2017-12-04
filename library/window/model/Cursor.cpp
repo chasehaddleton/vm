@@ -98,6 +98,34 @@ void Cursor::moveEOL() {
 	updateHorizontalPos();
 }
 
+// Moves the cursor to the start of the data
+void Cursor::moveSOD() {
+	currentLine = ds.begin();
+	currentLetter = currentLine->begin();
+	globalXPos = 0;
+	xPos = 0;
+	yPos = 0;
+	insertPos = 0;
+}
+
+// Moves the cursor to the given line
+void Cursor::moveToLine(size_t lineNum) {
+	std::ptrdiff_t lineDiff = static_cast<std::ptrdiff_t>(lineNum) - static_cast<std::ptrdiff_t>(yPos);
+	if (-lineDiff > yPos && yPos + lineDiff <= ds.size() - 1) { std::advance(currentLine, lineDiff); }
+	else if (-lineDiff > yPos) { std::advance(currentLine, -static_cast<std::ptrdiff_t>(yPos)); }
+	else { std::advance(currentLine, static_cast<std::ptrdiff_t>(ds.size()) - static_cast<std::ptrdiff_t>(yPos)); }
+}
+
+// Moves the cursor to the end of the data
+void Cursor::moveEOD() {
+	currentLine = --(ds.end());
+	currentLetter = --(currentLine->end());
+	globalXPos = currentLine->lineWidth();
+	xPos = globalXPos;
+	yPos = ds.size();
+	insertPos = currentLine->size() - 1;
+}
+
 // Returns true if cursor is at the start of a line
 bool Cursor::startOfLine() {
 	return xPos == 0;

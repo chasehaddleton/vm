@@ -68,6 +68,15 @@ public:
 	// Moves the cursor to the end of the line
 	void moveEOL();
 
+	// Moves the cursor to the start of the data
+	void moveSOD();
+
+	// Moves the cursor to the given line
+	void moveToLine(size_t lineNum);
+
+	// Moves the cursor to the end of the data
+	void moveEOD();
+
 	// Returns true if cursor is at the start of a line
 	bool startOfLine();
 
