@@ -12,6 +12,7 @@
 #include "commands/MoveToLineNum.h"
 #include "commands/ScrollDownPage.h"
 #include "commands/ScrollUpPage.h"
+#include "commands/Insert.h"
 
 bool handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -102,8 +103,27 @@ void VM::run(const std::string &fileName) {
 				break;
 			}
 			case ModeType::INSERT: {
-
-				break;
+				if (c == VMKeyboard::key.ESCAPE_ASCII) {
+					std::cout << "DID WE DO THIS?" << std::flush;
+					state.setEnableHistorySave(true);
+					model.saveHistory();
+					state.setMode(ModeType::COMMAND);
+					state.resetCommandState();
+				}
+				else if (handleMoveCommand(c, model)) {
+					model.saveHistory();
+				}
+				else if ((' ' <= c) && (c <= '~')) {
+					model.addChar(c);
+					state.addChar(c);
+				}
+				else if (c == 127) {
+					model.removeChar();
+					state.addChar(c);
+				}
+				else {
+					continue;
+				}
 			}
 			case ModeType::MACRO_RECORD: {
 				break;
@@ -127,5 +147,6 @@ VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<MoveToLineNum>(state, "Move to Line Number"));
 	commands.push_back(std::make_unique<ScrollDownPage>(state, "Move the Frame Down"));
 	commands.push_back(std::make_unique<ScrollUpPage>(state, "Move the Frame Up"));
+	commands.push_back(std::make_unique<Insert>(state, "Insert"));
 
 }

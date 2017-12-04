@@ -80,8 +80,8 @@ public:
 	// Redo the last undone command
 	void redo();
 
-	// Write the current HistoryFrame
-	void saveHistFrame();
+	// Saves the current history
+	void saveHistory();
 
 	// Output the DataSource's text to a file
 	void saveFile() const;

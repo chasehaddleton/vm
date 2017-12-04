@@ -87,6 +87,14 @@ void VMState::setFileModified(bool fileModified) {
 	VMState::fileModified = fileModified;
 }
 
+bool VMState::isEnableSaveHistory() {
+	return enableHistorySave;
+}
+
+void VMState::setEnableHistorySave(bool enable) {
+	enableHistorySave = enable;
+}
+
 VMStatusBar &VMState::getStatusBar() {
 	return statusBar;
 }
@@ -118,4 +126,12 @@ int VMState::getScrollAmount() const {
 
 void VMState::setScrollAmount(int scrollAmount) {
 	VMState::scrollAmount = scrollAmount;
+}
+
+void VMState::setCurrentCount(int count) {
+	currentCount = count;
+}
+
+int VMState::getCurrentCount() {
+	return currentCount;
 }

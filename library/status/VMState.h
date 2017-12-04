@@ -20,9 +20,11 @@ class VMState {
 	bool displayPastEnd{false};
 	bool showCommand{false};
 	bool fileModified{false};
+	bool enableHistorySave{true};
 	int windowX{0};
 	int windowY{0};
 	int scrollAmount{0};
+	int currentCount{0};
 
 	void reset();
 
@@ -71,11 +73,19 @@ public:
 
 	void setFileModified(bool fileModified);
 
+	bool isEnableSaveHistory();
+
+	void setEnableHistorySave(bool enable);
+
 	VMStatusBar &getStatusBar();
 
 	void bind(VMModel &m);
 
 	void resetCommandState();
+
+	void setCurrentCount(int count);
+
+	int getCurrentCount();
 
 	friend class VM;
 };
