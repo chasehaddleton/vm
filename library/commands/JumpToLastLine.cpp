@@ -8,8 +8,7 @@
 JumpToLastLine::JumpToLastLine(VMState &state, const std::string &name) : Command(state, name) {}
 
 void JumpToLastLine::doExecute(const std::string &command, VMModel &model, int count) const {
-	model.getCursor();
-	// TODO: implement
+	model.getCursor().moveToLastLine();
 }
 
 MatchType JumpToLastLine::doMatch(const std::string &s) const {
