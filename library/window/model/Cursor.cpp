@@ -185,7 +185,12 @@ bool Cursor::startOfLine() {
 bool Cursor::endOfLine() {
 	size_t width = currentLine->lineWidth();
 	if (state.isDisplayPastEnd()) { return xPos == width; }
-	return xPos == width - 1;
+	if (width == 0) {
+		return xPos == width;
+	}
+	else {
+		return xPos == width - 1;
+	}
 }
 
 // Returns true if cursor is at the start of the data

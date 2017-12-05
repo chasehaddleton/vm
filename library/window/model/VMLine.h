@@ -28,6 +28,7 @@ public:
 	void addChar(VMLine::iterator &it, char c);         // inserts the given character at the iterator position
 	void removeChar(VMLine::iterator &it);              // removes the character at the given position
 	void replaceChar(VMLine::iterator &it, char c);     // replaces the character at the given position
+	void emptyLine();                     // empties the line of all characters
 	size_t lineWidth() const;             // returns the sum of the widths of the elements in the line
 	size_t length() const;                // returns the number of elements in the line
 	size_t size() const;                  // returns the number of elements in the line

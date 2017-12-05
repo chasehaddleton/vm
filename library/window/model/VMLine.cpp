@@ -58,6 +58,10 @@ void VMLine::replaceChar(VMLine::iterator &it, char c) {
 	if (tmp.getChar() == '\t') { updateStartPos(it); }
 }
 
+// empties the line of all characters
+void VMLine::emptyLine() {
+	line.clear();
+}
 
 // updates the start positions relative to the beginning
 void VMLine::updateStartPos(VMLine::iterator &it) {
@@ -142,11 +146,9 @@ std::string VMLine::toString() const {
 
 	std::string tmp{};
 
-
 	for (auto &c:line) {
 		tmp.push_back(c.getChar());
 	}
-
 	return tmp;
 }
 

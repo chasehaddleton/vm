@@ -39,13 +39,18 @@ void VMDataSource::removeChar(VMDataSource::iterator &dsIter, VMLine::iterator &
 	dsIter->removeChar(lineIter);
 }
 
+// Empties the line pointed to by dsIter of all characters
+void VMDataSource::emptyLine(VMDataSource::iterator dsIter) {
+	dsIter->emptyLine();
+}
+
 // Add a line at the given iterator position
-void VMDataSource::addLine(VMDataSource::iterator dsIter, const std::string &s) {
+void VMDataSource::addLine(VMDataSource::iterator &dsIter, const std::string &s) {
 	lines.insert(dsIter, VMLine(s));
 }
 
 // Add a line at the given iterator position
-void VMDataSource::addLine(VMDataSource::iterator dsIter, VMLine line) {
+void VMDataSource::addLine(VMDataSource::iterator &dsIter, VMLine line) {
 	lines.insert(dsIter, line);
 }
 

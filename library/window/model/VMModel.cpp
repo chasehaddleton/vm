@@ -8,10 +8,33 @@ VMModel::VMModel(VMState &vmState) : state{vmState}, ds{vmState.getOpenFileName(
 
 // Adds a character at the current Cursor character position
 void VMModel::addChar(int c) {
-	// Adds a character at the current Cursor character position
-	ds.addChar(cursor.getDSIter(), cursor.getLineIter(), c);
-	cursor.moveRight();
-	state.setFileModified(true);
+	// If we receive a newline, we add either empty lines or split the current line
+	if (c == '\n') {
+		VMDataSource::iterator insertPos = cursor.getDSIter();
+		std::string line = cursor.getDSIter()->toString();
+		++insertPos;
+		if (cursor.getLineIter() == cursor.getDSIter()->begin()) {
+			// TODO: confirm works
+			ds.addLine(insertPos, line);
+			cursor.getDSIter()->emptyLine();
+			cursor.moveSOL();
+			cursor.moveDown();
+		}
+		else if (cursor.getLineIter() == cursor.getDSIter()->end()) {
+			ds.addLine(insertPos, "");
+			cursor.moveSOL();
+			cursor.moveDown();
+		}
+		else {
+
+		}
+	}
+	else {
+		// Add the character at the current Cursor character position
+		ds.addChar(cursor.getDSIter(), cursor.getLineIter(), c);
+		cursor.moveRight();
+		state.setFileModified(true);
+	}
 }
 
 // Removes the character at the current Cursor character position
