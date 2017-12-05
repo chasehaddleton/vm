@@ -14,7 +14,6 @@ void VMModel::addChar(int c) {
 		std::string line = cursor.getDSIter()->toString();
 		++insertPos;
 		if (cursor.getLineIter() == cursor.getDSIter()->begin()) {
-			// TODO: confirm works
 			ds.addLine(insertPos, line);
 			cursor.getDSIter()->emptyLine();
 			cursor.moveSOL();
@@ -26,7 +25,16 @@ void VMModel::addChar(int c) {
 			cursor.moveDown();
 		}
 		else {
-
+			ds.addLine(insertPos, line.substr(cursor.getInsertPos()));
+			VMLine::iterator deletePos = cursor.getLineIter();
+			VMLine::iterator endOfLine = cursor.getDSIter()->end();
+			--insertPos;
+			--insertPos;
+			cursor.moveSOL();
+			cursor.moveDown();
+			while (deletePos != endOfLine) {
+				ds.removeChar(insertPos, deletePos);
+			}
 		}
 	}
 	else {
