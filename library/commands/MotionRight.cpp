@@ -10,7 +10,7 @@ void MotionRight::doExecute(const std::string &command, VMModel &model, int coun
 }
 
 MatchType MotionRight::doMatch(const std::string &s) const {
-	if (s == "l" || VMKeyMap::RIGHT) { return MatchType::FULL; }
+	if (s == "l" || (!s.empty() && s.at(0) == VMKeyMap::RIGHT)) { return MatchType::FULL; }
 	return MatchType::NONE;
 }
 

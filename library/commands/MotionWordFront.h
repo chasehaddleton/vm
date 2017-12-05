@@ -7,7 +7,7 @@
 
 #include "../abstractions/command/Command.h"
 
-class MotionWordFront : Command {
+class MotionWordFront : public Command {
 	void doExecute(const std::string &command, VMModel &model, int count) const override;
 
 	MatchType doMatch(const std::string &s) const override;

@@ -10,7 +10,7 @@ void MotionDown::doExecute(const std::string &command, VMModel &model, int count
 }
 
 MatchType MotionDown::doMatch(const std::string &s) const {
-	if (s == "j" || VMKeyMap::DOWN) { return MatchType::FULL; }
+	if (s == "j" || (!s.empty() && s.at(0) == VMKeyMap::DOWN)) { return MatchType::FULL; }
 	return MatchType::NONE;
 }
 

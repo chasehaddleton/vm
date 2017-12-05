@@ -8,7 +8,7 @@ void Insert::doExecute(const std::string &command, VMModel &model, int count) co
 	state.setMode(ModeType::INSERT);
 	state.setDisplayPastEnd(true);
 	state.setEnableHistorySave(false);
-	state.resetCommandState();
+	state.keyBuff.clear();
 	state.addChar(count);
 }
 

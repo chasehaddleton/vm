@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.5.1)
 project(vm)
 
 find_package(Curses REQUIRED)
@@ -24,6 +24,14 @@ set(SOURCE_FILES main.cpp library/window/display/VMDisplay.cpp library/window/di
         library/commands/DeleteLine.cpp library/commands/DeleteLine.h library/commands/WriteQuit.cpp library/commands/WriteQuit.h
         library/commands/ReplaceChar.cpp library/commands/ReplaceChar.h library/commands/MoveToLineNum.cpp library/commands/MoveToLineNum.h
         library/commands/ScrollDownLine.cpp library/commands/ScrollDownLine.h library/commands/ScrollUpLine.cpp library/commands/ScrollUpLine.h
-        library/commands/Insert.cpp library/commands/Insert.h library/commands/ScrollDownPage.cpp library/commands/ScrollDownPage.h library/commands/ScrollUpPage.cpp library/commands/ScrollUpPage.h library/commands/MoveToFirstNonBlank.cpp library/commands/MoveToFirstNonBlank.h library/commands/SearchForward.cpp library/commands/SearchForward.h library/commands/SearchBackward.cpp library/commands/SearchBackward.h)
+        library/commands/Insert.cpp library/commands/Insert.h library/commands/ScrollDownPage.cpp library/commands/ScrollDownPage.h
+        library/commands/ScrollUpPage.cpp library/commands/ScrollUpPage.h library/commands/MoveToFirstNonBlank.cpp
+        library/commands/MoveToFirstNonBlank.h library/commands/SearchForward.cpp library/commands/SearchForward.h
+        library/commands/SearchBackward.cpp library/commands/SearchBackward.h library/commands/StartOfLine.h
+        library/commands/StartOfLine.cpp library/commands/MotionWordFront.cpp library/commands/MotionWordFront.h
+        library/commands/MotionWordBack.cpp library/commands/MotionWordBack.h library/commands/MotionDown.cpp library/commands/MotionDown.h
+        library/commands/MotionUp.cpp library/commands/MotionUp.h library/commands/MotionLeft.cpp library/commands/MotionLeft.h
+        library/commands/MotionRight.cpp library/commands/MotionRight.h library/commands/EndOfLine.h library/commands/EndOfLine.cpp
+        library/commands/CharType.h)
 add_executable(vm ${SOURCE_FILES})
 target_link_libraries(vm ${CURSES_LIBRARIES})

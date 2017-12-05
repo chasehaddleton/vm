@@ -5,7 +5,7 @@
 #include "StartOfLine.h"
 
 void StartOfLine::doExecute(const std::string &command, VMModel &model, int count) const {
-	for (int i = 0; i < count; ++i) { model.moveCursorSOL(); }
+	model.moveCursorSOL();
 }
 
 MatchType StartOfLine::doMatch(const std::string &s) const {

@@ -20,7 +20,7 @@ class VMDisplay : public Display {
 	int xSize;
 	int ySize;
 
-	bool enablePreProcessing = false;
+	//bool enablePreProcessing = false;
 
 	void init();
 

@@ -19,8 +19,16 @@
 #include "commands/MoveToFirstNonBlank.h"
 #include "commands/SearchForward.h"
 #include "commands/SearchBackward.h"
+#include "commands/StartOfLine.h"
+#include "commands/MotionWordFront.h"
+#include "commands/MotionWordBack.h"
+#include "commands/MotionUp.h"
+#include "commands/MotionDown.h"
+#include "commands/MotionLeft.h"
+#include "commands/MotionRight.h"
+#include "commands/EndOfLine.h"
 
-bool handleMoveCommand(const int &ch, VMModel &m) {
+bool VM::handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
 		m.moveCursorLeft();
 	} else if (ch == VMKeyboard::key.RIGHT) {
@@ -32,7 +40,7 @@ bool handleMoveCommand(const int &ch, VMModel &m) {
 	} else {
 		return false;
 	}
-
+	state.getStatusBar().clearMessage();
 	return true;
 }
 
@@ -71,12 +79,12 @@ void VM::run(const std::string &fileName) {
 					if (state.keyBuff.empty()) {
 						// Check for special key-character/commands
 						if (c == ':' || c == '/' || c == '?') {
-							state.displayCommand();
 							state.addChar(c);
+							state.displayCommand();
 							continue;
 						} else if (handleMoveCommand(c, model)) {
 							continue;
-						} else if ('0' <= c && c <= '9') {
+						} else if ('0' <= c && c <= '9' && (numExecutions == 0 && c != '0') ){
 							numExecutions = numExecutions * 10 + (c - '0');
 							continue;
 						}
@@ -109,7 +117,7 @@ void VM::run(const std::string &fileName) {
 				break;
 			}
 			case ModeType::INSERT: {
-				// std::cout << std::flush;
+				//std::cout << VMKeyboard::key.ENTER_ASCII << std::flush;
 				if (c == VMKeyboard::key.ESCAPE_ASCII) {
 					state.setEnableHistorySave(true);
 					model.saveHistory();
@@ -118,6 +126,10 @@ void VM::run(const std::string &fileName) {
 				} else if (handleMoveCommand(c, model)) {
 					model.saveHistory();
 				} else if ((' ' <= c) && (c <= '~')) {
+					model.addChar(c);
+					state.addChar(c);
+				}
+				else if (c == VMKeyboard::key.ENTER_ASCII) {
 					model.addChar(c);
 					state.addChar(c);
 				}
@@ -143,19 +155,26 @@ void VM::run(const std::string &fileName) {
 VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<Quit>(state, "Quit"));
 	commands.push_back(std::make_unique<Write>(state, "Write"));
+	commands.push_back(std::make_unique<Insert>(state, "Insert"));
 	commands.push_back(std::make_unique<FileInfo>(state, "File Info"));
 	commands.push_back(std::make_unique<DeleteLine>(state, "Delete Line"));
 	commands.push_back(std::make_unique<WriteQuit>(state, "Write Quit"));
 	commands.push_back(std::make_unique<ReplaceChar>(state, "Replace Char"));
+	commands.push_back(std::make_unique<StartOfLine>(state, "Move to Start of Line"));
 	commands.push_back(std::make_unique<MoveToLineNum>(state, "Move to Line Number"));
+	commands.push_back(std::make_unique<MoveToLastLine>(state, "Move to the Last Line"));
 	commands.push_back(std::make_unique<ScrollDownLine>(state, "Move the Frame Down"));
 	commands.push_back(std::make_unique<ScrollUpLine>(state, "Move the Frame Up"));
-	commands.push_back(std::make_unique<MoveToLastLine>(state, "Move to the Last Line"));
-	commands.push_back(std::make_unique<Insert>(state, "Insert"));
 	commands.push_back(std::make_unique<ScrollDownPage>(state, "Scroll Down a Page"));
 	commands.push_back(std::make_unique<ScrollUpPage>(state, "Scroll Up a Page"));
 	commands.push_back(std::make_unique<MoveToFirstNonBlank>(state, "Move to First Non Blank Line"));
 	commands.push_back(std::make_unique<SearchForward>(state, "Search Forward"));
 	commands.push_back(std::make_unique<SearchBackward>(state, "Search Backward"));
-
+	commands.push_back(std::make_unique<MotionWordFront>(state, "Move Word Forward"));
+	commands.push_back(std::make_unique<MotionWordBack>(state, "Move Word Back"));
+	commands.push_back(std::make_unique<MotionUp>(state, "Move Up"));
+	commands.push_back(std::make_unique<MotionDown>(state, "Move Down"));
+	commands.push_back(std::make_unique<MotionLeft>(state, "Move Left"));
+	commands.push_back(std::make_unique<MotionRight>(state, "Move Right"));
+	commands.push_back(std::make_unique<EndOfLine>(state, "Move To End of Line"));
 }

@@ -10,7 +10,7 @@ void MotionUp::doExecute(const std::string &command, VMModel &model, int count) 
 }
 
 MatchType MotionUp::doMatch(const std::string &s) const {
-	if (s == "k" || VMKeyMap::UP) { return MatchType::FULL; }
+	if (s == "k" || (!s.empty() && s.at(0) == VMKeyMap::UP)) { return MatchType::FULL; }
 	return MatchType::NONE;
 }
 

@@ -10,7 +10,7 @@ void MotionLeft::doExecute(const std::string &command, VMModel &model, int count
 }
 
 MatchType MotionLeft::doMatch(const std::string &s) const {
-	if (s == "h" || VMKeyMap::LEFT) { return MatchType::FULL; }
+	if (s == "h" || (!s.empty() && s.at(0) == VMKeyMap::LEFT)) { return MatchType::FULL; }
 	return MatchType::NONE;
 }
 
