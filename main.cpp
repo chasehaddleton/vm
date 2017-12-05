@@ -1,5 +1,6 @@
 
 #include "library/VM.h"
+#include <iostream>
 
 int main(int argc, const char *argv[]) {
 	std::string fileName{};
@@ -9,5 +10,10 @@ int main(int argc, const char *argv[]) {
 	}
 
 	VM vm;
-	vm.run(fileName);
+
+	try {
+		vm.run(fileName);
+	} catch (std::invalid_argument &e) {
+		std::cerr << "Error: file name given is invalid";
+	}
 }

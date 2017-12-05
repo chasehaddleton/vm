@@ -10,19 +10,23 @@ VMDataSource::VMDataSource() {
 }
 
 VMDataSource::VMDataSource(const std::string &name) : fileName{name} {
-	std::ifstream f{name};
-	std::string line;
-	// Check if failbit was set on ifstream
-	if (f.fail()) {
-		throw std::invalid_argument("No filename matching input!");
-	}
-		// Otherwise read file
-	else {
-		while (std::getline(f, line)) {
-			lines.emplace_back(line);
+	if (name.empty()) {
+		lines.emplace_front("");
+	} else {
+		std::ifstream f{name};
+		std::string line;
+		// Check if failbit was set on ifstream
+		if (f.fail()) {
+			throw std::invalid_argument("No filename matching input!");
 		}
+			// Otherwise read file
+		else {
+			while (std::getline(f, line)) {
+				lines.emplace_back(line);
+			}
+		}
+		f.close();
 	}
-	f.close();
 }
 
 size_t VMDataSource::size() {

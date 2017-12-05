@@ -8,8 +8,12 @@
 #include "../input/VMKeyMap.h"
 
 void WriteQuit::doExecute(const std::string &command, VMModel &model, int count) const {
-	save->execute(":w", model, count);
-	quit->execute(":q", model, count);
+	if (state.getOpenFileName().empty()) {
+		state.getStatusBar().setMessage("Error, write with :w to give file name");
+	} else {
+		save->execute(":w", model, count);
+		quit->execute(":q", model, count);
+	}
 }
 
 MatchType WriteQuit::doMatch(const std::string &s) const {
