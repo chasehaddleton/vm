@@ -79,8 +79,8 @@ void VM::run(const std::string &fileName) {
 					if (state.keyBuff.empty()) {
 						// Check for special key-character/commands
 						if (c == ':' || c == '/' || c == '?') {
-							state.displayCommand();
 							state.addChar(c);
+							state.displayCommand();
 							continue;
 						} else if (handleMoveCommand(c, model)) {
 							continue;

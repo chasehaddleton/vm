@@ -15,11 +15,10 @@ void Quit::doExecute(const std::string &command, VMModel &model, int count) cons
 }
 
 MatchType Quit::doMatch(const std::string &s) const {
-	if (s == ":" || s == ":q" || s == ":q!") {
-		std::cout << "PARTIAL" << std::flush;
-		return MatchType::PARTIAL;
-	} else if (s == (":q!" + VMKeyMap::ENTER) || s == (":q" + VMKeyMap::ENTER)) {
+	if (s == (":q!" + VMKeyMap::ENTER) || s == (":q" + VMKeyMap::ENTER)) {
 		return MatchType::FULL;
+	} else if (s == ":" || s == ":q" || s == ":q!") {
+		return MatchType::PARTIAL;
 	}
 
 	return MatchType::NONE;

@@ -62,7 +62,7 @@ void VMStatusBar::doNotify(const Subject *sub) {
 		auto buff = dynamic_cast<const VMKeyBuffer *>(sub);
 
 		if (buff) {
-			message = buff->toString();
+			setMessage(buff->toString());
 		}
 	}
 }
