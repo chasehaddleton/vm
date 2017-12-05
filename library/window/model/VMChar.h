@@ -10,8 +10,8 @@
 class VMChar {
 	char c;
 	int colour;
-	unsigned char width;
 	size_t startPos;
+	unsigned char width;
 
 public:
 	VMChar() = default;

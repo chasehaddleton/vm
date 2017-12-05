@@ -29,6 +29,9 @@ set(SOURCE_FILES main.cpp library/window/display/VMDisplay.cpp library/window/di
         library/commands/MoveToFirstNonBlank.h library/commands/SearchForward.cpp library/commands/SearchForward.h
         library/commands/SearchBackward.cpp library/commands/SearchBackward.h library/commands/StartOfLine.h
         library/commands/StartOfLine.cpp library/commands/MotionWordFront.cpp library/commands/MotionWordFront.h
-        library/commands/MotionWordBack.cpp library/commands/MotionWordBack.h)
+        library/commands/MotionWordBack.cpp library/commands/MotionWordBack.h library/commands/MotionDown.cpp library/commands/MotionDown.h
+        library/commands/MotionUp.cpp library/commands/MotionUp.h library/commands/MotionLeft.cpp library/commands/MotionLeft.h
+        library/commands/MotionRight.cpp library/commands/MotionRight.h library/commands/EndOfLine.h library/commands/EndOfLine.cpp
+        library/commands/CharType.h)
 add_executable(vm ${SOURCE_FILES})
 target_link_libraries(vm ${CURSES_LIBRARIES})

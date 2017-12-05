@@ -22,6 +22,11 @@
 #include "commands/StartOfLine.h"
 #include "commands/MotionWordFront.h"
 #include "commands/MotionWordBack.h"
+#include "commands/MotionUp.h"
+#include "commands/MotionDown.h"
+#include "commands/MotionLeft.h"
+#include "commands/MotionRight.h"
+#include "commands/EndOfLine.h"
 
 bool VM::handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
@@ -167,5 +172,9 @@ VM::VM() : state{}, display{state}, keyboard{} {
 	commands.push_back(std::make_unique<SearchBackward>(state, "Search Backward"));
 	commands.push_back(std::make_unique<MotionWordFront>(state, "Move Word Forward"));
 	commands.push_back(std::make_unique<MotionWordBack>(state, "Move Word Back"));
-
+	commands.push_back(std::make_unique<MotionUp>(state, "Move Up"));
+	commands.push_back(std::make_unique<MotionDown>(state, "Move Down"));
+	commands.push_back(std::make_unique<MotionLeft>(state, "Move Left"));
+	commands.push_back(std::make_unique<MotionRight>(state, "Move Right"));
+	commands.push_back(std::make_unique<EndOfLine>(state, "Move To End of Line"));
 }

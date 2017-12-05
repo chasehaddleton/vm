@@ -45,7 +45,6 @@ void VMLine::addChar(VMLine::iterator &it, char c) {
 
 // removes the character at the given position
 void VMLine::removeChar(VMLine::iterator &it) {
-	VMChar tmp = *it;
 	it = line.erase(it);
 	VMLine::iterator updateIt = it;
 	updateStartPos(updateIt);
@@ -69,7 +68,7 @@ void VMLine::updateStartPos(VMLine::iterator &it) {
 	unsigned char previousWidth;
 	size_t newStartPos;
 	unsigned char newWidth;
-	std::ptrdiff_t count;
+
 	// Get the information about the startPos of the previous character
 	if (it != this->begin()) {
 		std::advance(it, -1);

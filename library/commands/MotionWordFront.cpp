@@ -8,39 +8,14 @@
 
 void MotionWordFront::doExecute(const std::string &command, VMModel &model, int count) const {
 	for (int i = 0; i < count; ++i) {
-		auto &cur = model.getCursor();
-		bool seenBlank = false;
-		bool seenWord = false;
+		bool movedDown = false;
+		CharType wordType = CharType::BLANK;
 		model.moveCursorRight();
 		std::string currentChar;
 		std::regex word("\\w");
 		std::regex blank("\\s");
 
-		while (!cur.endOfData()) {
-			if (!cur.endOfLine()) {
-				// not at the end of the line, look for more words
-				currentChar = cur.getLineIter()->getChar();
-
-				if (regex_match(currentChar, word) || !regex_match(currentChar, blank) ) {
-
-
-					if (seenBlank) {
-						// we have seen a blank though, that means this is the new word
-						break; // we're done!
-					}
-				} else {
-					seenBlank = true;
-				}
-
-				cur.moveRight();
-			} else {
-				seenBlank = true;
-				cur.moveDown();
-				cur.moveSOL();
-			}
-		}
-
-		/*// If we're not at the start of the file, there's more to do
+		// If we're not at the start of the file, there's more to do
 		while (!model.getCursor().endOfData()) {
 			currentChar = model.getCursor().getLineIter()->getChar();
 			// Update the word type if we haven't already
@@ -95,7 +70,7 @@ void MotionWordFront::doExecute(const std::string &command, VMModel &model, int 
 					else { model.getCursor().moveRight(); }
 				}
 			}
-		}*/
+		}
 	}
 }
 
