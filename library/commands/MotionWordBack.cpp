@@ -17,8 +17,8 @@ void MotionWordBack::moveToPreviousWord(VMModel &model) const {
 	CharType wordType = CharType::BLANK;
 	model.moveCursorLeft();
 	std::string currentChar;
-	std::regex word("\w");
-	std::regex blank("\s");
+	std::regex word("\\w");
+	std::regex blank("\\s");
 
 	// If we're not at the start of the file, there's more to do
 	while (!model.getCursor().startOfData()) {

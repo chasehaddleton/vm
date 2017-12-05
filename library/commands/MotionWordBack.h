@@ -7,7 +7,7 @@
 
 #include "../abstractions/command/Command.h"
 
-class MotionWordBack : Command {
+class MotionWordBack : public Command {
 	void doExecute(const std::string &command, VMModel &model, int count) const override;
 
 	// Moves to the start of the previous "word"
