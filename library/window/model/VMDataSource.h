@@ -39,9 +39,12 @@ public:
 	// Joins all lines between two iterators, startIter must be before endIter or undefined behaviour
 	void joinLines(VMDataSource::iterator startIter, VMDataSource::iterator endIter);
 
-	void addLine(VMDataSource::iterator dsIter, const std::string &str);
+	// Empties the line pointed to by dsIter of all characters
+	void emptyLine(VMDataSource::iterator dsIter);
 
-	void addLine(VMDataSource::iterator dsIter, VMLine line);
+	void addLine(VMDataSource::iterator &dsIter, const std::string &str);
+
+	void addLine(VMDataSource::iterator &dsIter, VMLine line);
 
 	VMDataSource::iterator removeLine(iterator it);
 
