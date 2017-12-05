@@ -20,7 +20,7 @@
 #include "commands/SearchForward.h"
 #include "commands/SearchBackward.h"
 
-bool handleMoveCommand(const int &ch, VMModel &m) {
+bool VM::handleMoveCommand(const int &ch, VMModel &m) {
 	if (ch == VMKeyboard::key.LEFT) {
 		m.moveCursorLeft();
 	} else if (ch == VMKeyboard::key.RIGHT) {
@@ -32,7 +32,7 @@ bool handleMoveCommand(const int &ch, VMModel &m) {
 	} else {
 		return false;
 	}
-
+	state.getStatusBar().clearMessage();
 	return true;
 }
 

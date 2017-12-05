@@ -50,7 +50,7 @@ void VMState::displayCommand() {
 void VMState::hideCommand() {
 	if (showCommand) {
 		showCommand = false;
-		statusBar.setMessage("");
+		statusBar.clearMessage();
 	}
 }
 

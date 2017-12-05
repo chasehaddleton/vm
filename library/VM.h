@@ -18,6 +18,7 @@ class VM {
 	VMDisplay display;
 	VMKeyboard keyboard;
 
+	bool handleMoveCommand(const int &ch, VMModel &m);
 public:
 	VM();
 

@@ -53,6 +53,10 @@ void VMStatusBar::setMessage(const std::string &m) {
 	message = m;
 }
 
+void VMStatusBar::clearMessage() {
+	message = "";
+}
+
 void VMStatusBar::doNotify(const Subject *sub) {
 	if (state->isCommandShown()) {
 		auto buff = dynamic_cast<const VMKeyBuffer *>(sub);

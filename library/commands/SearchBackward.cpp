@@ -13,7 +13,7 @@ void SearchBackward::doExecute(const std::string &command, VMModel &model, int c
 
 		int matches = 0;
 		bool freePass = true;
-		size_t lineCounter = model.getCursor().getYPos();
+		size_t lineCounter = model.getCursor().getYPos() + 1;
 		ptrdiff_t matchPos = 0;
 
 		while (matches < count) {
@@ -31,7 +31,7 @@ void SearchBackward::doExecute(const std::string &command, VMModel &model, int c
 
 				if (tmpIt != model.getDataSourceBegin()) {
 					--tmpIt;
-					++lineCounter;
+					--lineCounter;
 				} else {
 					break;
 				}
@@ -40,6 +40,7 @@ void SearchBackward::doExecute(const std::string &command, VMModel &model, int c
 			if (matches != count && (freePass || matches > 0)) {
 				freePass = false;
 				tmpIt = --model.getDataSourceEnd();
+				lineCounter = model.size();
 				state.getStatusBar().setMessage("Search hit top, resuming from from");
 			} else {
 				break;
@@ -47,7 +48,7 @@ void SearchBackward::doExecute(const std::string &command, VMModel &model, int c
 		}
 
 		if (matches > 0) {
-			model.getCursor().moveToLine(lineCounter % model.size() - 1);
+			model.getCursor().moveToLine(lineCounter);
 
 			while (matchPos > 0) {
 				model.getCursor().moveRight();

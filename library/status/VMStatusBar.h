@@ -26,6 +26,8 @@ public:
 	std::string operator*();
 
 	void setMessage(const std::string &m);
+
+	void clearMessage();
 };
 
 
